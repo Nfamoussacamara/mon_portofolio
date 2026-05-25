@@ -178,13 +178,35 @@ function HeroText() {
       </div>
 
       {/* LE MÉTIER */}
-      <div ref={roleRef} className="hero-role-container mb-8 relative">
+      <div ref={roleRef} className="hero-role-container mb-4 relative">
         <div className="relative inline-block overflow-hidden">
           <h2 className="hero-role block text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold leading-tight tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500">
             Développeur Full-Stack
           </h2>
           <div className="reveal-bar-role absolute inset-0 bg-indigo-500 z-10 scale-x-0" />
         </div>
+      </div>
+
+      {/* Flèche scroll mobile uniquement (juste sous le métier) */}
+      <div className="hero-btns lg:hidden flex justify-center mb-4">
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
+        >
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-blue-500"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </motion.div>
       </div>
 
       {/* Sous-titre */}
