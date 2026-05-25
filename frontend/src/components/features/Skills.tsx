@@ -50,6 +50,8 @@ export const Skills = () => {
             whileInView="visible"
             whileHover="hover"
                     whileTap="hover"
+                    whileFocus="hover"
+                    tabIndex={0}
             viewport={defaultViewport}
             className="md:col-span-2 rounded-3xl border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
           >
@@ -79,6 +81,8 @@ export const Skills = () => {
                     initial="initial"
                     whileHover="hover"
                     whileTap="hover"
+                    whileFocus="hover"
+                    tabIndex={0}
                     className="px-4 py-2 rounded-xl font-mono text-xs font-semibold border cursor-default"
                   >
                     {skill}
@@ -95,6 +99,8 @@ export const Skills = () => {
             whileInView="visible"
             whileHover="hover"
                     whileTap="hover"
+                    whileFocus="hover"
+                    tabIndex={0}
             viewport={defaultViewport}
             className="md:col-span-1 rounded-3xl border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
           >
@@ -121,6 +127,8 @@ export const Skills = () => {
                     initial="initial"
                     whileHover="hover"
                     whileTap="hover"
+                    whileFocus="hover"
+                    tabIndex={0}
                     className="px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold border cursor-default"
                   >
                     {skill}
@@ -137,6 +145,8 @@ export const Skills = () => {
             whileInView="visible"
             whileHover="hover"
                     whileTap="hover"
+                    whileFocus="hover"
+                    tabIndex={0}
             viewport={defaultViewport}
             className="md:col-span-1 rounded-3xl border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
           >
@@ -161,6 +171,8 @@ export const Skills = () => {
                     initial="initial"
                     whileHover="hover"
                     whileTap="hover"
+                    whileFocus="hover"
+                    tabIndex={0}
                     className="px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold border cursor-default"
                   >
                     {skill}
@@ -177,6 +189,8 @@ export const Skills = () => {
             whileInView="visible"
             whileHover="hover"
                     whileTap="hover"
+                    whileFocus="hover"
+                    tabIndex={0}
             viewport={defaultViewport}
             className="md:col-span-2 rounded-3xl border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
           >
@@ -198,6 +212,8 @@ export const Skills = () => {
                     initial="initial"
                     whileHover="hover"
                     whileTap="hover"
+                    whileFocus="hover"
+                    tabIndex={0}
                     className="px-4 py-2 rounded-xl font-mono text-xs font-semibold border cursor-default"
                   >
                     {skill}
