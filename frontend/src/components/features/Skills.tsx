@@ -3,8 +3,16 @@ import { sectionHeader, fadeLeft, fadeRight, defaultViewport } from '../../lib/a
 
 
 // Variants pour les badges skill
-const badgeVariants = (hoverBg: string, hoverBorder: string, hoverText?: string) => ({
-  initial: { backgroundColor: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)' },
+const badgeVariants = (hoverBg: string, hoverBorder: string, hoverText?: string, isMobile: boolean = false) => ({
+  initial: isMobile ? {
+    backgroundColor: hoverBg,
+    borderColor: hoverBorder,
+    color: hoverText || 'rgba(255,255,255,1)'
+  } : { 
+    backgroundColor: 'rgba(255,255,255,0.05)', 
+    borderColor: 'rgba(255,255,255,0.1)', 
+    color: 'rgba(255,255,255,0.8)' 
+  },
   hover: {
     backgroundColor: hoverBg,
     borderColor: hoverBorder,
@@ -14,6 +22,8 @@ const badgeVariants = (hoverBg: string, hoverBorder: string, hoverText?: string)
 });
 
 export const Skills = () => {
+  const isMobile = window.innerWidth < 1024;
+
   return (
     <section id="skills" className="py-16 md:py-28 bg-[var(--bg-primary)] relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
@@ -54,7 +64,7 @@ export const Skills = () => {
           >
             {/* Effet code en hologramme — Framer Motion via whileHover */}
             <motion.div
-              variants={{ initial: { opacity: 0 }, hover: { opacity: 1, transition: { duration: 0.4 } } }}
+              variants={{ initial: { opacity: isMobile ? 1 : 0 }, hover: { opacity: 1, transition: { duration: 0.4 } } }}
               className="absolute inset-x-0 bottom-0 top-1/3 bg-gradient-to-t from-violet-500/10 via-transparent to-transparent pointer-events-none"
             />
             <div className="absolute -right-10 -bottom-10 opacity-10 font-mono text-[10px] leading-tight select-none pointer-events-none text-violet-500 max-w-xs break-all hidden sm:block">
@@ -74,7 +84,7 @@ export const Skills = () => {
                 {['Python', 'Django', 'Django REST Framework', 'Node.js', 'GraphQL', 'Celery', 'RabbitMQ'].map((skill) => (
                   <motion.span
                     key={skill}
-                    variants={badgeVariants('rgba(139,92,246,0.2)', 'rgba(139,92,246,0.3)')}
+                    variants={badgeVariants('rgba(139,92,246,0.2)', 'rgba(139,92,246,0.3)', undefined, isMobile)}
                     initial="initial"
                     whileHover="hover"
                     className="px-4 py-2 rounded-xl font-mono text-xs font-semibold border cursor-default"
@@ -114,7 +124,7 @@ export const Skills = () => {
                 {['OWASP Top 10', 'Pentesting', 'JWT / OAuth2', 'Docker', 'CI/CD (GitLab)'].map((skill) => (
                   <motion.span
                     key={skill}
-                    variants={badgeVariants('rgba(255,255,255,0.05)', 'rgba(239,68,68,0.5)', 'rgba(248,113,113,1)')}
+                    variants={badgeVariants('rgba(255,255,255,0.05)', 'rgba(239,68,68,0.5)', 'rgba(248,113,113,1)', isMobile)}
                     initial="initial"
                     whileHover="hover"
                     className="px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold border cursor-default"
@@ -136,7 +146,7 @@ export const Skills = () => {
             className="md:col-span-1 rounded-3xl border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
           >
             <motion.div
-              variants={{ initial: { opacity: 0 }, hover: { opacity: 1, transition: { duration: 0.4 } } }}
+              variants={{ initial: { opacity: isMobile ? 1 : 0 }, hover: { opacity: 1, transition: { duration: 0.4 } } }}
               className="absolute inset-0 bg-gradient-to-tr from-cyan-500/5 to-transparent pointer-events-none"
             />
             <div className="p-8 relative z-10 flex flex-col h-full">
@@ -152,7 +162,7 @@ export const Skills = () => {
                 {['React', 'TypeScript', 'Tailwind', 'Framer Motion', 'Zustand', 'React Query'].map((skill) => (
                   <motion.span
                     key={skill}
-                    variants={badgeVariants('rgba(6,182,212,0.2)', 'rgba(6,182,212,0.3)')}
+                    variants={badgeVariants('rgba(6,182,212,0.2)', 'rgba(6,182,212,0.3)', undefined, isMobile)}
                     initial="initial"
                     whileHover="hover"
                     className="px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold border cursor-default"
@@ -187,7 +197,7 @@ export const Skills = () => {
                 {['PostgreSQL', 'Redis', 'Elasticsearch', 'Prisma ORM', 'AWS / S3', 'NGINX'].map((skill) => (
                   <motion.span
                     key={skill}
-                    variants={badgeVariants('rgba(16,185,129,0.2)', 'rgba(16,185,129,0.3)')}
+                    variants={badgeVariants('rgba(16,185,129,0.2)', 'rgba(16,185,129,0.3)', undefined, isMobile)}
                     initial="initial"
                     whileHover="hover"
                     className="px-4 py-2 rounded-xl font-mono text-xs font-semibold border cursor-default"
