@@ -194,7 +194,7 @@ function HeroText() {
       </p>
 
       {/* Boutons */}
-      <div className="hero-btns opacity-0 flex flex-wrap gap-3">
+      <div className="hero-btns opacity-0 flex flex-col sm:flex-row flex-wrap gap-3 w-full sm:w-auto">
         <Button size="lg" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
           Voir mes projets
         </Button>
@@ -234,8 +234,8 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Scroll Indicator - Déplacé au-dessus du marquee pour éviter le chevauchement */}
-        <div className="scroll-indicator opacity-0 flex flex-col items-center gap-2 mb-6 -mt-16">
+        {/* Scroll Indicator */}
+        <div className="scroll-indicator opacity-0 flex flex-col items-center gap-2 mb-6 mt-6 md:-mt-16">
           <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold">Découvrir</span>
           <motion.div
             animate={{ y: [0, 6, 0] }}
