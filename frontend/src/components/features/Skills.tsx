@@ -174,14 +174,6 @@ export const Skills = () => {
             viewport={defaultViewport}
             className="md:col-span-2 rounded-3xl border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
           >
-            {/* Grid de fond animée au hover */}
-            <motion.div
-              variants={{
-                initial: { opacity: 0.5 },
-                hover: { opacity: 1, transition: { duration: 0.7 } }
-              } as Variants}
-              className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0wIDBoNDB2NDBIMHoiIGZpbGw9Im5vbmUiLz4KPHBhdGggZD0iTTAgMGg0MHYxSDB6IiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDMpIi8+CjxwYXRoIGQ9Ik0wIDB2NDBoMVYweiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPgo8L3N2Zz4=')] pointer-events-none"
-            />
 
             <div className="p-8 relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-3 mb-6">
