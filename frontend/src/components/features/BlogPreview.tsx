@@ -24,11 +24,7 @@ const mockPosts = [
   }
 ];
 
-// Variants typés explicitement pour éviter les erreurs TS
-const headerVariant: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE } }
-};
+
 
 const leftCard: Variants = {
   hidden: { opacity: 0, x: -60 },

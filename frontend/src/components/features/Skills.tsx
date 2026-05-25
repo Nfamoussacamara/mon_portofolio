@@ -1,8 +1,6 @@
 import { motion } from 'framer-motion';
-import { sectionHeader, fadeLeft, fadeRight, defaultViewport } from '../../lib/animations';
 import type { Variants } from 'framer-motion';
-
-const premiumEase: [number, number, number, number] = [0.22, 1, 0.36, 1];
+import { sectionHeader, fadeLeft, fadeRight, defaultViewport } from '../../lib/animations';
 
 
 // Variants pour les badges skill
