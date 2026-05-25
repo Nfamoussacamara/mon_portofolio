@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import type { Variants } from 'framer-motion';
 import { sectionHeader, fadeLeft, fadeRight, defaultViewport } from '../../lib/animations';
 
 
