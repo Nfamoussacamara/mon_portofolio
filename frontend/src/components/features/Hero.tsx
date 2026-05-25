@@ -56,57 +56,106 @@ function HeroText() {
         gsap.set(".hero-role-container", { x: roleCX, y: roleCY });
       }
 
-      // 2. RÉVÉLATION DU NOM (CENTRE)
-      tl.to(".reveal-bar-name", {
-        scaleX: 1,
-        duration: 0.6,
-        transformOrigin: "left",
-        delay: 0.6
-      })
-      .set(".hero-name", { opacity: 1 })
-      .to(".reveal-bar-name", {
-        scaleX: 0,
-        duration: 0.6,
-        transformOrigin: "right"
-      })
+      const isMobile = window.innerWidth < 1024;
 
-      // 3. RÉVÉLATION DU MÉTIER (CENTRE)
-      .to(".reveal-bar-role", {
-        scaleX: 1,
-        duration: 0.5,
-        transformOrigin: "left"
-      }, "-=0.1")
-      .set(".hero-role", { opacity: 1 })
-      .to(".reveal-bar-role", {
-        scaleX: 0,
-        duration: 0.5,
-        transformOrigin: "right"
-      })
+      if (isMobile) {
+        // MOBILE : Le métier sort EN PREMIER, puis le nom
+        // 2. RÉVÉLATION DU MÉTIER (MOBILE)
+        tl.to(".reveal-bar-role", {
+          scaleX: 1,
+          duration: 0.5,
+          transformOrigin: "left",
+          delay: 0.6
+        })
+        .set(".hero-role", { opacity: 1 })
+        .to(".reveal-bar-role", {
+          scaleX: 0,
+          duration: 0.5,
+          transformOrigin: "right"
+        })
 
-      // 4. LES DEUX REJOIGNENT LEURS PLACES (Le nom en premier)
-      .to(".hero-name-container", {
-        x: 0,
-        y: 0,
-        duration: 1.2,
-        ease: "power4.inOut",
-        delay: 0.3
-      })
-      .to(".hero-role-container", {
-        x: 0,
-        y: 0,
-        duration: 1.2,
-        ease: "power4.inOut"
-      }, "-=1")
+        // 3. RÉVÉLATION DU NOM (MOBILE)
+        .to(".reveal-bar-name", {
+          scaleX: 1,
+          duration: 0.6,
+          transformOrigin: "left"
+        }, "-=0.1")
+        .set(".hero-name", { opacity: 1 })
+        .to(".reveal-bar-name", {
+          scaleX: 0,
+          duration: 0.6,
+          transformOrigin: "right"
+        })
+
+        // 4. MOBILE : Le métier rejoint sa place EN PREMIER, puis le nom
+        .to(".hero-role-container", {
+          x: 0,
+          y: 0,
+          duration: 1.2,
+          ease: "power4.inOut",
+          delay: 0.3
+        })
+        .to(".hero-name-container", {
+          x: 0,
+          y: 0,
+          duration: 1.2,
+          ease: "power4.inOut"
+        }, "-=1")
+
+      } else {
+        // DESKTOP : Le nom sort EN PREMIER, puis le métier (ordre original)
+        // 2. RÉVÉLATION DU NOM
+        tl.to(".reveal-bar-name", {
+          scaleX: 1,
+          duration: 0.6,
+          transformOrigin: "left",
+          delay: 0.6
+        })
+        .set(".hero-name", { opacity: 1 })
+        .to(".reveal-bar-name", {
+          scaleX: 0,
+          duration: 0.6,
+          transformOrigin: "right"
+        })
+
+        // 3. RÉVÉLATION DU MÉTIER
+        .to(".reveal-bar-role", {
+          scaleX: 1,
+          duration: 0.5,
+          transformOrigin: "left"
+        }, "-=0.1")
+        .set(".hero-role", { opacity: 1 })
+        .to(".reveal-bar-role", {
+          scaleX: 0,
+          duration: 0.5,
+          transformOrigin: "right"
+        })
+
+        // 4. DESKTOP : Le nom rejoint sa place EN PREMIER, puis le métier
+        .to(".hero-name-container", {
+          x: 0,
+          y: 0,
+          duration: 1.2,
+          ease: "power4.inOut",
+          delay: 0.3
+        })
+        .to(".hero-role-container", {
+          x: 0,
+          y: 0,
+          duration: 1.2,
+          ease: "power4.inOut"
+        }, "-=1")
+      }
 
       // 5. APPARITION FINALE DU RESTE
-      .to(".hero-title-1", {
+      tl.to(".hero-title-1", {
         opacity: 0.6,
         y: 0,
         duration: 0.7,
         ease: "power2.out"
       }, "-=0.5")
 
-      .to([".hero-sub", ".hero-btns"], {
+      tl.to([".hero-sub", ".hero-btns"], {
         opacity: 1,
         y: 0,
         stagger: 0.15,
@@ -114,7 +163,7 @@ function HeroText() {
         ease: "power2.out"
       }, "-=0.4")
 
-      .to(".hero-photo-container", {
+      tl.to(".hero-photo-container", {
         opacity: 1,
         y: 0,
         duration: 1.0,
@@ -122,7 +171,7 @@ function HeroText() {
       }, "-=0.8")
 
       // Scroll indicator en dernier
-      .to(".scroll-indicator", {
+      tl.to(".scroll-indicator", {
         opacity: 1,
         y: 0,
         duration: 0.8
