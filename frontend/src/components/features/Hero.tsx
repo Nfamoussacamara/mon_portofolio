@@ -56,39 +56,41 @@ function HeroText() {
         gsap.set(".hero-role-container", { x: roleCX, y: roleCY });
       }
 
+      // Même ordre de révélation sur tous les écrans : NOM d'abord, puis MÉTIER
+      // 2. RÉVÉLATION DU NOM (CENTRE)
+      tl.to(".reveal-bar-name", {
+        scaleX: 1,
+        duration: 0.6,
+        transformOrigin: "left",
+        delay: 0.6
+      })
+      .set(".hero-name", { opacity: 1 })
+      .to(".reveal-bar-name", {
+        scaleX: 0,
+        duration: 0.6,
+        transformOrigin: "right"
+      })
+
+      // 3. RÉVÉLATION DU MÉTIER (CENTRE)
+      .to(".reveal-bar-role", {
+        scaleX: 1,
+        duration: 0.5,
+        transformOrigin: "left"
+      }, "-=0.1")
+      .set(".hero-role", { opacity: 1 })
+      .to(".reveal-bar-role", {
+        scaleX: 0,
+        duration: 0.5,
+        transformOrigin: "right"
+      })
+
+      // 4. DÉPLACEMENT VERS LES POSITIONS FINALES
+      // Sur mobile : métier part EN PREMIER vers sa place, puis le nom
+      // Sur desktop : nom part EN PREMIER vers sa place, puis le métier
       const isMobile = window.innerWidth < 1024;
 
       if (isMobile) {
-        // MOBILE : Le métier sort EN PREMIER, puis le nom
-        // 2. RÉVÉLATION DU MÉTIER (MOBILE)
-        tl.to(".reveal-bar-role", {
-          scaleX: 1,
-          duration: 0.5,
-          transformOrigin: "left",
-          delay: 0.6
-        })
-        .set(".hero-role", { opacity: 1 })
-        .to(".reveal-bar-role", {
-          scaleX: 0,
-          duration: 0.5,
-          transformOrigin: "right"
-        })
-
-        // 3. RÉVÉLATION DU NOM (MOBILE)
-        .to(".reveal-bar-name", {
-          scaleX: 1,
-          duration: 0.6,
-          transformOrigin: "left"
-        }, "-=0.1")
-        .set(".hero-name", { opacity: 1 })
-        .to(".reveal-bar-name", {
-          scaleX: 0,
-          duration: 0.6,
-          transformOrigin: "right"
-        })
-
-        // 4. MOBILE : Le métier rejoint sa place EN PREMIER, puis le nom
-        .to(".hero-role-container", {
+        tl.to(".hero-role-container", {
           x: 0,
           y: 0,
           duration: 1.2,
@@ -100,39 +102,9 @@ function HeroText() {
           y: 0,
           duration: 1.2,
           ease: "power4.inOut"
-        }, "-=1")
-
+        }, "-=1");
       } else {
-        // DESKTOP : Le nom sort EN PREMIER, puis le métier (ordre original)
-        // 2. RÉVÉLATION DU NOM
-        tl.to(".reveal-bar-name", {
-          scaleX: 1,
-          duration: 0.6,
-          transformOrigin: "left",
-          delay: 0.6
-        })
-        .set(".hero-name", { opacity: 1 })
-        .to(".reveal-bar-name", {
-          scaleX: 0,
-          duration: 0.6,
-          transformOrigin: "right"
-        })
-
-        // 3. RÉVÉLATION DU MÉTIER
-        .to(".reveal-bar-role", {
-          scaleX: 1,
-          duration: 0.5,
-          transformOrigin: "left"
-        }, "-=0.1")
-        .set(".hero-role", { opacity: 1 })
-        .to(".reveal-bar-role", {
-          scaleX: 0,
-          duration: 0.5,
-          transformOrigin: "right"
-        })
-
-        // 4. DESKTOP : Le nom rejoint sa place EN PREMIER, puis le métier
-        .to(".hero-name-container", {
+        tl.to(".hero-name-container", {
           x: 0,
           y: 0,
           duration: 1.2,
@@ -144,7 +116,7 @@ function HeroText() {
           y: 0,
           duration: 1.2,
           ease: "power4.inOut"
-        }, "-=1")
+        }, "-=1");
       }
 
       // 5. APPARITION FINALE DU RESTE
@@ -186,7 +158,7 @@ function HeroText() {
   }, []);
 
   return (
-    <div ref={containerRef} className="order-2 lg:order-1 pt-4">
+    <div ref={containerRef} className="order-2 lg:order-1 pt-4 flex flex-col items-center lg:items-start text-center lg:text-left">
 
       {/* Greeting */}
       <div className="hero-title-1 mb-2 opacity-0">
@@ -196,7 +168,7 @@ function HeroText() {
       </div>
       
       {/* LE NOM */}
-      <div ref={nameRef} className="hero-name-container relative inline-block mb-4">
+      <div ref={nameRef} className="hero-name-container relative mb-4">
         <div className="relative inline-block overflow-hidden">
           <h1 className="hero-name text-4xl md:text-6xl lg:text-[80px] font-extrabold leading-tight tracking-tighter text-white sm:whitespace-nowrap">
             N'famoussa Camara
@@ -206,7 +178,7 @@ function HeroText() {
       </div>
 
       {/* LE MÉTIER */}
-      <div ref={roleRef} className="hero-role-container mb-8 relative inline-block">
+      <div ref={roleRef} className="hero-role-container mb-8 relative">
         <div className="relative inline-block overflow-hidden">
           <h2 className="hero-role block text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold leading-tight tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500">
             Développeur Full-Stack
