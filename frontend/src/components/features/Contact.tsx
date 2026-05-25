@@ -8,14 +8,40 @@ const labelClass = "block text-sm font-medium mb-2 text-slate-400";
 
 export const Contact = () => {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('loading');
-    setTimeout(() => {
-      setStatus('success');
-      setTimeout(() => setStatus('idle'), 4000);
-    }, 1500);
+    setErrorMessage('');
+    
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch('http://localhost:8000/api/contact/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        e.currentTarget.reset();
+        setTimeout(() => setStatus('idle'), 5000);
+      } else {
+        const errorData = await response.json();
+        setStatus('error');
+        setErrorMessage(errorData.message || 'Une erreur est survenue.');
+        setTimeout(() => setStatus('idle'), 5000);
+      }
+    } catch (err) {
+      setStatus('error');
+      setErrorMessage('Impossible de contacter le serveur.');
+      setTimeout(() => setStatus('idle'), 5000);
+    }
   };
 
   const infos = [
@@ -86,19 +112,20 @@ export const Contact = () => {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className={labelClass}>Nom complet</label>
-                <input type="text" required className={inputClass} placeholder="Jean Dupont" />
+                <input type="text" name="name" required className={inputClass} placeholder="Jean Dupont" />
               </div>
               <div>
                 <label className={labelClass}>Adresse Email</label>
-                <input type="email" required className={inputClass} placeholder="jean@example.com" />
+                <input type="email" name="email" required className={inputClass} placeholder="jean@example.com" />
               </div>
               <div>
                 <label className={labelClass}>Sujet</label>
-                <input type="text" required className={inputClass} placeholder="Votre sujet..." />
+                <input type="text" name="subject" required className={inputClass} placeholder="Votre sujet..." />
               </div>
               <div>
                 <label className={labelClass}>Message</label>
                 <textarea
+                  name="message"
                   required
                   rows={4}
                   className={inputClass + ' resize-none'}
@@ -119,9 +146,19 @@ export const Contact = () => {
                 <motion.p
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-emerald-500 text-sm text-center pt-2"
+                  className="text-emerald-500 text-sm text-center pt-2 font-medium"
                 >
                   Message envoyé. Je vous réponds très bientôt.
+                </motion.p>
+              )}
+
+              {status === 'error' && (
+                <motion.p
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-red-500 text-sm text-center pt-2 font-medium"
+                >
+                  {errorMessage}
                 </motion.p>
               )}
             </form>
