@@ -16,7 +16,7 @@ export const Footer = () => {
   return (
     <footer className="border-t border-white/5 bg-[var(--bg-secondary)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex flex-col md:flex-row flex-wrap items-center justify-between gap-6 md:gap-8">
           
           {/* Logo */}
           <motion.div
@@ -33,7 +33,7 @@ export const Footer = () => {
           </motion.div>
 
           {/* Nav Links */}
-          <nav className="flex items-center gap-6">
+          <nav className="flex flex-wrap justify-center items-center gap-4 md:gap-6">
             {links.map((link) => (
               <motion.a
                 key={link.label}
@@ -49,7 +49,7 @@ export const Footer = () => {
           </nav>
 
           {/* Copyright */}
-          <p className="text-sm text-[var(--text-muted)]">
+          <p className="text-sm text-center text-[var(--text-muted)] w-full md:w-auto">
             © {new Date().getFullYear()} — Tous droits réservés.
           </p>
         </div>

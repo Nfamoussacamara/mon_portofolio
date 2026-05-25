@@ -35,6 +35,28 @@ export const Navbar = () => {
     { name: 'Projects', href: '#projects' },
   ];
 
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setIsOpen(false);
+    
+    if (href.startsWith('#')) {
+      setTimeout(() => {
+        const element = document.getElementById(href.substring(1));
+        if (element) {
+          const navbarHeight = 80; // Hauteur h-20
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+          window.scrollTo({
+             top: offsetPosition,
+             behavior: 'smooth'
+          });
+        }
+      }, 150);
+    } else {
+      window.location.href = href;
+    }
+  };
+
   return (
     <motion.nav
       animate={{
@@ -71,6 +93,7 @@ export const Navbar = () => {
               variants={linkVariants}
               initial="initial"
               whileHover="hover"
+              onClick={(e) => scrollToSection(e, link.href)}
               className="text-[15px] font-medium"
             >
               {link.name}
@@ -99,6 +122,7 @@ export const Navbar = () => {
             variants={linkVariants}
             initial="initial"
             whileHover="hover"
+            onClick={(e) => scrollToSection(e, '#contact')}
             className="text-[15px] font-medium"
           >
             Discuter
@@ -110,6 +134,7 @@ export const Navbar = () => {
             initial="initial"
             whileHover="hover"
             whileTap={{ scale: 0.97 }}
+            onClick={(e) => scrollToSection(e, '#contact')}
             className="px-5 py-2.5 dark:bg-white dark:text-black rounded-md text-[15px] font-medium bg-[#eb5424] text-white"
           >
             Me Contacter
@@ -164,7 +189,7 @@ export const Navbar = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.06, duration: 0.3 }}
                   className="block text-base font-medium text-slate-700 dark:text-[#a1a1aa]"
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => scrollToSection(e, link.href)}
                 >
                   {link.name}
                 </motion.a>
@@ -176,7 +201,7 @@ export const Navbar = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.18, duration: 0.3 }}
                   className="block text-base font-medium text-slate-700 dark:text-[#a1a1aa]"
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => scrollToSection(e, '#contact')}
                 >
                   Discuter
                 </motion.a>
@@ -186,7 +211,7 @@ export const Navbar = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.24, duration: 0.3 }}
                   className="block w-full text-center px-5 py-2.5 bg-[#eb5424] text-white dark:bg-white dark:text-black rounded-md font-medium"
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => scrollToSection(e, '#contact')}
                 >
                   Me Contacter
                 </motion.a>
