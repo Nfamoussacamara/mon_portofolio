@@ -208,7 +208,7 @@ function HeroText() {
 
 export function Hero() {
   return (
-    <section id="home" className="relative pt-0 pb-24 md:pb-32 overflow-hidden">
+    <section id="home" className="relative pt-0 pb-8 md:pb-32 overflow-hidden">
       {/* Ambient glow - déplacé vers le bas pour éviter la navbar */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-48 right-1/4 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[120px]" />
@@ -260,7 +260,7 @@ export function Hero() {
 
         {/* ── FUSED TECH MARQUEE ───────────────────── */}
         <motion.div
-          className="border-t border-white/5 pt-12"
+          className="border-t border-white/5 pt-6 md:pt-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
