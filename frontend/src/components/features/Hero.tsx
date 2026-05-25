@@ -37,24 +37,27 @@ function HeroText() {
       });
 
       // Masquer tout au début
-      gsap.set([".hero-title-1", ".hero-sub", ".hero-btns", ".navbar-anim", ".hero-photo-container", ".scroll-indicator"], { opacity: 0, y: 40 });
+      gsap.set([".hero-title-1", ".hero-sub", ".hero-btns", ".hero-photo-container", ".scroll-indicator"], { opacity: 0, y: 40 });
       gsap.set([".hero-name", ".hero-role"], { opacity: 0 });
 
       // 1. CALCUL DES OFFSETS DU CENTRE POUR LES DEUX
+      const isDesktop = window.innerWidth >= 1024;
       const nameBounds = nameRef.current?.getBoundingClientRect();
       const roleBounds = roleRef.current?.getBoundingClientRect();
 
-      if (nameBounds && roleBounds) {
-        // Offset Nom
+      if (isDesktop && nameBounds && roleBounds) {
+        // Mode PC : Animation cinématique qui part du centre
         const nameCX = window.innerWidth / 2 - (nameBounds.left + nameBounds.width / 2);
-        const nameCY = window.innerHeight / 2 - (nameBounds.top + nameBounds.height / 2) - 30; // Un peu plus haut
+        const nameCY = window.innerHeight / 2 - (nameBounds.top + nameBounds.height / 2) - 30;
         
-        // Offset Rôle
         const roleCX = window.innerWidth / 2 - (roleBounds.left + roleBounds.width / 2);
-        const roleCY = window.innerHeight / 2 - (roleBounds.top + roleBounds.height / 2) + 40; // Un peu plus bas
+        const roleCY = window.innerHeight / 2 - (roleBounds.top + roleBounds.height / 2) + 40;
 
         gsap.set(".hero-name-container", { x: nameCX, y: nameCY });
         gsap.set(".hero-role-container", { x: roleCX, y: roleCY });
+      } else {
+        // Mode Mobile : Simple glissement vers le haut (fade up classique)
+        gsap.set([".hero-name-container", ".hero-role-container"], { y: 20 });
       }
 
       // 2. RÉVÉLATION DU NOM (CENTRE)
@@ -100,19 +103,12 @@ function HeroText() {
       }, "-=1")
 
       // 5. APPARITION FINALE DU RESTE
-      .to(".navbar-anim", {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power2.out"
-      }, "-=0.5")
-
       .to(".hero-title-1", {
         opacity: 0.6,
         y: 0,
         duration: 0.7,
         ease: "power2.out"
-      }, "-=0.7")
+      }, "-=0.5")
 
       .to([".hero-sub", ".hero-btns"], {
         opacity: 1,
@@ -209,7 +205,7 @@ export function Hero() {
           <HeroText />
 
           {/* Right: Photo */}
-          <div className="hero-photo-container opacity-0 relative w-full max-w-[520px] mx-auto lg:ml-auto lg:mr-0 order-1 lg:order-2 self-end">
+          <div className="hero-photo-container opacity-0 relative w-4/5 max-w-[320px] mx-auto lg:w-full lg:max-w-[520px] lg:ml-auto lg:mr-0 order-1 lg:order-2 self-end">
             <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-blue-600/10 to-transparent rounded-full blur-3xl translate-y-20" />
             <div className="relative aspect-[4/5] flex items-end justify-center overflow-visible">
               <img

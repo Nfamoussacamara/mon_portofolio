@@ -13,9 +13,7 @@ import { ScrollToTop } from './components/ui/ScrollToTop';
 function App() {
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] font-sans text-[var(--text-primary)]">
-      <div className="navbar-anim opacity-0">
-        <Navbar />
-      </div>
+      <Navbar />
 
       <main className="w-full pt-12">
         <Hero />
