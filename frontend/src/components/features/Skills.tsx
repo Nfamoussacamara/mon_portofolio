@@ -51,7 +51,7 @@ export const Skills = () => {
             whileInView="visible"
             whileHover="hover"
             viewport={defaultViewport}
-            className="md:col-span-2 rounded-[2rem] border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
+            className="md:col-span-2 rounded-3xl border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
           >
             {/* Effet code en hologramme — Framer Motion via whileHover */}
             <motion.div
@@ -94,17 +94,8 @@ export const Skills = () => {
             whileInView="visible"
             whileHover="hover"
             viewport={defaultViewport}
-            className="md:col-span-1 rounded-[2rem] border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
+            className="md:col-span-1 rounded-3xl border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
           >
-            {/* Scanner laser — Framer Motion animate */}
-            <motion.div
-              className="absolute inset-x-0 h-[2px] bg-red-500/80 shadow-[0_0_15px_rgba(239,68,68,1)] z-0"
-              animate={{ y: ['0%', '3200%', '0%'] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: false }}
-            />
 
             <div className="p-8 relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-3 mb-6">
@@ -143,7 +134,7 @@ export const Skills = () => {
             whileInView="visible"
             whileHover="hover"
             viewport={defaultViewport}
-            className="md:col-span-1 rounded-[2rem] border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
+            className="md:col-span-1 rounded-3xl border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
           >
             <motion.div
               variants={{ initial: { opacity: 0 }, hover: { opacity: 1, transition: { duration: 0.4 } } }}
@@ -181,7 +172,7 @@ export const Skills = () => {
             whileInView="visible"
             whileHover="hover"
             viewport={defaultViewport}
-            className="md:col-span-2 rounded-[2rem] border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
+            className="md:col-span-2 rounded-3xl border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
           >
             {/* Grid de fond animée au hover */}
             <motion.div
