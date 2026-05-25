@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useQuery } from '@tanstack/react-query';
 import { ProjectCard } from './ProjectCard';
 import { sectionHeader, defaultViewport, staggerContainer } from '../../lib/animations';
 
-const mockProjects = [
+const DEFAULT_PROJECTS = [
   {
     id: 1,
     title: 'IdentiGuinée Secure Core',
@@ -34,14 +35,39 @@ const mockProjects = [
   }
 ];
 
-const filters = ['Tous', 'Frontend', 'Backend', 'Full-Stack'];
+const fetchProjects = async () => {
+  const res = await fetch('http://localhost:8000/api/projects/');
+  if (!res.ok) throw new Error('API Error');
+  const data = await res.json();
+  
+  // Formatage des clés de l'API vers les clés du Frontend
+  return data.map((p: any) => ({
+    id: p.id,
+    title: p.title,
+    description: p.description,
+    image: p.image_url || 'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=700',
+    stack: p.stack || [],
+    category: p.category,
+    linkGithub: p.link_github,
+    linkDemo: p.link_demo,
+  }));
+};
 
-// Direction selon la colonne : gauche=depuis gauche, centre=depuis bas, droite=depuis droite
+const filters = ['Tous', 'Frontend', 'Backend', 'Full-Stack'];
 
 export const Projects = () => {
   const [activeFilter, setActiveFilter] = useState('Tous');
 
-  const filteredProjects = mockProjects.filter(project => {
+  // Architecture hybride avancée : Si le backend ne répond pas (ou est vide), 
+  // initialData affiche les données codées en dur sans jamais casser le site.
+  const { data: projects } = useQuery({
+    queryKey: ['projects'],
+    queryFn: fetchProjects,
+    initialData: DEFAULT_PROJECTS,
+    staleTime: 60000 // Pas de refresh avant 1 minute
+  });
+
+  const filteredProjects = projects.filter(project => {
     if (activeFilter === 'Tous') return true;
     return project.category === activeFilter;
   });
