@@ -98,7 +98,7 @@ export const Education = () => {
   }, []);
 
   return (
-    <section className="py-24 relative overflow-hidden bg-[var(--bg-primary)]" ref={containerRef}>
+    <section className="py-16 md:py-28 relative overflow-hidden bg-[var(--bg-primary)]" ref={containerRef}>
       {/* Glow d'arrière-plan */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[120px]" />
@@ -116,54 +116,40 @@ export const Education = () => {
 
         {/* L'arbre / La ligne de temps */}
         <div className="relative max-w-3xl mx-auto pb-10">
-          {/* Ligne verticale centrale statique */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/10 -translate-x-1/2" />
+          {/* Ligne verticale : à gauche sur mobile, au centre sur PC */}
+          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-white/10 md:-translate-x-1/2" />
           
           {/* Ligne lumineuse SCROLL (GSAP Scrub) */}
           <div 
             ref={centralLineRef}
-            className="absolute left-1/2 top-0 w-px bg-gradient-to-b from-blue-500 via-indigo-500 to-transparent -translate-x-1/2 drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]"
+            className="absolute left-6 md:left-1/2 top-0 w-px bg-gradient-to-b from-blue-500 via-indigo-500 to-transparent md:-translate-x-1/2 drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]"
           />
 
-          <div className="space-y-24">
+          <div className="space-y-12 md:space-y-24">
             {EDUCATION_DATA.map((item, index) => {
               const isLeft = index % 2 === 0;
 
               return (
-                <div key={index} className="timeline-row relative flex items-center justify-between w-full group">
+                <div key={index} className="timeline-row relative w-full group py-4 md:py-0 md:h-[120px]">
                   
-                  {/* Ligne de connexion horizontale animée GSAP */}
-                  <div className={`timeline-line absolute top-1/2 -translate-y-1/2 w-[calc(50%-45%)] h-px bg-indigo-500/80 transition-colors duration-500 ${isLeft ? 'left-[45%] origin-right group-hover:bg-indigo-300' : 'right-[45%] origin-left group-hover:bg-indigo-300'}`} />
+                  {/* Ligne de connexion horizontale animée GSAP (cachée sur mobile) */}
+                  <div className={`timeline-line hidden md:block absolute top-1/2 -translate-y-1/2 w-[calc(50%-45%)] h-px bg-indigo-500/80 transition-colors duration-500 ${isLeft ? 'left-[45%] origin-right group-hover:bg-indigo-300' : 'right-[45%] origin-left group-hover:bg-indigo-300'}`} />
 
-                  {/* Côté Gauche */}
-                  <div className={`w-[45%] flex ${isLeft ? 'justify-end text-right' : 'justify-start'}`}>
-                    {isLeft && (
-                      <div className="timeline-card bg-[#111111] border border-white/10 p-6 rounded-2xl hover:border-white/25 transition-all duration-300 w-full relative z-10">
-                        <span className="text-indigo-400 font-mono text-sm block mb-1">{item.year}</span>
-                        <h3 className="text-xl font-bold text-white mb-1">{item.degree}</h3>
-                        <div className="text-white/40 text-sm font-medium mb-3 uppercase tracking-wider">{item.school}</div>
-                        <p className="text-white/60 text-sm leading-relaxed">{item.description}</p>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Nœud Central */}
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-20">
+                  {/* Nœud Central : à gauche sur mobile, au centre sur PC */}
+                  <div className="absolute left-6 md:left-1/2 top-8 md:top-1/2 -translate-x-1/2 md:-translate-y-1/2 flex items-center justify-center z-20">
                     <div className="timeline-dot w-4 h-4 rounded-full bg-[#111111] border-[2px] border-indigo-500 flex items-center justify-center group-hover:scale-150 group-hover:bg-indigo-500 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] transition-all duration-300 relative">
                       <div className="timeline-inner-point w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:bg-white transition-colors" />
                     </div>
                   </div>
 
-                  {/* Côté Droit */}
-                  <div className={`w-[45%] flex ${!isLeft ? 'justify-start text-left' : 'justify-end'}`}>
-                    {!isLeft && (
-                      <div className="timeline-card bg-[#111111] border border-white/10 p-6 rounded-2xl hover:border-white/25 transition-all duration-300 w-full relative z-10">
-                        <span className="text-indigo-400 font-mono text-sm block mb-1">{item.year}</span>
-                        <h3 className="text-xl font-bold text-white mb-1">{item.degree}</h3>
-                        <div className="text-white/40 text-sm font-medium mb-3 uppercase tracking-wider">{item.school}</div>
-                        <p className="text-white/60 text-sm leading-relaxed">{item.description}</p>
-                      </div>
-                    )}
+                  {/* Carte combinée : marge gauche sur mobile, placement absolu et alignement selon côté sur PC */}
+                  <div className={`ml-16 md:ml-0 md:absolute md:top-1/2 md:-translate-y-1/2 w-[calc(100%-5rem)] md:w-[45%] ${isLeft ? 'md:left-0 md:text-right' : 'md:right-0 md:text-left'} text-left`}>
+                    <div className="timeline-card bg-[#111111] border border-white/10 p-6 rounded-2xl hover:border-white/25 transition-all duration-300 w-full relative z-10">
+                      <span className="text-indigo-400 font-mono text-sm block mb-1">{item.year}</span>
+                      <h3 className="text-xl font-bold text-white mb-1">{item.degree}</h3>
+                      <div className="text-white/40 text-sm font-medium mb-3 uppercase tracking-wider">{item.school}</div>
+                      <p className="text-white/60 text-sm leading-relaxed">{item.description}</p>
+                    </div>
                   </div>
 
                 </div>

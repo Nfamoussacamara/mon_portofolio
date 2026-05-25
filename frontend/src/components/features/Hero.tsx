@@ -40,13 +40,12 @@ function HeroText() {
       gsap.set([".hero-title-1", ".hero-sub", ".hero-btns", ".hero-photo-container", ".scroll-indicator"], { opacity: 0, y: 40 });
       gsap.set([".hero-name", ".hero-role"], { opacity: 0 });
 
-      // 1. CALCUL DES OFFSETS DU CENTRE POUR LES DEUX
-      const isDesktop = window.innerWidth >= 1024;
+      // 1. CALCUL DES OFFSETS DU CENTRE POUR LES DEUX (TOUTES RÉSOLUTIONS)
       const nameBounds = nameRef.current?.getBoundingClientRect();
       const roleBounds = roleRef.current?.getBoundingClientRect();
 
-      if (isDesktop && nameBounds && roleBounds) {
-        // Mode PC : Animation cinématique qui part du centre
+      if (nameBounds && roleBounds) {
+        // Animation cinématique qui part du centre pour tous les écrans
         const nameCX = window.innerWidth / 2 - (nameBounds.left + nameBounds.width / 2);
         const nameCY = window.innerHeight / 2 - (nameBounds.top + nameBounds.height / 2) - 30;
         
@@ -55,9 +54,6 @@ function HeroText() {
 
         gsap.set(".hero-name-container", { x: nameCX, y: nameCY });
         gsap.set(".hero-role-container", { x: roleCX, y: roleCY });
-      } else {
-        // Mode Mobile : Simple glissement vers le haut (fade up classique)
-        gsap.set([".hero-name-container", ".hero-role-container"], { y: 20 });
       }
 
       // 2. RÉVÉLATION DU NOM (CENTRE)
@@ -240,8 +236,15 @@ export function Hero() {
           </motion.div>
         </div>
 
+
         {/* ── FUSED TECH MARQUEE ───────────────────── */}
-        <div className="border-t border-white/5 pt-12">
+        <motion.div
+          className="border-t border-white/5 pt-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
             <div className="marquee-wrapper flex select-none" aria-hidden="true">
               <div className="flex shrink-0 animate-marquee items-center gap-16 pr-16">
@@ -262,7 +265,7 @@ export function Hero() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
