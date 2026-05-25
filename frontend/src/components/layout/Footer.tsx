@@ -1,3 +1,10 @@
+import { motion } from 'framer-motion';
+
+const linkVariants = {
+  initial: { color: 'rgba(161,161,170,1)' },
+  hover: { color: 'rgba(255,255,255,1)', transition: { duration: 0.2 } }
+};
+
 export const Footer = () => {
   const links = [
     { label: 'À propos', href: '#about' },
@@ -10,26 +17,34 @@ export const Footer = () => {
     <footer className="border-t border-white/5 bg-[var(--bg-secondary)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          
           {/* Logo */}
-          <div className="flex items-center gap-3">
+          <motion.div
+            whileHover={{ scale: 1.03 }}
+            transition={{ duration: 0.2 }}
+            className="flex items-center gap-3 cursor-pointer"
+          >
             <div className="w-7 h-7 rounded bg-slate-900 dark:bg-white flex items-center justify-center">
               <div className="w-2.5 h-2.5 bg-white dark:bg-black rounded-full" />
             </div>
             <span className="text-base font-bold tracking-tight text-slate-900 dark:text-white">
               Portofolio.
             </span>
-          </div>
+          </motion.div>
 
           {/* Nav Links */}
           <nav className="flex items-center gap-6">
             {links.map((link) => (
-              <a
+              <motion.a
                 key={link.label}
                 href={link.href}
-                className="text-sm text-[var(--text-muted)] hover:text-slate-900 dark:hover:text-white transition-colors"
+                variants={linkVariants}
+                initial="initial"
+                whileHover="hover"
+                className="text-sm"
               >
                 {link.label}
-              </a>
+              </motion.a>
             ))}
           </nav>
 

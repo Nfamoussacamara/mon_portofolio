@@ -3,6 +3,21 @@ import { useTheme } from '../../context/ThemeContext';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const linkVariants = {
+  initial: { color: 'rgba(161,161,170,1)' },
+  hover: { color: 'rgba(255,255,255,1)', transition: { duration: 0.2 } }
+};
+
+const ctaVariants = {
+  initial: { backgroundColor: 'rgba(255,255,255,1)', color: 'rgba(0,0,0,1)' },
+  hover: { backgroundColor: 'rgba(229,231,235,1)', transition: { duration: 0.2 } }
+};
+
+const iconBtnVariants = {
+  initial: { color: 'rgba(161,161,170,1)' },
+  hover: { color: 'rgba(255,255,255,1)', transition: { duration: 0.2 } }
+};
+
 export const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
@@ -21,73 +36,112 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 w-full ${
-        scrolled 
-          ? 'bg-white/80 dark:bg-[#000000]/90 backdrop-blur-md shadow-sm border-b border-black/5 dark:border-white/10' 
-          : 'bg-transparent border-b border-transparent'
-      }`}
+    <motion.nav
+      animate={{
+        backgroundColor: scrolled ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0)',
+        backdropFilter: scrolled ? 'blur(12px)' : 'blur(0px)',
+        borderBottomColor: scrolled ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0)',
+        boxShadow: scrolled ? '0 1px 0 rgba(255,255,255,0.05)' : 'none',
+      }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed top-0 left-0 right-0 z-[100] w-full border-b border-transparent"
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative">
-        
-        {/* Left Side: Logo */}
-        <div className="flex-shrink-0 cursor-pointer flex items-center gap-3 relative z-10">
-           <div className="w-8 h-8 rounded bg-slate-900 dark:bg-white flex items-center justify-center">
-              <div className="w-3 h-3 bg-white dark:bg-black rounded-full" />
-           </div>
-           <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-              Portofolio.
-           </span>
-        </div>
 
-        {/* Center: Main Links */}
+        {/* Left: Logo */}
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          transition={{ duration: 0.2 }}
+          className="flex-shrink-0 cursor-pointer flex items-center gap-3 relative z-10"
+        >
+          <div className="w-8 h-8 rounded bg-slate-900 dark:bg-white flex items-center justify-center">
+            <div className="w-3 h-3 bg-white dark:bg-black rounded-full" />
+          </div>
+          <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+            Portofolio.
+          </span>
+        </motion.div>
+
+        {/* Center: Nav Links */}
         <div className="hidden md:flex items-center gap-8 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           {navLinks.map((link) => (
-            <a
+            <motion.a
               key={link.name}
               href={link.href}
-              className="text-[15px] font-medium text-slate-600 hover:text-slate-900 dark:text-[#a1a1aa] dark:hover:text-white transition-colors"
+              variants={linkVariants}
+              initial="initial"
+              whileHover="hover"
+              className="text-[15px] font-medium"
             >
               {link.name}
-            </a>
+            </motion.a>
           ))}
         </div>
 
-        {/* Right Side: Secondary Links & CTA */}
+        {/* Right: Actions */}
         <div className="hidden md:flex items-center gap-6 relative z-10">
-          <button 
-            onClick={toggleTheme} 
-            className="text-slate-500 hover:text-slate-900 dark:text-[#a1a1aa] dark:hover:text-white transition-colors flex items-center justify-center"
+          <motion.button
+            onClick={toggleTheme}
+            variants={iconBtnVariants}
+            initial="initial"
+            whileHover="hover"
+            whileTap={{ scale: 0.9 }}
             aria-label="Toggle Theme"
+            className="flex items-center justify-center"
           >
             {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-          
-          <div className="w-px h-6 bg-slate-200 dark:bg-[#333333]"></div>
+          </motion.button>
 
-          <a 
-            href="#contact" 
-            className="text-[15px] font-medium text-slate-600 hover:text-slate-900 dark:text-[#a1a1aa] dark:hover:text-white transition-colors"
+          <div className="w-px h-6 bg-slate-200 dark:bg-[#333333]" />
+
+          <motion.a
+            href="#contact"
+            variants={linkVariants}
+            initial="initial"
+            whileHover="hover"
+            className="text-[15px] font-medium"
           >
             Discuter
-          </a>
-          
-          <a 
-            href="#contact" 
-            className="px-5 py-2.5 bg-[#eb5424] hover:bg-[#d04a20] text-white dark:bg-white dark:hover:bg-gray-100 dark:text-black rounded-md text-[15px] font-medium transition-colors"
+          </motion.a>
+
+          <motion.a
+            href="#contact"
+            variants={ctaVariants}
+            initial="initial"
+            whileHover="hover"
+            whileTap={{ scale: 0.97 }}
+            className="px-5 py-2.5 dark:bg-white dark:text-black rounded-md text-[15px] font-medium bg-[#eb5424] text-white"
           >
             Me Contacter
-          </a>
+          </motion.a>
         </div>
 
-        {/* Mobile menu button */}
+        {/* Mobile: Burger */}
         <div className="md:hidden flex items-center gap-4">
-          <button onClick={toggleTheme} className="text-slate-600 dark:text-[#a1a1aa]">
+          <motion.button
+            onClick={toggleTheme}
+            whileTap={{ scale: 0.9 }}
+            className="text-slate-600 dark:text-[#a1a1aa]"
+          >
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
-          <button onClick={() => setIsOpen(!isOpen)} className="text-slate-900 dark:text-white">
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          </motion.button>
+          <motion.button
+            onClick={() => setIsOpen(!isOpen)}
+            whileTap={{ scale: 0.9 }}
+            className="text-slate-900 dark:text-white"
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={isOpen ? 'close' : 'open'}
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {isOpen ? <X size={24} /> : <Menu size={24} />}
+              </motion.span>
+            </AnimatePresence>
+          </motion.button>
         </div>
       </div>
 
@@ -98,27 +152,49 @@ export const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-t border-black/5 dark:border-white/10 bg-white dark:bg-[#000000]"
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden border-t border-black/5 dark:border-white/10 bg-white dark:bg-[#000000] overflow-hidden"
           >
             <div className="px-6 py-4 space-y-4">
-              {navLinks.map((link) => (
-                <a
+              {navLinks.map((link, i) => (
+                <motion.a
                   key={link.name}
                   href={link.href}
-                  className="block text-base font-medium text-slate-700 hover:text-slate-900 dark:text-[#a1a1aa] dark:hover:text-white"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.06, duration: 0.3 }}
+                  className="block text-base font-medium text-slate-700 dark:text-[#a1a1aa]"
                   onClick={() => setIsOpen(false)}
                 >
                   {link.name}
-                </a>
+                </motion.a>
               ))}
               <div className="pt-4 border-t border-slate-100 dark:border-[#333333] space-y-4">
-                 <a href="#contact" className="block text-base font-medium text-slate-700 dark:text-[#a1a1aa]" onClick={() => setIsOpen(false)}>Discuter</a>
-                 <a href="#contact" className="block w-full text-center px-5 py-2.5 bg-[#eb5424] text-white dark:bg-white dark:text-black rounded-md font-medium" onClick={() => setIsOpen(false)}>Me Contacter</a>
+                <motion.a
+                  href="#contact"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.18, duration: 0.3 }}
+                  className="block text-base font-medium text-slate-700 dark:text-[#a1a1aa]"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Discuter
+                </motion.a>
+                <motion.a
+                  href="#contact"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.24, duration: 0.3 }}
+                  className="block w-full text-center px-5 py-2.5 bg-[#eb5424] text-white dark:bg-white dark:text-black rounded-md font-medium"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Me Contacter
+                </motion.a>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
   );
 };

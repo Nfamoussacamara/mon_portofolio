@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
+import { sectionHeader, fadeLeft, fadeRight, defaultViewport } from '../../lib/animations';
 
 const inputClass = "w-full px-4 py-3 rounded-xl border text-sm bg-transparent outline-none transition-all duration-200 border-white/10 text-white placeholder-[#555] focus:border-white/30 focus:bg-white/5";
 const labelClass = "block text-sm font-medium mb-2 text-slate-400";
@@ -24,17 +25,17 @@ export const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-28 bg-[var(--bg-primary)] relative overflow-hidden">
+    <section id="contact" className="py-16 md:py-28 bg-[var(--bg-primary)] relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-3xl -translate-y-1/2" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          variants={sectionHeader}
+          initial="hidden"
+          whileInView="visible"
+          viewport={defaultViewport}
           className="text-center mb-16"
         >
           <p className="text-sm font-mono font-medium text-blue-500 dark:text-blue-400 mb-3 tracking-widest uppercase">
@@ -53,10 +54,10 @@ export const Contact = () => {
  
           {/* Gauche: Informations */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            variants={fadeLeft}
+            initial="hidden"
+            whileInView="visible"
+            viewport={defaultViewport}
           >
 
             <div className="space-y-5">
@@ -76,10 +77,10 @@ export const Contact = () => {
 
           {/* Droite: Formulaire */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            variants={fadeRight}
+            initial="hidden"
+            whileInView="visible"
+            viewport={defaultViewport}
             className="rounded-2xl border border-white/8 bg-white/2 dark:bg-white/[0.02] p-8"
           >
             <form onSubmit={handleSubmit} className="space-y-5">
