@@ -27,7 +27,7 @@ export const About = () => {
   ];
 
   return (
-    <section id="about" className="py-16 md:py-28 relative overflow-hidden bg-[var(--bg-secondary)] border-y border-white/5">
+    <section id="about" className="py-16 md:py-28 relative overflow-hidden bg-[var(--bg-secondary)] border-y border-slate-200 dark:border-white/5">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute -top-1/2 -left-1/4 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-3xl" />
         <div className="absolute -bottom-1/4 -right-1/4 w-[500px] h-[500px] bg-indigo-600/5 rounded-full blur-3xl" />
@@ -46,7 +46,7 @@ export const About = () => {
           <p className="text-sm font-mono font-medium text-blue-500 mb-3 tracking-widest uppercase">
             // about me
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-5 leading-tight">
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-5 leading-tight">
             Développeur <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">Full-Stack</span>
           </h2>
         </motion.div>
@@ -62,7 +62,7 @@ export const About = () => {
             className="space-y-6"
           >
             <motion.p variants={fadeLeft} className="text-[var(--text-muted)] text-[1.1rem] leading-relaxed">
-              Je suis <strong className="text-white">N'Famoussa Camara</strong>, développeur full-stack passionné par la conception d'applications web modernes, performantes et évolutives.
+              Je suis <strong className="text-slate-900 dark:text-white">N'Famoussa Camara</strong>, développeur full-stack passionné par la conception d'applications web modernes, performantes et évolutives.
               Actuellement étudiant en informatique à l'Université de Labé, je développe des solutions numériques orientées résolution de problèmes réels avec une forte attention portée à l'architecture logicielle, à la qualité du code et à l'expérience utilisateur.
             </motion.p>
             <motion.p variants={fadeLeft} className="text-[var(--text-muted)] text-[1.1rem] leading-relaxed">
@@ -94,9 +94,9 @@ export const About = () => {
                 <motion.div
                   key={stat.label}
                   variants={staggerItem}
-                  className="text-center p-4 rounded-2xl border border-white/8 bg-white/2"
+                  className="text-center p-4 rounded-2xl border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5"
                 >
-                  <div className="text-3xl font-bold text-white mb-1">
+                  <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">
                     <CountUp value={stat.value} />
                   </div>
                   <div className="text-xs text-[var(--text-muted)] leading-tight">{stat.label}</div>

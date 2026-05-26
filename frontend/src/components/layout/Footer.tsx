@@ -14,7 +14,7 @@ export const Footer = () => {
   ];
 
   return (
-    <footer className="border-t border-white/5 bg-[var(--bg-secondary)]">
+    <footer className="border-t border-slate-200 dark:border-white/5 bg-[var(--bg-secondary)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex flex-col md:flex-row flex-wrap items-center justify-between gap-6 md:gap-8">
           

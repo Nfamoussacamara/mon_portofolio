@@ -2,13 +2,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Geist+Mono&display=swap');
 
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   :root {
     --bg-primary: #ffffff;
     --bg-secondary: #f8fafc;
     --text-primary: #0f172a;
-    --text-muted: #64748b;
+    --text-muted: #475569; /* slate-600 for better contrast */
     --border-card: rgba(0, 0, 0, 0.03);
     
     /* Branding Accent (exemple bleu moderne, peut être changé) */

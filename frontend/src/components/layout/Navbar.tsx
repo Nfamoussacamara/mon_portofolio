@@ -3,21 +3,6 @@ import { useTheme } from '../../context/ThemeContext';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const linkVariants = {
-  initial: { color: 'rgba(161,161,170,1)' },
-  hover: { color: 'rgba(255,255,255,1)', transition: { duration: 0.2 } }
-};
-
-const ctaVariants = {
-  initial: { backgroundColor: 'rgba(255,255,255,1)', color: 'rgba(0,0,0,1)' },
-  hover: { backgroundColor: 'rgba(229,231,235,1)', transition: { duration: 0.2 } }
-};
-
-const iconBtnVariants = {
-  initial: { color: 'rgba(161,161,170,1)' },
-  hover: { color: 'rgba(255,255,255,1)', transition: { duration: 0.2 } }
-};
-
 export const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
@@ -30,9 +15,9 @@ export const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
+    { name: 'À propos', href: '#about' },
+    { name: 'Compétences', href: '#skills' },
+    { name: 'Projets', href: '#projects' },
   ];
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -43,7 +28,7 @@ export const Navbar = () => {
       setTimeout(() => {
         const element = document.getElementById(href.substring(1));
         if (element) {
-          const navbarHeight = 80; // Hauteur h-20
+          const navbarHeight = 80;
           const elementPosition = element.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
           window.scrollTo({
@@ -60,13 +45,19 @@ export const Navbar = () => {
   return (
     <motion.nav
       animate={{
-        backgroundColor: scrolled ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0)',
+        backgroundColor: scrolled 
+          ? (theme === 'dark' ? 'rgba(0,0,0,0.85)' : 'rgba(255,255,255,0.85)') 
+          : 'rgba(0,0,0,0)',
         backdropFilter: scrolled ? 'blur(12px)' : 'blur(0px)',
-        borderBottomColor: scrolled ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0)',
-        boxShadow: scrolled ? '0 1px 0 rgba(255,255,255,0.05)' : 'none',
+        borderBottomColor: scrolled 
+          ? (theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)') 
+          : 'rgba(255,255,255,0)',
+        boxShadow: scrolled 
+          ? (theme === 'dark' ? '0 1px 0 rgba(255,255,255,0.05)' : '0 1px 0 rgba(0,0,0,0.05)') 
+          : 'none',
       }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed top-0 left-0 right-0 z-[100] w-full border-b border-transparent"
+      className="navbar-anim fixed top-0 left-0 right-0 z-[100] w-full border-b border-transparent"
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative">
 
@@ -90,11 +81,8 @@ export const Navbar = () => {
             <motion.a
               key={link.name}
               href={link.href}
-              variants={linkVariants}
-              initial="initial"
-              whileHover="hover"
               onClick={(e) => scrollToSection(e, link.href)}
-              className="text-[15px] font-medium"
+              className="text-[15px] font-medium text-[var(--text-primary)] transition-opacity duration-200 hover:opacity-80"
             >
               {link.name}
             </motion.a>
@@ -105,12 +93,9 @@ export const Navbar = () => {
         <div className="hidden md:flex items-center gap-6 relative z-10">
           <motion.button
             onClick={toggleTheme}
-            variants={iconBtnVariants}
-            initial="initial"
-            whileHover="hover"
             whileTap={{ scale: 0.9 }}
             aria-label="Toggle Theme"
-            className="flex items-center justify-center"
+            className="flex items-center justify-center text-[var(--text-primary)] transition-opacity duration-200 hover:opacity-80"
           >
             {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
           </motion.button>
@@ -119,23 +104,17 @@ export const Navbar = () => {
 
           <motion.a
             href="#contact"
-            variants={linkVariants}
-            initial="initial"
-            whileHover="hover"
             onClick={(e) => scrollToSection(e, '#contact')}
-            className="text-[15px] font-medium"
+            className="text-[15px] font-medium text-[var(--text-primary)] transition-opacity duration-200 hover:opacity-80"
           >
             Discuter
           </motion.a>
 
           <motion.a
             href="#contact"
-            variants={ctaVariants}
-            initial="initial"
-            whileHover="hover"
             whileTap={{ scale: 0.97 }}
             onClick={(e) => scrollToSection(e, '#contact')}
-            className="px-5 py-2.5 dark:bg-white dark:text-black rounded-md text-[15px] font-medium bg-[#eb5424] text-white"
+            className="px-5 py-2.5 rounded-md text-[15px] font-medium transition-colors duration-200 bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-slate-200"
           >
             Me Contacter
           </motion.a>

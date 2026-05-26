@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { sectionHeader, fadeLeft, fadeRight, defaultViewport } from '../../lib/animations';
 
-const inputClass = "w-full px-4 py-3 rounded-xl border text-sm bg-transparent outline-none transition-all duration-200 border-white/10 text-white placeholder-[#555] focus:border-white/30 focus:bg-white/5";
-const labelClass = "block text-sm font-medium mb-2 text-slate-400";
+const inputClass = "w-full px-4 py-3 rounded-xl border text-sm bg-transparent outline-none transition-all duration-200 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-[#555] focus:border-slate-400 dark:focus:border-white/30 focus:bg-slate-50 dark:focus:bg-white/5";
+const labelClass = "block text-sm font-medium mb-2 text-slate-700";
 
 export const Contact = () => {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -71,7 +71,7 @@ export const Contact = () => {
             Parlons de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">votre projet</span>
           </h2>
           <p className="text-[var(--text-muted)] text-lg max-w-2xl mx-auto leading-relaxed">
-            Architecture d'entreprise, audit de sécurité ou produit web innovant — n'hésitez 
+            Architecture d'entreprise, audit de sécurité ou produit web innovant — n'hésitez
             pas à me contacter. Je réponds dans les 24h.
           </p>
         </motion.div>
@@ -89,7 +89,7 @@ export const Contact = () => {
             <div className="space-y-5">
               {infos.map((info) => (
                 <div key={info.label} className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/8 flex items-center justify-center flex-shrink-0 group-hover:border-blue-500/30 transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/8 flex items-center justify-center flex-shrink-0 group-hover:border-blue-500/30 transition-colors">
                     <div className="w-2 h-2 rounded-full bg-blue-500" />
                   </div>
                   <div>
@@ -107,7 +107,7 @@ export const Contact = () => {
             initial="hidden"
             whileInView="visible"
             viewport={defaultViewport}
-            className="rounded-2xl border border-white/8 bg-white/2 dark:bg-white/[0.02] p-8"
+            className="rounded-2xl border border-slate-200 dark:border-white/8 bg-slate-50 dark:bg-white/[0.02] p-8"
           >
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>

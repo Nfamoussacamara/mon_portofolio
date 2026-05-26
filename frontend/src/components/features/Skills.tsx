@@ -1,19 +1,28 @@
 import { motion } from 'framer-motion';
+import { useTheme } from '../../context/ThemeContext';
 import { sectionHeader, fadeLeft, fadeRight, defaultViewport } from '../../lib/animations';
 
 
-// Variants pour les badges skill
-const badgeVariants = (hoverBg: string, hoverBorder: string, hoverText?: string) => ({
-  initial: { backgroundColor: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)' },
-  hover: {
-    backgroundColor: hoverBg,
-    borderColor: hoverBorder,
-    ...(hoverText ? { color: hoverText } : {}),
-    transition: { duration: 0.2 }
-  }
-});
+// badgeVariants is now generated inside component to be theme-aware
 
 export const Skills = () => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
+  const badgeVariants = (hoverBg: string, hoverBorder: string, hoverText?: string) => ({
+    initial: {
+      backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)',
+      borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.12)',
+      color: isDark ? 'rgba(255,255,255,0.8)' : 'rgba(15,23,42,0.85)',
+    },
+    hover: {
+      backgroundColor: hoverBg,
+      borderColor: hoverBorder,
+      ...(hoverText ? { color: hoverText } : { color: isDark ? 'rgba(255,255,255,0.95)' : 'rgba(15,23,42,1)' }),
+      transition: { duration: 0.2 }
+    }
+  });
+
   return (
     <section id="skills" className="py-16 md:py-28 bg-[var(--bg-primary)] relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
@@ -32,7 +41,7 @@ export const Skills = () => {
           <p className="text-sm font-mono font-medium text-indigo-500 mb-3 tracking-widest uppercase text-center">
             // tech stack
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-5 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-5 text-center">
             Mon arsenal <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">technique</span>
           </h2>
           <p className="text-[var(--text-muted)] text-lg max-w-2xl mx-auto leading-relaxed text-center">
@@ -49,11 +58,11 @@ export const Skills = () => {
             initial="hidden"
             whileInView="visible"
             whileHover="hover"
-                    whileTap="hover"
-                    whileFocus="hover"
-                    tabIndex={0}
+            whileTap="hover"
+            whileFocus="hover"
+            tabIndex={0}
             viewport={defaultViewport}
-            className="md:col-span-2 rounded-3xl border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
+            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
           >
             {/* Effet code en hologramme — Framer Motion via whileHover */}
             <motion.div
@@ -69,9 +78,9 @@ export const Skills = () => {
                 <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-violet-500"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                 </div>
-                <h3 className="text-2xl font-bold text-white">Logic & Backend</h3>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Logic &amp; Backend</h3>
               </div>
-              <p className="text-white/60 text-sm mb-8 max-w-md">Architecture distribuée, APIs RESTful, WebSockets et micro-services. Conception selon les principes SOLID pour des systèmes scalables.</p>
+              <p className="text-slate-700 dark:text-white/60 text-sm mb-8 max-w-md">Architecture distribuée, APIs RESTful, WebSockets et micro-services. Conception selon les principes SOLID pour des systèmes scalables.</p>
 
               <div className="flex flex-wrap gap-2 mt-auto">
                 {['Python', 'Django', 'Django REST Framework', 'Node.js', 'GraphQL', 'Celery', 'RabbitMQ'].map((skill) => (
@@ -98,11 +107,11 @@ export const Skills = () => {
             initial="hidden"
             whileInView="visible"
             whileHover="hover"
-                    whileTap="hover"
-                    whileFocus="hover"
-                    tabIndex={0}
+            whileTap="hover"
+            whileFocus="hover"
+            tabIndex={0}
             viewport={defaultViewport}
-            className="md:col-span-1 rounded-3xl border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
+            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
           >
 
             <div className="p-8 relative z-10 flex flex-col h-full">
@@ -115,9 +124,9 @@ export const Skills = () => {
                   />
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-red-500"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                 </div>
-                <h3 className="text-2xl font-bold text-white">DevSecOps</h3>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white">DevSecOps</h3>
               </div>
-              <p className="text-white/60 text-sm mb-8">Audits de sécurité, gestion des vulnérabilités (OWASP) et implémentation Zero Trust.</p>
+              <p className="text-slate-700 dark:text-white/60 text-sm mb-8">Audits de sécurité, gestion des vulnérabilités (OWASP) et implémentation Zero Trust.</p>
 
               <div className="flex flex-wrap gap-2 mt-auto relative z-10">
                 {['OWASP Top 10', 'Pentesting', 'JWT / OAuth2', 'Docker', 'CI/CD (GitLab)'].map((skill) => (
@@ -144,11 +153,11 @@ export const Skills = () => {
             initial="hidden"
             whileInView="visible"
             whileHover="hover"
-                    whileTap="hover"
-                    whileFocus="hover"
-                    tabIndex={0}
+            whileTap="hover"
+            whileFocus="hover"
+            tabIndex={0}
             viewport={defaultViewport}
-            className="md:col-span-1 rounded-3xl border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
+            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
           >
             <motion.div
               variants={{ initial: { opacity: 0 }, hover: { opacity: 1, transition: { duration: 0.4 } } }}
@@ -159,9 +168,9 @@ export const Skills = () => {
                 <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-cyan-500"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                 </div>
-                <h3 className="text-2xl font-bold text-white">Frontend</h3>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Frontend</h3>
               </div>
-              <p className="text-white/60 text-sm mb-8">Interfaces utilisateur ultra-réactives, animations fluides (60fps) et design pixel-perfect.</p>
+              <p className="text-slate-700 dark:text-white/60 text-sm mb-8">Interfaces utilisateur ultra-réactives, animations fluides (60fps) et design pixel-perfect.</p>
 
               <div className="flex flex-wrap gap-2 mt-auto">
                 {['React', 'TypeScript', 'Tailwind', 'Framer Motion', 'Zustand', 'React Query'].map((skill) => (
@@ -188,11 +197,11 @@ export const Skills = () => {
             initial="hidden"
             whileInView="visible"
             whileHover="hover"
-                    whileTap="hover"
-                    whileFocus="hover"
-                    tabIndex={0}
+            whileTap="hover"
+            whileFocus="hover"
+            tabIndex={0}
             viewport={defaultViewport}
-            className="md:col-span-2 rounded-3xl border border-white/10 bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
+            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
           >
 
             <div className="p-8 relative z-10 flex flex-col h-full">
@@ -200,9 +209,9 @@ export const Skills = () => {
                 <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-500"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
                 </div>
-                <h3 className="text-2xl font-bold text-white">Data & Cloud</h3>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Data &amp; Cloud</h3>
               </div>
-              <p className="text-white/60 text-sm mb-6 max-w-md">Modélisation relationnelle complexe, indexation avancée, cache en mémoire et déploiement cloud résilient.</p>
+              <p className="text-slate-700 dark:text-white/60 text-sm mb-6 max-w-md">Modélisation relationnelle complexe, indexation avancée, cache en mémoire et déploiement cloud résilient.</p>
 
               <div className="flex flex-wrap gap-2 mt-auto">
                 {['PostgreSQL', 'Redis', 'Elasticsearch', 'Prisma ORM', 'AWS / S3', 'NGINX'].map((skill) => (

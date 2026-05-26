@@ -53,7 +53,7 @@ export const Education = () => {
           trigger: containerRef.current,
           start: 'top 60%',
           end: 'bottom 80%',
-          scrub: 1, // L'animation avance et recule de manière ultra fluide avec le scroll
+          scrub: 1,
         }
       }
     );
@@ -76,7 +76,6 @@ export const Education = () => {
         }
       });
 
-      // TOUT s'enclenche immédiatement à la milliseconde '0' du déclenchement
       tl.fromTo(dot, 
         { scale: 0, opacity: 0 }, 
         { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.5)' },
@@ -109,15 +108,15 @@ export const Education = () => {
           <p className="text-sm font-mono font-medium text-blue-500 uppercase tracking-widest mb-3">
             // Parcours
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-5 leading-tight">
-            Éducation & <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">Parcours Académique</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-5 leading-tight">
+            Éducation &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">Parcours Académique</span>
           </h2>
         </div>
 
-        {/* L'arbre / La ligne de temps */}
+        {/* Ligne de temps */}
         <div className="relative max-w-3xl mx-auto pb-10">
-          {/* Ligne verticale : à gauche sur mobile, au centre sur PC */}
-          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-white/10 md:-translate-x-1/2" />
+          {/* Ligne verticale */}
+          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-slate-200 dark:bg-white/10 md:-translate-x-1/2" />
           
           {/* Ligne lumineuse SCROLL (GSAP Scrub) */}
           <div 
@@ -132,23 +131,23 @@ export const Education = () => {
               return (
                 <div key={index} className="timeline-row relative w-full group py-4 md:py-0 md:h-[120px]">
                   
-                  {/* Ligne de connexion horizontale animée GSAP (cachée sur mobile) */}
+                  {/* Ligne de connexion horizontale */}
                   <div className={`timeline-line hidden md:block absolute top-1/2 -translate-y-1/2 w-[calc(50%-45%)] h-px bg-indigo-500/80 transition-colors duration-500 ${isLeft ? 'left-[45%] origin-right group-hover:bg-indigo-300' : 'right-[45%] origin-left group-hover:bg-indigo-300'}`} />
 
-                  {/* Nœud Central : à gauche sur mobile, au centre sur PC */}
+                  {/* Nœud Central */}
                   <div className="absolute left-6 md:left-1/2 top-8 md:top-1/2 -translate-x-1/2 md:-translate-y-1/2 flex items-center justify-center z-20">
-                    <div className="timeline-dot w-4 h-4 rounded-full bg-[#111111] border-[2px] border-indigo-500 flex items-center justify-center group-hover:scale-150 group-hover:bg-indigo-500 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] transition-all duration-300 relative">
+                    <div className="timeline-dot w-4 h-4 rounded-full bg-slate-200 dark:bg-[#111111] border-[2px] border-indigo-500 flex items-center justify-center group-hover:scale-150 group-hover:bg-indigo-500 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] transition-all duration-300 relative">
                       <div className="timeline-inner-point w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:bg-white transition-colors" />
                     </div>
                   </div>
 
-                  {/* Carte combinée : marge gauche sur mobile, placement absolu et alignement selon côté sur PC */}
+                  {/* Carte */}
                   <div className={`ml-16 md:ml-0 md:absolute md:top-1/2 md:-translate-y-1/2 w-[calc(100%-5rem)] md:w-[45%] ${isLeft ? 'md:left-0 md:text-right' : 'md:right-0 md:text-left'} text-left`}>
-                    <div className="timeline-card bg-[#111111] border border-white/10 p-6 rounded-2xl hover:border-white/25 transition-all duration-300 w-full relative z-10">
+                    <div className="timeline-card bg-white dark:bg-[#111111] border border-slate-200 dark:border-white/10 p-6 rounded-2xl hover:border-slate-300 dark:hover:border-white/25 transition-all duration-300 w-full relative z-10">
                       <span className="text-indigo-400 font-mono text-sm block mb-1">{item.year}</span>
-                      <h3 className="text-xl font-bold text-white mb-1">{item.degree}</h3>
-                      <div className="text-white/40 text-sm font-medium mb-3 uppercase tracking-wider">{item.school}</div>
-                      <p className="text-white/60 text-sm leading-relaxed">{item.description}</p>
+                      <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{item.degree}</h3>
+                      <div className="text-slate-700 dark:text-white/40 text-sm font-medium mb-3 uppercase tracking-wider">{item.school}</div>
+                      <p className="text-slate-700 dark:text-white/60 text-sm leading-relaxed">{item.description}</p>
                     </div>
                   </div>
 

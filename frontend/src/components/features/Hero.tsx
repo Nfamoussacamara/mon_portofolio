@@ -39,8 +39,9 @@ function HeroText() {
       // Masquer tout au début
       gsap.set([".hero-title-1", ".hero-sub", ".hero-btns", ".hero-photo-container", ".scroll-indicator"], { opacity: 0, y: 40 });
       gsap.set([".hero-name", ".hero-role"], { opacity: 0 });
+      gsap.set(".navbar-anim", { opacity: 0, y: -20 });
 
-      // 1. CALCUL DES OFFSETS DU CENTRE POUR LES DEUX (TOUTES RÉSOLUTIONS)
+      // 1. CALCUL DES OFFSETS DU CENTRE (TOUTES RÉSOLUTIONS)
       const nameBounds = nameRef.current?.getBoundingClientRect();
       const roleBounds = roleRef.current?.getBoundingClientRect();
 
@@ -149,6 +150,13 @@ function HeroText() {
         duration: 0.8
       }, "-=0.3");
 
+      tl.to(".navbar-anim", {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out"
+      }, "-=0.6");
+
     });
 
     return () => {
@@ -162,7 +170,7 @@ function HeroText() {
 
       {/* Greeting */}
       <div className="hero-title-1 mb-2 opacity-0">
-        <h1 className="text-xl md:text-2xl font-medium tracking-tight text-white/70">
+        <h1 className="text-xl md:text-2xl font-medium tracking-tight text-[var(--text-muted)]">
           Bonjour, je suis
         </h1>
       </div>
@@ -170,7 +178,7 @@ function HeroText() {
       {/* LE NOM */}
       <div ref={nameRef} className="hero-name-container relative mb-4">
         <div className="relative inline-block overflow-hidden">
-          <h1 className="hero-name text-4xl md:text-6xl lg:text-[80px] font-extrabold leading-tight tracking-tighter text-white sm:whitespace-nowrap">
+          <h1 className="hero-name text-4xl md:text-6xl lg:text-[80px] font-extrabold leading-tight tracking-tighter text-[var(--text-primary)] sm:whitespace-nowrap">
             N'famoussa Camara
           </h1>
           <div className="reveal-bar-name absolute inset-0 bg-blue-500 z-10 scale-x-0" />
@@ -187,7 +195,7 @@ function HeroText() {
         </div>
       </div>
 
-      {/* Flèche scroll mobile uniquement (juste sous le métier) */}
+      {/* Flèche scroll mobile uniquement */}
       <div className="hero-btns lg:hidden flex justify-center mb-4">
         <motion.div
           animate={{ y: [0, 6, 0] }}
@@ -211,7 +219,7 @@ function HeroText() {
 
       {/* Sous-titre */}
       <p className="hero-sub opacity-0 text-lg text-[var(--text-muted)] max-w-md leading-relaxed mb-10">
-        Spécialisé en Cybersécurité, React & Django. Je construis des applications
+        Spécialisé en Cybersécurité, React &amp; Django. Je construis des applications
         robustes, sécurisées et prêtes pour la production.
       </p>
 
@@ -230,8 +238,8 @@ function HeroText() {
 
 export function Hero() {
   return (
-    <section id="home" className="relative pt-0 pb-8 md:pb-32 overflow-hidden">
-      {/* Ambient glow - déplacé vers le bas pour éviter la navbar */}
+    <section id="home" className="relative pt-0 pb-6 md:pb-16 overflow-hidden">
+      {/* Ambient glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-48 right-1/4 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[120px]" />
         <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-indigo-600/4 rounded-full blur-[100px]" />
@@ -258,7 +266,7 @@ export function Hero() {
 
         {/* Scroll Indicator */}
         <div className="scroll-indicator opacity-0 flex flex-col items-center gap-2 mb-6 mt-6 md:-mt-16">
-          <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold">Découvrir</span>
+          <span className="text-[10px] uppercase tracking-[0.2em] text-slate-700 font-bold">Découvrir</span>
           <motion.div
             animate={{ y: [0, 6, 0] }}
             transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
@@ -279,10 +287,9 @@ export function Hero() {
           </motion.div>
         </div>
 
-
-        {/* ── FUSED TECH MARQUEE ───────────────────── */}
+        {/* TECH MARQUEE */}
         <motion.div
-          className="border-t border-white/5 pt-6 md:pt-12"
+          className="border-t border-[var(--border-card)] pt-6 md:pt-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}

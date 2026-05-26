@@ -4,6 +4,17 @@ import { useQuery } from '@tanstack/react-query';
 import { ProjectCard } from './ProjectCard';
 import { sectionHeader, defaultViewport, staggerContainer } from '../../lib/animations';
 
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  stack: string[];
+  category: string;
+  linkGithub?: string;
+  linkDemo?: string;
+}
+
 const DEFAULT_PROJECTS = [
   {
     id: 1,
@@ -58,7 +69,7 @@ const filters = ['Tous', 'Frontend', 'Backend', 'Full-Stack'];
 export const Projects = () => {
   const [activeFilter, setActiveFilter] = useState('Tous');
 
-  // Architecture hybride avancée : Si le backend ne répond pas (ou est vide), 
+  // Architecture hybride avancée : Si le backend ne répond pas (ou est vide),
   // initialData affiche les données codées en dur sans jamais casser le site.
   const { data: projects } = useQuery({
     queryKey: ['projects'],
@@ -67,13 +78,13 @@ export const Projects = () => {
     staleTime: 60000 // Pas de refresh avant 1 minute
   });
 
-  const filteredProjects = projects.filter(project => {
+  const filteredProjects = (projects as Project[]).filter((project: Project) => {
     if (activeFilter === 'Tous') return true;
     return project.category === activeFilter;
   });
 
   return (
-    <section id="projects" className="py-16 md:py-28 bg-[var(--bg-secondary)] border-y border-white/5 relative overflow-hidden">
+    <section id="projects" className="py-16 md:py-28 bg-[var(--bg-secondary)] border-y border-slate-200 dark:border-white/5 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-3xl" />
       </div>
@@ -106,7 +117,7 @@ export const Projects = () => {
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                 activeFilter === filter
                   ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm'
-                  : 'bg-transparent text-slate-600 border border-slate-200 hover:border-slate-300 dark:text-[#a1a1aa] dark:border-white/10 dark:hover:border-white/20 dark:hover:text-white'
+                  : 'bg-transparent text-slate-700 border border-slate-200 hover:border-slate-300 dark:text-[#a1a1aa] dark:border-white/10 dark:hover:border-white/20 dark:hover:text-white'
               }`}
             >
               {filter}

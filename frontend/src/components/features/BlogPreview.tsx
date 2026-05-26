@@ -24,8 +24,6 @@ const mockPosts = [
   }
 ];
 
-
-
 const leftCard: Variants = {
   hidden: { opacity: 0, x: -60 },
   visible: { opacity: 1, x: 0, transition: { duration: 1.1, ease: EASE } }
@@ -37,7 +35,7 @@ const rightCard: Variants = {
 };
 
 const titleHover: Variants = {
-  initial: { color: 'rgba(255,255,255,1)' },
+  initial: { color: 'var(--text-primary)' },
   hover: { color: '#a855f7', transition: { duration: 0.25 } }
 };
 
@@ -50,7 +48,7 @@ export const BlogPreview = () => {
   const cardVariantsList: Variants[] = [leftCard, rightCard];
 
   return (
-    <section id="blog" className="py-16 md:py-28 bg-[var(--bg-primary)] border-t border-white/5 relative overflow-hidden">
+    <section id="blog" className="py-16 md:py-28 bg-[var(--bg-primary)] border-t border-slate-200 dark:border-white/5 relative overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <motion.div
@@ -65,7 +63,7 @@ export const BlogPreview = () => {
               // technical blog
             </p>
             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
-              Pensées & <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-indigo-500">Articles</span>
+              Pensées &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-indigo-500">Articles</span>
             </h2>
           </div>
           <Button variant="outline">Voir tout le blog</Button>
@@ -80,10 +78,10 @@ export const BlogPreview = () => {
               whileInView="visible"
               whileHover="hover"
               viewport={defaultViewport}
-              className="p-8 rounded-2xl border border-white/8 bg-white/2 flex flex-col h-full cursor-pointer"
+              className="p-8 rounded-2xl border border-slate-200 dark:border-white/8 bg-slate-50 dark:bg-white/2 flex flex-col h-full cursor-pointer"
             >
               <div className="flex items-center gap-4 mb-6">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--text-muted)] px-2 py-1 rounded border border-white/10">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--text-muted)] px-2 py-1 rounded border border-slate-200 dark:border-white/10">
                   {post.category}
                 </span>
                 <span className="text-xs text-[var(--text-muted)]">{post.date}</span>

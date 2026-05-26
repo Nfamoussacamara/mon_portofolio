@@ -14,10 +14,10 @@ export interface ButtonProps extends HTMLMotionProps<'button'> {
 }
 
 const variantInitial: Record<string, TargetAndTransition> = {
-  primary:   { backgroundColor: 'rgba(15,23,42,1)',    color: 'rgba(255,255,255,1)' },
+  primary:   { backgroundColor: 'rgba(15,23,42,1)',    color: '#ffffff' },
   secondary: { backgroundColor: 'rgba(241,245,249,1)', color: 'rgba(15,23,42,1)' },
-  outline:   { backgroundColor: 'rgba(0,0,0,0)',       color: 'rgba(255,255,255,1)' },
-  ghost:     { backgroundColor: 'rgba(0,0,0,0)',       color: 'rgba(255,255,255,1)' },
+  outline:   { backgroundColor: 'rgba(0,0,0,0)',       color: 'var(--text-primary)' },
+  ghost:     { backgroundColor: 'rgba(0,0,0,0)',       color: 'var(--text-primary)' },
 };
 
 const variantHover: Record<string, TargetAndTransition> = {
@@ -38,7 +38,7 @@ const sizes = {
 const borders: Record<string, string> = {
   primary:   '',
   secondary: '',
-  outline:   'border border-white/30',
+  outline:   'border border-[var(--border-card)]',
   ghost:     '',
 };
 
