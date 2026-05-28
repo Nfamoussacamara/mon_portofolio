@@ -17,12 +17,13 @@ class ProfileSerializer(serializers.ModelSerializer):
                 if request else instance.avatar.url
             )
         
-        # Résolution de l'URL du CV
+        # Résolution de l'URL du CV (Cloudinary si configuré, local sinon)
         if instance.cv_file and instance.cv_file.name:
-            data['cv_file'] = (
-                request.build_absolute_uri(instance.cv_file.url)
-                if request else instance.cv_file.url
-            )
+            cv_url = instance.cv_file.url
+            # Si l'URL est relative (stockage local), on la préfixe avec le domaine
+            if cv_url.startswith('/') and request:
+                cv_url = request.build_absolute_uri(cv_url)
+            data['cv_file'] = cv_url
         
         # Projets
         if instance.projects_count is None:
