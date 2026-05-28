@@ -70,12 +70,10 @@ export const Navbar = () => {
           transition={{ duration: 0.2 }}
           className="flex-shrink-0 cursor-pointer flex items-center gap-3 relative z-10"
         >
-          <div className="w-8 h-8 rounded bg-slate-900 dark:bg-white flex items-center justify-center">
-            <span className="text-sm font-semibold text-white dark:text-black">NC</span>
+          <div className="w-10 h-10 rounded flex items-center justify-center">
+            <span className="text-xl font-bold text-slate-900 dark:text-white">NC</span>
           </div>
-          <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-            Portofolio.
-          </span>
+          {/* Brand text removed as requested */}
         </motion.div>
 
         {/* Center: Nav Links */}
