@@ -93,7 +93,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-# Django 4.2+ utilise STORAGES pour staticfiles et media
+# Requis par 'django-cloudinary-storage' qui crashe si cet attribut est manquant en Django 5+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 WHITENOISE_MANIFEST_STRICT = False # Empêche les crashs si un fichier manque
 
 MEDIA_URL = '/media/'
