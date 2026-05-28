@@ -221,9 +221,22 @@ function HeroText() {
         <Button size="lg" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
           Voir mes projets
         </Button>
-        <Button size="lg" variant="outline" onClick={() => window.open(resolveMediaUrl(content.cv_file) || '/cv.pdf', '_blank')}>
+        <a
+          href={(() => {
+            const url = resolveMediaUrl(content.cv_file) || '/cv.pdf';
+            // Ajoute fl_attachment à l'URL Cloudinary pour forcer le téléchargement
+            if (url.includes('res.cloudinary.com')) {
+              return url.replace('/upload/', '/upload/fl_attachment/');
+            }
+            return url;
+          })()}
+          download="Mon_CV.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/15 text-sm font-semibold text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200"
+        >
           Mon CV
-        </Button>
+        </a>
       </div>
     </div>
   );
