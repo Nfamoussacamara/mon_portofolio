@@ -71,7 +71,7 @@ export const Navbar = () => {
           className="flex-shrink-0 cursor-pointer flex items-center gap-3 relative z-10"
         >
           <div className="w-8 h-8 rounded bg-slate-900 dark:bg-white flex items-center justify-center">
-            <div className="w-3 h-3 bg-white dark:bg-black rounded-full" />
+            <span className="text-sm font-semibold text-white dark:text-black">NC</span>
           </div>
           <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
             Portofolio.
