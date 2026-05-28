@@ -221,22 +221,32 @@ function HeroText() {
         <Button size="lg" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
           Voir mes projets
         </Button>
-        <a
-          href={(() => {
-            const url = resolveMediaUrl(content.cv_file) || '/cv.pdf';
-            // Ajoute fl_attachment à l'URL Cloudinary pour forcer le téléchargement
-            if (url.includes('res.cloudinary.com')) {
-              return url.replace('/upload/', '/upload/fl_attachment/');
+        <button
+          onClick={async () => {
+            const rawUrl = resolveMediaUrl(content.cv_file) || '/cv.pdf';
+            // Ajoute fl_attachment pour Cloudinary
+            const url = rawUrl.includes('res.cloudinary.com')
+              ? rawUrl.replace('/upload/', '/upload/fl_attachment/')
+              : rawUrl;
+            try {
+              const res = await fetch(url);
+              const blob = await res.blob();
+              const link = document.createElement('a');
+              link.href = URL.createObjectURL(blob);
+              link.download = 'Mon_CV.pdf';
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              URL.revokeObjectURL(link.href);
+            } catch {
+              // Fallback si fetch échoue (CORS, etc.)
+              window.open(url, '_blank');
             }
-            return url;
-          })()}
-          download="Mon_CV.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/15 text-sm font-semibold text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200"
+          }}
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/15 text-sm font-semibold text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200 cursor-pointer"
         >
           Mon CV
-        </a>
+        </button>
       </div>
     </div>
   );
