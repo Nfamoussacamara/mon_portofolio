@@ -14,7 +14,14 @@ class ProfileSerializer(serializers.ModelSerializer):
         if instance.avatar and instance.avatar.name:
             data['avatar_url'] = (
                 request.build_absolute_uri(instance.avatar.url)
-                if request else f'http://localhost:8000{instance.avatar.url}'
+                if request else instance.avatar.url
+            )
+        
+        # Résolution de l'URL du CV
+        if instance.cv_file and instance.cv_file.name:
+            data['cv_file'] = (
+                request.build_absolute_uri(instance.cv_file.url)
+                if request else instance.cv_file.url
             )
         
         # Projets
@@ -79,7 +86,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         if instance.image and instance.image.name:
             data['image_url'] = (
                 request.build_absolute_uri(instance.image.url)
-                if request else f'http://localhost:8000{instance.image.url}'
+                if request else instance.image.url
             )
         elif not data.get('image_url'):
             data['image_url'] = ''

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '../../components/ui/Button';
+import { API_BASE } from '../../lib/api';
 
 interface AboutData {
   about_text: string;
@@ -22,7 +23,7 @@ export const AdminAbout = ({ token }: { token: string }) => {
   const { data: profile, isLoading } = useQuery({
     queryKey: ['admin-profile'],
     queryFn: async () => {
-      const res = await fetch('http://localhost:8000/api/profile/', {
+      const res = await fetch(`${API_BASE}/profile/`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       return res.json().then(data => data[0] || {});
@@ -43,7 +44,7 @@ export const AdminAbout = ({ token }: { token: string }) => {
 
   const updateMutation = useMutation({
     mutationFn: async (data: AboutData) => {
-      const res = await fetch(`http://localhost:8000/api/profile/${profile.id}/`, {
+      const res = await fetch(`${API_BASE}/profile/${profile.id}/`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`,

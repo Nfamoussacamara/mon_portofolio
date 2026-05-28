@@ -14,6 +14,8 @@
     
     /* Branding Accent (exemple bleu moderne, peut être changé) */
     --accent: 59, 130, 246; 
+    --autofill-bg: #ffffff;
+    --autofill-text: #0f172a;
   }
 
   .dark {
@@ -22,6 +24,8 @@
     --text-primary: #ededed;
     --text-muted: #a1a1aa;
     --border-card: rgba(255, 255, 255, 0.1);
+    --autofill-bg: #111111;
+    --autofill-text: #ededed;
   }
 
   body {
@@ -49,7 +53,7 @@
     background-image: radial-gradient(#ffffff0a 0.5px, transparent 0.5px);
   }
 
-  /* Fix for browser autofill background in dark mode */
+  /* Fix for browser autofill background - Theme Aware */
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
@@ -59,8 +63,8 @@
   select:-webkit-autofill,
   select:-webkit-autofill:hover,
   select:-webkit-autofill:focus {
-    -webkit-text-fill-color: #ededed !important;
-    -webkit-box-shadow: 0 0 0px 1000px #0a0a0a inset !important;
+    -webkit-text-fill-color: var(--autofill-text) !important;
+    -webkit-box-shadow: 0 0 0px 1000px var(--autofill-bg) inset !important;
     transition: background-color 5000s ease-in-out 0s !important;
   }
 }

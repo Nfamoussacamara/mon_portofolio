@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '../../components/ui/Button';
+import { API_BASE } from '../../lib/api';
 
 export const Login = ({ onLogin }: { onLogin: (token: string) => void }) => {
   const [username, setUsername] = useState('');
@@ -14,7 +15,7 @@ export const Login = ({ onLogin }: { onLogin: (token: string) => void }) => {
     setError('');
 
     try {
-      const res = await fetch('http://localhost:8000/api/token/', {
+      const res = await fetch(`${API_BASE}/token/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })

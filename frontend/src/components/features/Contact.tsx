@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { sectionHeader, fadeLeft, fadeRight, defaultViewport } from '../../lib/animations';
 import { normalizeProfile, usePublicProfile } from '../../lib/siteContent';
+import { API_BASE } from '../../lib/api';
 
 const inputClass = "w-full px-4 py-3 rounded-xl border text-sm bg-transparent outline-none transition-all duration-200 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-[#555] focus:border-slate-400 dark:focus:border-white/30 focus:bg-slate-50 dark:focus:bg-white/5";
 const labelClass = "block text-sm font-medium mb-2 text-slate-700";
@@ -22,7 +23,7 @@ export const Contact = () => {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const response = await fetch('http://localhost:8000/api/contact/', {
+      const response = await fetch(`${API_BASE}/contact/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

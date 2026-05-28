@@ -9,6 +9,7 @@ import { AdminSkills } from './AdminSkills';
 import { AdminEducation } from './AdminEducation';
 import { AdminBlog } from './AdminBlog';
 import { AdminMessages } from './AdminMessages';
+import { API_BASE, BACKEND_BASE } from '../../lib/api';
 
 type Section = 'overview' | 'configuration' | 'projects' | 'skills' | 'education' | 'blog' | 'messages';
 
@@ -39,7 +40,7 @@ const Overview = ({ token }: { token: string }) => {
     const headers = { 'Authorization': `Bearer ${token}` };
     const urls = ['projects/', 'skills/', 'education/', 'contact/'];
     const [p, s, e, m] = await Promise.all(
-      urls.map(u => fetch(`http://localhost:8000/api/${u}`, { headers }).then(r => r.json()))
+      urls.map(u => fetch(`${API_BASE}/${u}`, { headers }).then(r => r.json()))
     );
     return {
       projects: Array.isArray(p) ? p.length : 0,
@@ -86,7 +87,7 @@ const Overview = ({ token }: { token: string }) => {
           </h3>
           <p className="text-slate-400 text-sm">Accès direct à la base de données et aux paramétrages avancés.</p>
         </div>
-        <a href="http://localhost:8000/admin" target="_blank" rel="noreferrer" className="flex-shrink-0">
+        <a href={`${BACKEND_BASE}/admin`} target="_blank" rel="noreferrer" className="flex-shrink-0">
           <Button variant="outline" className="border-white/10 hover:bg-white/5 w-full sm:w-auto">Ouvrir ↗</Button>
         </a>
       </div>

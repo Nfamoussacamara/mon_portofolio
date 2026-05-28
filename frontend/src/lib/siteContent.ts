@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
+import { API_BASE, BACKEND_BASE } from './api';
 
-const API_BASE = 'http://localhost:8000/api';
-const BACKEND_BASE = 'http://localhost:8000';
 
 export type ProfileRecord = {
   id?: number;

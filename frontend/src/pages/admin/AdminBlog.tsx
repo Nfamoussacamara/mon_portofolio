@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Button } from '../../components/ui/Button';
@@ -7,8 +7,8 @@ import { TableRowSkeleton } from '../../components/ui/Skeleton';
 import { useToast } from '../../context/ToastContext';
 import type { BlogPostRecord } from '../../lib/siteContent';
 import { fallbackBlogPosts } from '../../lib/siteContent';
+import { API_BASE as API } from '../../lib/api';
 
-const API = 'http://localhost:8000/api';
 const inputClass = "w-full px-4 py-2.5 rounded-xl border text-sm bg-white/5 outline-none transition-all border-white/10 text-white placeholder-slate-600 focus:border-blue-500/50";
 const labelClass = "block text-xs font-medium mb-1.5 text-slate-400";
 

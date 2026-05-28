@@ -1,12 +1,12 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Button } from '../../components/ui/Button';
 import { Modal } from '../../components/ui/Modal';
 import { CardSkeleton } from '../../components/ui/Skeleton';
 import { useToast } from '../../context/ToastContext';
+import { API_BASE as API } from '../../lib/api';
 
-const API = 'http://localhost:8000/api';
 
 const fetchProjects = async () => {
   const res = await fetch(`${API}/projects/`);
