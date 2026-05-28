@@ -46,7 +46,7 @@ export const ProjectCard = ({ title, description, image, stack, category, linkGi
         </div>
 
         {/* Section basse : Infos statiques */}
-        <div className="p-5 flex flex-col flex-1">
+        <div className="p-5 flex flex-col flex-1 min-h-0 overflow-hidden">
           <div className="flex items-center gap-2 mb-3">
              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-slate-700 dark:text-white/40">
                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
@@ -55,8 +55,8 @@ export const ProjectCard = ({ title, description, image, stack, category, linkGi
              </svg>
              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-700 dark:text-white/40">{category}</span>
           </div>
-          <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-3 line-clamp-2">{title}</h3>
-          <p className="text-sm text-slate-700 dark:text-white/40 leading-relaxed line-clamp-3">{description}</p>
+          <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-2 line-clamp-2">{title}</h3>
+          <p className="text-sm text-slate-700 dark:text-white/40 leading-relaxed line-clamp-2 overflow-hidden">{description}</p>
         </div>
 
         {/* RIDEAU MONTANT (Framer Motion) */}
