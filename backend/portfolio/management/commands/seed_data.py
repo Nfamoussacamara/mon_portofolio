@@ -9,7 +9,16 @@ class Command(BaseCommand):
     help = 'Peuple la base de données avec toutes les informations du frontend (idempotent)'
 
     def handle(self, *args, **options):
+        # ✅ Ne seeder que si la base est vide — préserve les données admin
+        if Profile.objects.exists():
+            self.stdout.write(self.style.WARNING(
+                "⏭️  Base de données déjà peuplée — seed ignoré. "
+                "Modifiez vos données via l'interface admin Django."
+            ))
+            return
+
         self.stdout.write("Initialisation de la base de données...")
+
 
         # 1. Création/mise à jour du Profil
         profile, created = Profile.objects.update_or_create(
