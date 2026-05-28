@@ -14,7 +14,7 @@ export const AdminMessages = ({ token }: { token: string }) => {
 
   const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
 
-  const { data: messages, isLoading } = useQuery({
+  const { data: messages, isLoading, isError } = useQuery({
     queryKey: ['admin-messages'],
     queryFn: async () => {
       const res = await fetch(`${API}/contact/`, { headers });
@@ -31,7 +31,7 @@ export const AdminMessages = ({ token }: { token: string }) => {
     onError: () => showToast('Suppression échouée.', 'error'),
   });
 
-  const unread = messages?.filter((m: any) => !m.is_read)?.length ?? 0;
+  const unread = (messages ?? []).filter((m: any) => !m.is_read).length;
 
   return (
     <div>
@@ -47,7 +47,7 @@ export const AdminMessages = ({ token }: { token: string }) => {
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {[1,2,3,4].map(i => (
-            <div key={i} className="bg-[#111111] border border-white/5 p-6 rounded-2xl h-48 animate-pulse flex flex-col justify-between">
+            <div key={i} className="bg-[#1a1a1a] border border-white/5 p-6 rounded-2xl h-48 animate-pulse flex flex-col justify-between">
               <div className="space-y-3">
                 <div className="w-1/3 h-3 bg-white/10 rounded" />
                 <div className="w-2/3 h-5 bg-white/10 rounded" />
@@ -57,24 +57,26 @@ export const AdminMessages = ({ token }: { token: string }) => {
             </div>
           ))}
         </div>
+      ) : isError ? (
+        <div className="text-sm text-slate-400">Impossible de charger les messages. Réessayez plus tard.</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {messages?.map((m: any) => (
+          {(messages ?? []).map((m: any) => (
             <motion.div key={m.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-              className={`bg-[#111111] border p-6 rounded-2xl hover:border-white/25 transition-all duration-300 w-full relative z-10 flex flex-col justify-between ${!m.is_read ? 'border-blue-500/40 shadow-[0_0_15px_rgba(59,130,246,0.1)]' : 'border-white/10'}`}
+              className={`bg-[#1a1a1a] border p-6 rounded-2xl hover:border-white/25 transition-all duration-300 w-full relative z-10 flex flex-col justify-between group ${!m.is_read ? 'border-blue-500/40 shadow-[0_0_15px_rgba(59,130,246,0.1)]' : 'border-white/10'}`}
             >
               <div>
-                <div className="flex items-start justify-between mb-1">
+                <div className="flex items-start justify-between mb-1 pr-8">
                   <span className="text-indigo-400 font-mono text-sm block">{new Date(m.created_at).toLocaleDateString('fr-FR')}</span>
                   {!m.is_read && <span className="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded uppercase tracking-wider font-semibold">Nouveau</span>}
                 </div>
+                <Button variant="ghost" size="sm" className="absolute top-2 right-2 w-8 h-8 p-0 flex items-center justify-center rounded-full text-red-400/70 hover:bg-red-500/10 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all z-20" onClick={() => { if(confirm('Supprimer ce message ?')) remove.mutate(m.id); }}>✕</Button>
                 <h3 className="text-xl font-bold text-white mb-2 truncate">{m.name}</h3>
                 <div className="text-white/40 text-sm font-medium mb-3 uppercase tracking-wider truncate">{m.email}</div>
                 <p className="text-white/60 text-sm leading-relaxed line-clamp-2 mb-6">{m.subject || '(sans sujet)'}</p>
               </div>
               <div className="flex gap-2 mt-auto">
                 <Button variant="outline" size="sm" className="text-xs border-white/10 hover:bg-white/5 flex-1" onClick={() => setSelected(m)}>Lire</Button>
-                <Button variant="ghost" size="sm" className="text-xs text-red-400 hover:bg-red-500/10 hover:text-red-300 flex-none px-3" onClick={() => { if(confirm('Supprimer ce message ?')) remove.mutate(m.id); }}>✕</Button>
               </div>
             </motion.div>
           ))}

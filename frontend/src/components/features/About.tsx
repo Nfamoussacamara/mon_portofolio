@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useSpring, useInView } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { fadeLeft, fadeRight, staggerContainer, staggerItem, sectionHeader, defaultViewport } from '../../lib/animations';
+import { normalizeProfile, usePublicProfile } from '../../lib/siteContent';
 
 const CountUp = ({ value }: { value: string }) => {
   const ref = useRef<HTMLSpanElement>(null);
@@ -20,11 +21,16 @@ const CountUp = ({ value }: { value: string }) => {
 };
 
 export const About = () => {
+  const { data: profile } = usePublicProfile();
+  const content = normalizeProfile(profile);
+
   const stats = [
-    { label: 'Projets livrés', value: '12+' },
-    { label: "Ans d'expérience", value: '3+' },
-    { label: 'Technologies', value: '20+' },
+    { label: 'Projets livrés', value: `${content.projects_count}+` },
+    { label: "Ans d'expérience", value: `${content.experience_years}+` },
+    { label: 'Technologies', value: `${content.technologies_count}+` },
   ];
+
+  const aboutParagraphs = content.about_text.split('\n\n').filter(Boolean);
 
   return (
     <section id="about" className="py-16 md:py-28 relative overflow-hidden bg-[var(--bg-secondary)] border-y border-slate-200 dark:border-white/5">
@@ -47,7 +53,7 @@ export const About = () => {
             // about me
           </p>
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-5 leading-tight">
-            Développeur <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">Full-Stack</span>
+            À propos de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">{content.full_name}</span>
           </h2>
         </motion.div>
 
@@ -61,14 +67,11 @@ export const About = () => {
             viewport={defaultViewport}
             className="space-y-6"
           >
-            <motion.p variants={fadeLeft} className="text-[var(--text-muted)] text-[1.1rem] leading-relaxed">
-              Je suis <strong className="text-slate-900 dark:text-white">N'Famoussa Camara</strong>, développeur full-stack passionné par la conception d'applications web modernes, performantes et évolutives.
-              Actuellement étudiant en informatique à l'Université de Labé, je développe des solutions numériques orientées résolution de problèmes réels avec une forte attention portée à l'architecture logicielle, à la qualité du code et à l'expérience utilisateur.
-            </motion.p>
-            <motion.p variants={fadeLeft} className="text-[var(--text-muted)] text-[1.1rem] leading-relaxed">
-              Je travaille principalement avec <strong className="text-blue-400">React, Django REST Framework et PostgreSQL</strong> pour construire des applications full-stack rapides, maintenables et scalables.
-              Je m'intéresse particulièrement au développement backend, aux APIs REST, aux architectures propres, aux principes SOLID ainsi qu'à l'optimisation des performances web.
-            </motion.p>
+            {aboutParagraphs.map((paragraph, index) => (
+              <motion.p key={index} variants={fadeLeft} className="text-[var(--text-muted)] text-[1.1rem] leading-relaxed">
+                {paragraph}
+              </motion.p>
+            ))}
           </motion.div>
 
           {/* Col droite */}
@@ -79,7 +82,7 @@ export const About = () => {
             viewport={defaultViewport}
           >
             <motion.p variants={fadeRight} className="text-[var(--text-muted)] text-[1.1rem] leading-relaxed mb-12">
-              Au-delà du développement, je m'intéresse également à la <strong className="text-indigo-400">cybersécurité, aux réseaux informatiques</strong> et à la conception de plateformes capables d'avoir un impact concret dans des domaines comme l'éducation, la santé numérique, l'immobilier et les services digitaux en Guinée.
+              {content.hero_subtitle}
             </motion.p>
 
             {/* Stats */}
@@ -94,7 +97,7 @@ export const About = () => {
                 <motion.div
                   key={stat.label}
                   variants={staggerItem}
-                  className="text-center p-4 rounded-2xl border border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-white/5"
+                  className="text-center p-4 rounded-2xl border border-slate-300 dark:border-white/5 bg-slate-100 dark:bg-white/5"
                 >
                   <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">
                     <CountUp value={stat.value} />

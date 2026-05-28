@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
 import { sectionHeader, fadeLeft, fadeRight, defaultViewport } from '../../lib/animations';
+import { fallbackSkills, usePublicSkills } from '../../lib/siteContent';
 
 
 // badgeVariants is now generated inside component to be theme-aware
@@ -8,6 +9,16 @@ import { sectionHeader, fadeLeft, fadeRight, defaultViewport } from '../../lib/a
 export const Skills = () => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+  const { data: skills } = usePublicSkills();
+  const skillList = skills?.length ? skills : fallbackSkills;
+
+  const groupedSkills = {
+    Backend: skillList.filter((skill) => skill.category === 'Backend'),
+    Frontend: skillList.filter((skill) => skill.category === 'Frontend'),
+    DevOps: skillList.filter((skill) => skill.category === 'DevOps'),
+    Security: skillList.filter((skill) => skill.category === 'Soft' || skill.category === 'Other'),
+  };
+  const securitySkills = groupedSkills.Security.length ? groupedSkills.Security : groupedSkills.DevOps.slice(0, 5);
 
   const badgeVariants = (hoverBg: string, hoverBorder: string, hoverText?: string) => ({
     initial: {
@@ -62,7 +73,7 @@ export const Skills = () => {
             whileFocus="hover"
             tabIndex={0}
             viewport={defaultViewport}
-            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
+            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px]"
           >
             {/* Effet code en hologramme — Framer Motion via whileHover */}
             <motion.div
@@ -83,18 +94,18 @@ export const Skills = () => {
               <p className="text-slate-700 dark:text-white/60 text-sm mb-8 max-w-md">Architecture distribuée, APIs RESTful, WebSockets et micro-services. Conception selon les principes SOLID pour des systèmes scalables.</p>
 
               <div className="flex flex-wrap gap-2 mt-auto">
-                {['Python', 'Django', 'Django REST Framework', 'Node.js', 'GraphQL', 'Celery', 'RabbitMQ'].map((skill) => (
+                {groupedSkills.Backend.map((skill) => (
                   <motion.span
-                    key={skill}
+                    key={skill.id}
                     variants={badgeVariants('rgba(139,92,246,0.2)', 'rgba(139,92,246,0.3)')}
                     initial="initial"
                     whileHover="hover"
                     whileTap="hover"
                     whileFocus="hover"
                     tabIndex={0}
-                    className="px-4 py-2 rounded-xl font-mono text-xs font-semibold border cursor-default"
+                    className="px-4 py-2 rounded-xl font-mono text-xs font-semibold border cursor-pointer"
                   >
-                    {skill}
+                    {skill.name}
                   </motion.span>
                 ))}
               </div>
@@ -111,7 +122,7 @@ export const Skills = () => {
             whileFocus="hover"
             tabIndex={0}
             viewport={defaultViewport}
-            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
+            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px]"
           >
 
             <div className="p-8 relative z-10 flex flex-col h-full">
@@ -129,18 +140,32 @@ export const Skills = () => {
               <p className="text-slate-700 dark:text-white/60 text-sm mb-8">Audits de sécurité, gestion des vulnérabilités (OWASP) et implémentation Zero Trust.</p>
 
               <div className="flex flex-wrap gap-2 mt-auto relative z-10">
-                {['OWASP Top 10', 'Pentesting', 'JWT / OAuth2', 'Docker', 'CI/CD (GitLab)'].map((skill) => (
+                {securitySkills.map((skill) => (
                   <motion.span
-                    key={skill}
+                    key={skill.id}
                     variants={badgeVariants('rgba(255,255,255,0.05)', 'rgba(239,68,68,0.5)', 'rgba(248,113,113,1)')}
                     initial="initial"
                     whileHover="hover"
                     whileTap="hover"
                     whileFocus="hover"
                     tabIndex={0}
-                    className="px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold border cursor-default"
+                    className="px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold border cursor-pointer"
                   >
-                    {skill}
+                    {skill.name}
+                  </motion.span>
+                ))}
+                {groupedSkills.DevOps.filter((skill) => !securitySkills.some((item) => item.id === skill.id)).map((skill) => (
+                  <motion.span
+                    key={skill.id}
+                    variants={badgeVariants('rgba(255,255,255,0.05)', 'rgba(239,68,68,0.5)', 'rgba(248,113,113,1)')}
+                    initial="initial"
+                    whileHover="hover"
+                    whileTap="hover"
+                    whileFocus="hover"
+                    tabIndex={0}
+                    className="px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold border cursor-pointer"
+                  >
+                    {skill.name}
                   </motion.span>
                 ))}
               </div>
@@ -157,7 +182,7 @@ export const Skills = () => {
             whileFocus="hover"
             tabIndex={0}
             viewport={defaultViewport}
-            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
+            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px]"
           >
             <motion.div
               variants={{ initial: { opacity: 0 }, hover: { opacity: 1, transition: { duration: 0.4 } } }}
@@ -173,18 +198,18 @@ export const Skills = () => {
               <p className="text-slate-700 dark:text-white/60 text-sm mb-8">Interfaces utilisateur ultra-réactives, animations fluides (60fps) et design pixel-perfect.</p>
 
               <div className="flex flex-wrap gap-2 mt-auto">
-                {['React', 'TypeScript', 'Tailwind', 'Framer Motion', 'Zustand', 'React Query'].map((skill) => (
+                {groupedSkills.Frontend.map((skill) => (
                   <motion.span
-                    key={skill}
+                    key={skill.id}
                     variants={badgeVariants('rgba(6,182,212,0.2)', 'rgba(6,182,212,0.3)')}
                     initial="initial"
                     whileHover="hover"
                     whileTap="hover"
                     whileFocus="hover"
                     tabIndex={0}
-                    className="px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold border cursor-default"
+                    className="px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold border cursor-pointer"
                   >
-                    {skill}
+                    {skill.name}
                   </motion.span>
                 ))}
               </div>
@@ -201,7 +226,7 @@ export const Skills = () => {
             whileFocus="hover"
             tabIndex={0}
             viewport={defaultViewport}
-            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0d0d0d] overflow-hidden relative min-h-[320px]"
+            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px]"
           >
 
             <div className="p-8 relative z-10 flex flex-col h-full">
@@ -214,18 +239,18 @@ export const Skills = () => {
               <p className="text-slate-700 dark:text-white/60 text-sm mb-6 max-w-md">Modélisation relationnelle complexe, indexation avancée, cache en mémoire et déploiement cloud résilient.</p>
 
               <div className="flex flex-wrap gap-2 mt-auto">
-                {['PostgreSQL', 'Redis', 'Elasticsearch', 'Prisma ORM', 'AWS / S3', 'NGINX'].map((skill) => (
+                {groupedSkills.DevOps.map((skill) => (
                   <motion.span
-                    key={skill}
+                    key={skill.id}
                     variants={badgeVariants('rgba(16,185,129,0.2)', 'rgba(16,185,129,0.3)')}
                     initial="initial"
                     whileHover="hover"
                     whileTap="hover"
                     whileFocus="hover"
                     tabIndex={0}
-                    className="px-4 py-2 rounded-xl font-mono text-xs font-semibold border cursor-default"
+                    className="px-4 py-2 rounded-xl font-mono text-xs font-semibold border cursor-pointer"
                   >
-                    {skill}
+                    {skill.name}
                   </motion.span>
                 ))}
               </div>

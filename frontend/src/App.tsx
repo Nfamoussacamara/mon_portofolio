@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Navbar } from './components/layout/Navbar';
 import { Hero } from './components/features/Hero';
@@ -21,23 +21,30 @@ import { AdminLayout } from './pages/admin/AdminLayout';
 const queryClient = new QueryClient();
 
 // Composant regroupant tout le site public
-const PublicPortfolio = () => (
-  <div className="min-h-screen bg-[var(--bg-primary)] font-sans text-[var(--text-primary)] relative">
-    <Navbar />
-    <main className="w-full pt-12">
-      <Hero />
-      <About />
-      <Skills />
-      <Projects />
-      <Education />
-      <BlogPreview />
-      <CallToAction />
-      <Contact />
-    </main>
-    <Footer />
-    <ScrollToTop />
-  </div>
-);
+const PublicPortfolio = () => {
+  useEffect(() => {
+    // Scroller vers le haut (Hero) au chargement de la page
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[var(--bg-primary)] font-sans text-[var(--text-primary)] relative">
+      <Navbar />
+      <main className="w-full pt-12">
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Education />
+        <BlogPreview />
+        <CallToAction />
+        <Contact />
+      </main>
+      <Footer />
+      <ScrollToTop />
+    </div>
+  );
+};
 
 // Portail d'administration avec token JWT
 const AdminPortal = () => {

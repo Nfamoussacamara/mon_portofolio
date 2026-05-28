@@ -29,19 +29,19 @@ export const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] w-full max-w-lg mx-auto"
           >
-            <div className="bg-[#0a0a0a] border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
+            <div className="bg-white dark:bg-[#1c1c1c] border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden">
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-white/5">
-                <h3 className="text-white font-semibold text-lg">{title}</h3>
+              <div className="flex items-center justify-between p-6 border-b border-slate-200 dark:border-white/5">
+                <h3 className="text-slate-900 dark:text-white font-semibold text-lg">{title}</h3>
                 <button
                   onClick={onClose}
-                  className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-slate-400 hover:text-white transition-all"
+                  className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/10 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-all"
                 >
                   ✕
                 </button>
               </div>
               {/* Content */}
-              <div className="p-6">{children}</div>
+              <div className="p-6 max-h-[80vh] overflow-y-auto thin-scrollbar">{children}</div>
             </div>
           </motion.div>
         </>

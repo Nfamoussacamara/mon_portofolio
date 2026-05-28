@@ -1,5 +1,5 @@
 from rest_framework import viewsets, mixins
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.exceptions import Throttled
 from django.utils.decorators import method_decorator
@@ -15,14 +15,24 @@ def get_client_ip(request):
         return x_forwarded_for.split(',')[0]
     return request.META.get('REMOTE_ADDR')
 
-class ContactMessageViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+class IsAdminOrCreateOnly(AllowAny):
     """
-    Endpoint POST /api/contact/ permettant de soumettre un message.
-    Limité à 5 requêtes par IP par heure pour éviter le SPAM.
+    Permet à n'importe qui d'envoyer un message (POST).
+    Mais seuls les administrateurs peuvent lire, modifier ou supprimer les messages.
     """
-    queryset = ContactMessage.objects.all()
+    def has_permission(self, request, view):
+        if request.method == 'POST':
+            return True
+        return request.user and request.user.is_staff
+
+class ContactMessageViewSet(viewsets.ModelViewSet):
+    """
+    Endpoint /api/contact/ pour gérer les messages de contact.
+    Création publique (limitée), lecture/suppression restreintes aux admins.
+    """
+    queryset = ContactMessage.objects.all().order_by('-created_at')
     serializer_class = ContactMessageSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAdminOrCreateOnly]
 
     @method_decorator(ratelimit(key='ip', rate='5/h', method='POST', block=True))
     def create(self, request, *args, **kwargs):

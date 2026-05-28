@@ -2,27 +2,9 @@ import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { sectionHeader, defaultViewport } from '../../lib/animations';
 import type { Variants } from 'framer-motion';
+import { fallbackBlogPosts, usePublicBlogPosts } from '../../lib/siteContent';
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
-
-const mockPosts = [
-  {
-    id: 1,
-    title: "Pourquoi l'architecture Clean est vitale en 2026",
-    excerpt: "Découvrez comment structurer vos projets Django et React pour qu'ils durent des années sans devenir une dette technique.",
-    date: "24 Mai 2026",
-    category: "Architecture",
-    readTime: "5 min"
-  },
-  {
-    id: 2,
-    title: "Securing JWT: Les erreurs que vous faites probablement",
-    excerpt: "HttpOnly, SameSite, Refresh Tokens... On fait le tour des bonnes pratiques pour sécuriser vos APIs Django REST.",
-    date: "18 Mai 2026",
-    category: "Cybersécurité",
-    readTime: "8 min"
-  }
-];
 
 const leftCard: Variants = {
   hidden: { opacity: 0, x: -60 },
@@ -34,18 +16,12 @@ const rightCard: Variants = {
   visible: { opacity: 1, x: 0, transition: { duration: 1.1, ease: EASE } }
 };
 
-const titleHover: Variants = {
-  initial: { color: 'var(--text-primary)' },
-  hover: { color: '#a855f7', transition: { duration: 0.25 } }
-};
 
-const lineHover: Variants = {
-  initial: { width: 24 },
-  hover: { width: 40, transition: { duration: 0.25 } }
-};
 
 export const BlogPreview = () => {
+  const { data: blogPosts } = usePublicBlogPosts();
   const cardVariantsList: Variants[] = [leftCard, rightCard];
+  const posts = (blogPosts?.length ? blogPosts : fallbackBlogPosts).slice(0, 2);
 
   return (
     <section id="blog" className="py-16 md:py-28 bg-[var(--bg-primary)] border-t border-slate-200 dark:border-white/5 relative overflow-hidden">
@@ -70,15 +46,14 @@ export const BlogPreview = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {mockPosts.map((post, i) => (
+          {posts.map((post, i) => (
             <motion.article
               key={post.id}
               variants={cardVariantsList[i]}
               initial="hidden"
               whileInView="visible"
-              whileHover="hover"
               viewport={defaultViewport}
-              className="p-8 rounded-2xl border border-slate-200 dark:border-white/8 bg-slate-50 dark:bg-white/2 flex flex-col h-full cursor-pointer"
+              className="p-8 rounded-2xl border border-slate-200 dark:border-white/8 bg-slate-50 dark:bg-white/2 flex flex-col h-full cursor-pointer group hover:border-purple-500/30 dark:hover:border-purple-500/30 transition-colors duration-300"
             >
               <div className="flex items-center gap-4 mb-6">
                 <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--text-muted)] px-2 py-1 rounded border border-slate-200 dark:border-white/10">
@@ -88,13 +63,9 @@ export const BlogPreview = () => {
                 <span className="text-xs text-[var(--text-muted)] ml-auto">{post.readTime}</span>
               </div>
 
-              <motion.h3
-                variants={titleHover}
-                initial="initial"
-                className="text-xl font-bold mb-4"
-              >
+              <h3 className="text-xl font-bold mb-4 text-slate-900 dark:text-white group-hover:text-purple-500 transition-colors duration-300">
                 {post.title}
-              </motion.h3>
+              </h3>
 
               <p className="text-[var(--text-muted)] leading-relaxed mb-8 flex-1">
                 {post.excerpt}
@@ -102,11 +73,7 @@ export const BlogPreview = () => {
 
               <div className="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2">
                 Lire l'article
-                <motion.div
-                  variants={lineHover}
-                  initial="initial"
-                  className="h-px bg-current"
-                />
+                <div className="h-px bg-current w-6 group-hover:w-10 transition-all duration-300" />
               </div>
             </motion.article>
           ))}

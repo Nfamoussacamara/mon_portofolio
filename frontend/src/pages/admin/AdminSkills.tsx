@@ -20,7 +20,7 @@ export const AdminSkills = ({ token }: { token: string }) => {
   const [editing, setEditing] = useState<any>(null);
   const [form, setForm] = useState<SkillForm>(emptyForm);
 
-  const { data: skills, isLoading } = useQuery({ queryKey: ['admin-skills'], queryFn: async () => (await fetch(`${API}/skills/`)).json() });
+  const { data: skills, isLoading, isError } = useQuery({ queryKey: ['admin-skills'], queryFn: async () => (await fetch(`${API}/skills/`)).json(), retry: 1 });
   const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
 
   const save = useMutation({
@@ -56,19 +56,22 @@ export const AdminSkills = ({ token }: { token: string }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {[1,2,3,4,5,6].map(i => <TableRowSkeleton key={i} />)}
         </div>
+      ) : isError ? (
+        <div className="text-sm text-slate-400">Impossible de charger les compétences. Réessayez plus tard.</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {skills?.map((s: any) => (
+          {(skills ?? []).map((s: any) => (
             <motion.div key={s.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-              className="bg-[#111111] border border-white/10 p-6 rounded-2xl hover:border-white/25 transition-all duration-300 w-full relative z-10 flex flex-col justify-between"
+              className="bg-[#1a1a1a] border border-white/10 p-6 rounded-2xl hover:border-white/25 transition-all duration-300 w-full relative z-10 flex flex-col justify-between group"
             >
               <div>
-                <div className="flex items-start justify-between mb-2">
+                <div className="flex items-start justify-between mb-2 pr-8">
                   <span className="text-indigo-400 font-mono text-sm block">{s.category}</span>
                   <span className={`text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded border border-white/5 ${categories[s.category] || categories.Other}`}>
                     {s.mastery_percentage}%
                   </span>
                 </div>
+                <Button variant="ghost" size="sm" className="absolute top-2 right-2 w-8 h-8 p-0 flex items-center justify-center rounded-full text-red-400/70 hover:bg-red-500/10 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all z-20" onClick={() => { if (confirm('Supprimer ?')) remove.mutate(s.id); }}>✕</Button>
                 <h3 className="text-xl font-bold text-white mb-4">{s.name}</h3>
                 
                 <div className="flex-1 h-1 bg-white/10 rounded-full overflow-hidden mb-6">
@@ -78,7 +81,6 @@ export const AdminSkills = ({ token }: { token: string }) => {
 
               <div className="flex gap-2 mt-auto">
                 <Button variant="outline" size="sm" className="text-xs border-white/10 hover:bg-white/5 flex-1" onClick={() => { setEditing(s); setForm({ name: s.name, category: s.category, mastery_percentage: s.mastery_percentage, icon_name: s.icon_name || '', order: s.order }); setIsOpen(true); }}>Éditer</Button>
-                <Button variant="ghost" size="sm" className="text-xs text-red-400 hover:bg-red-500/10 hover:text-red-300" onClick={() => { if (confirm('Supprimer ?')) remove.mutate(s.id); }}>✕</Button>
               </div>
             </motion.div>
           ))}

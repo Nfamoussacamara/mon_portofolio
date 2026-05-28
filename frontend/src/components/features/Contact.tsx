@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { sectionHeader, fadeLeft, fadeRight, defaultViewport } from '../../lib/animations';
+import { normalizeProfile, usePublicProfile } from '../../lib/siteContent';
 
 const inputClass = "w-full px-4 py-3 rounded-xl border text-sm bg-transparent outline-none transition-all duration-200 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-[#555] focus:border-slate-400 dark:focus:border-white/30 focus:bg-slate-50 dark:focus:bg-white/5";
 const labelClass = "block text-sm font-medium mb-2 text-slate-700";
 
 export const Contact = () => {
+  const { data: profile } = usePublicProfile();
+  const content = normalizeProfile(profile);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -45,9 +48,9 @@ export const Contact = () => {
   };
 
   const infos = [
-    { label: 'Email', value: 'contact@votre-email.com' },
-    { label: 'Localisation', value: 'Conakry, Guinée' },
-    { label: 'Disponibilité', value: 'Ouvert aux projets' },
+    { label: 'Email', value: content.contact_email || 'contact@votre-email.com' },
+    { label: 'Localisation', value: content.location || 'Conakry, Guinée' },
+    { label: 'Disponibilité', value: content.available_for_hire ? 'Ouvert aux projets' : 'Non disponible pour le moment' },
   ];
 
   return (
@@ -68,11 +71,13 @@ export const Contact = () => {
             // contact
           </p>
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
-            Parlons de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">votre projet</span>
+            {content.contact_page_title && content.contact_page_title !== 'Parlons de votre projet'
+              ? content.contact_page_title
+              : <>Parlons de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">votre projet</span></>
+            }
           </h2>
           <p className="text-[var(--text-muted)] text-lg max-w-2xl mx-auto leading-relaxed">
-            Architecture d'entreprise, audit de sécurité ou produit web innovant — n'hésitez
-            pas à me contacter. Je réponds dans les 24h.
+            {content.contact_page_description || 'Architecture d\'entreprise, audit de sécurité ou produit web innovant — n\'hésitez pas à me contacter. Je réponds dans les 24h.'}
           </p>
         </motion.div>
  
@@ -112,11 +117,11 @@ export const Contact = () => {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className={labelClass}>Nom complet</label>
-                <input type="text" name="name" required className={inputClass} placeholder="Jean Dupont" />
+                <input type="text" name="name" required className={inputClass} placeholder="N'famousa Camara" />
               </div>
               <div>
                 <label className={labelClass}>Adresse Email</label>
-                <input type="email" name="email" required className={inputClass} placeholder="jean@example.com" />
+                <input type="email" name="email" required className={inputClass} placeholder="camaranfamoussa199@gmail.com" />
               </div>
               <div>
                 <label className={labelClass}>Sujet</label>

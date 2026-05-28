@@ -1,43 +1,23 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { fallbackEducation, usePublicEducation } from '../../lib/siteContent';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const EDUCATION_DATA = [
-  {
-    year: 'Actuellement',
-    degree: 'Licence en Informatique',
-    school: 'Université de Labé',
-    description: 'Développement d\'algorithmes complexes, architecture web et cybersécurité.',
-    align: 'left',
-  },
-  {
-    year: '2021',
-    degree: 'Baccalauréat Scientifique',
-    school: 'Lycée',
-    description: 'Forte dominante en mathématiques et sciences physiques.',
-    align: 'right',
-  },
-  {
-    year: '2018',
-    degree: 'Brevet d\'Études du Premier Cycle',
-    school: 'Collège',
-    description: 'Formation générale et bases scientifiques.',
-    align: 'left',
-  },
-  {
-    year: '2014',
-    degree: 'Certificat d\'Études Primaires',
-    school: 'École Primaire',
-    description: 'Premiers pas dans l\'apprentissage formel.',
-    align: 'right',
-  }
-];
 
 export const Education = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const centralLineRef = useRef<HTMLDivElement>(null);
+  const { data: education } = usePublicEducation();
+  const educationList = (education?.length ? education : fallbackEducation)
+    .slice()
+    .sort((left, right) => left.order - right.order)
+    .map((item) => ({
+      year: item.end_year === 'Présent' || item.end_year === item.start_year ? item.start_year : `${item.start_year} - ${item.end_year}`,
+      degree: item.title,
+      school: item.institution,
+      description: item.description,
+    }));
 
   useEffect(() => {
     if (!containerRef.current || !centralLineRef.current) return;
@@ -94,7 +74,7 @@ export const Education = () => {
       .to(point, { backgroundColor: '#ffffff', scale: 1.2, duration: 0.15, yoyo: true, repeat: 1 }, 0.2);
     });
 
-  }, []);
+  }, [educationList.length]);
 
   return (
     <section className="py-16 md:py-28 relative overflow-hidden bg-[var(--bg-primary)]" ref={containerRef}>
@@ -125,7 +105,7 @@ export const Education = () => {
           />
 
           <div className="space-y-12 md:space-y-24">
-            {EDUCATION_DATA.map((item, index) => {
+            {educationList.map((item, index) => {
               const isLeft = index % 2 === 0;
 
               return (
@@ -136,14 +116,14 @@ export const Education = () => {
 
                   {/* Nœud Central */}
                   <div className="absolute left-6 md:left-1/2 top-8 md:top-1/2 -translate-x-1/2 md:-translate-y-1/2 flex items-center justify-center z-20">
-                    <div className="timeline-dot w-4 h-4 rounded-full bg-slate-200 dark:bg-[#111111] border-[2px] border-indigo-500 flex items-center justify-center group-hover:scale-150 group-hover:bg-indigo-500 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] transition-all duration-300 relative">
+                    <div className="timeline-dot w-4 h-4 rounded-full bg-slate-200 dark:bg-[#1a1a1a] border-[2px] border-indigo-500 flex items-center justify-center group-hover:scale-150 group-hover:bg-indigo-500 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] transition-all duration-300 relative">
                       <div className="timeline-inner-point w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:bg-white transition-colors" />
                     </div>
                   </div>
 
                   {/* Carte */}
                   <div className={`ml-16 md:ml-0 md:absolute md:top-1/2 md:-translate-y-1/2 w-[calc(100%-5rem)] md:w-[45%] ${isLeft ? 'md:left-0 md:text-right' : 'md:right-0 md:text-left'} text-left`}>
-                    <div className="timeline-card bg-white dark:bg-[#111111] border border-slate-200 dark:border-white/10 p-6 rounded-2xl hover:border-slate-300 dark:hover:border-white/25 transition-all duration-300 w-full relative z-10">
+                    <div className="timeline-card bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-white/10 p-6 rounded-2xl hover:border-indigo-500/40 dark:hover:border-white/25 transition-all duration-300 w-full relative z-10 cursor-default">
                       <span className="text-indigo-400 font-mono text-sm block mb-1">{item.year}</span>
                       <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{item.degree}</h3>
                       <div className="text-slate-700 dark:text-white/40 text-sm font-medium mb-3 uppercase tracking-wider">{item.school}</div>

@@ -2,23 +2,11 @@ import { motion } from 'framer-motion';
 import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { Button } from '../ui/Button';
-
-const TECHS = [
-  { name: 'React',       icon: 'https://cdn.simpleicons.org/react/61DAFB' },
-  { name: 'TypeScript',  icon: 'https://cdn.simpleicons.org/typescript/3178C6' },
-  { name: 'Python',      icon: 'https://cdn.simpleicons.org/python/3776AB' },
-  { name: 'Django',      icon: 'https://cdn.simpleicons.org/django/092E20' },
-  { name: 'Docker',      icon: 'https://cdn.simpleicons.org/docker/2496ED' },
-  { name: 'PostgreSQL',  icon: 'https://cdn.simpleicons.org/postgresql/4169E1' },
-  { name: 'Redis',       icon: 'https://cdn.simpleicons.org/redis/FF4438' },
-  { name: 'Linux',       icon: 'https://cdn.simpleicons.org/linux/FCC624' },
-  { name: 'Git',         icon: 'https://cdn.simpleicons.org/git/F05032' },
-  { name: 'Node.js',     icon: 'https://cdn.simpleicons.org/nodedotjs/339933' },
-  { name: 'Tailwind',    icon: 'https://cdn.simpleicons.org/tailwindcss/06B6D4' },
-  { name: 'GraphQL',     icon: 'https://cdn.simpleicons.org/graphql/E10098' },
-];
+import { getSkillIconUrl, normalizeProfile, resolveMediaUrl, usePublicProfile, usePublicSkills } from '../../lib/siteContent';
 
 function HeroText() {
+  const { data: profile } = usePublicProfile();
+  const content = normalizeProfile(profile);
   const containerRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLDivElement>(null);
   const roleRef = useRef<HTMLDivElement>(null);
@@ -179,7 +167,7 @@ function HeroText() {
       <div ref={nameRef} className="hero-name-container relative mb-4">
         <div className="relative inline-block overflow-hidden">
           <h1 className="hero-name text-4xl md:text-6xl lg:text-[80px] font-extrabold leading-tight tracking-tighter text-[var(--text-primary)] sm:whitespace-nowrap">
-            N'famoussa Camara
+            {content.full_name}
           </h1>
           <div className="reveal-bar-name absolute inset-0 bg-blue-500 z-10 scale-x-0" />
         </div>
@@ -189,10 +177,16 @@ function HeroText() {
       <div ref={roleRef} className="hero-role-container mb-4 relative">
         <div className="relative inline-block overflow-hidden">
           <h2 className="hero-role block text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold leading-tight tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500">
-            Développeur Full-Stack
+            {content.hero_title}
           </h2>
           <div className="reveal-bar-role absolute inset-0 bg-indigo-500 z-10 scale-x-0" />
         </div>
+      </div>
+
+      <div className="mb-6">
+        <span className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium ${content.available_for_hire ? 'border-emerald-500/20 bg-emerald-500/10 text-emerald-400' : 'border-amber-500/20 bg-amber-500/10 text-amber-400'}`}>
+          {content.available_for_hire ? 'Disponible pour de nouveaux projets' : 'Actuellement indisponible'}
+        </span>
       </div>
 
       {/* Flèche scroll mobile uniquement */}
@@ -219,8 +213,7 @@ function HeroText() {
 
       {/* Sous-titre */}
       <p className="hero-sub opacity-0 text-lg text-[var(--text-muted)] max-w-md leading-relaxed mb-10">
-        Spécialisé en Cybersécurité, React &amp; Django. Je construis des applications
-        robustes, sécurisées et prêtes pour la production.
+        {content.hero_subtitle}
       </p>
 
       {/* Boutons */}
@@ -228,7 +221,7 @@ function HeroText() {
         <Button size="lg" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
           Voir mes projets
         </Button>
-        <Button size="lg" variant="outline" onClick={() => window.open('/cv.pdf', '_blank')}>
+        <Button size="lg" variant="outline" onClick={() => window.open(resolveMediaUrl(content.cv_file) || '/cv.pdf', '_blank')}>
           Mon CV
         </Button>
       </div>
@@ -237,6 +230,20 @@ function HeroText() {
 }
 
 export function Hero() {
+  const { data: profile } = usePublicProfile();
+  const { data: skills } = usePublicSkills();
+  const content = normalizeProfile(profile);
+  const techs = (skills?.length ? skills : []).map((skill) => ({
+    name: skill.name,
+    icon: getSkillIconUrl(skill),
+  }));
+  const techMarquee = techs.length ? techs : [
+    { name: 'React', icon: getSkillIconUrl({ name: 'React', icon_name: 'react' }) },
+    { name: 'TypeScript', icon: getSkillIconUrl({ name: 'TypeScript', icon_name: 'typescript' }) },
+    { name: 'Python', icon: getSkillIconUrl({ name: 'Python', icon_name: 'python' }) },
+    { name: 'Django', icon: getSkillIconUrl({ name: 'Django', icon_name: 'django' }) },
+  ];
+
   return (
     <section id="home" className="relative pt-0 pb-6 md:pb-16 overflow-hidden">
       {/* Ambient glow */}
@@ -256,8 +263,8 @@ export function Hero() {
             <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-blue-600/10 to-transparent rounded-full blur-3xl translate-y-20" />
             <div className="relative aspect-[4/5] flex items-end justify-center overflow-visible">
               <img
-                src="/profil-removebg-preview.png"
-                alt="Photo de profil"
+                src={resolveMediaUrl(content.avatar_url) || '/profil-removebg-preview.png'}
+                alt={`Photo de profil de ${content.full_name}`}
                 className="w-full h-full object-contain object-bottom transform scale-115 origin-bottom"
               />
             </div>
@@ -298,7 +305,7 @@ export function Hero() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
             <div className="marquee-wrapper flex select-none" aria-hidden="true">
               <div className="flex shrink-0 animate-marquee items-center gap-16 pr-16">
-                {TECHS.map((tech, i) => (
+                {techMarquee.map((tech, i) => (
                   <div key={`hero-tech1-${i}`} className="tech-logo-item">
                     <img src={tech.icon} alt={tech.name} className="tech-logo-img" />
                     <span className="tech-logo-label">{tech.name}</span>
@@ -306,7 +313,7 @@ export function Hero() {
                 ))}
               </div>
               <div className="flex shrink-0 animate-marquee items-center gap-16 pr-16">
-                {TECHS.map((tech, i) => (
+                {techMarquee.map((tech, i) => (
                   <div key={`hero-tech2-${i}`} className="tech-logo-item">
                     <img src={tech.icon} alt={tech.name} className="tech-logo-img" />
                     <span className="tech-logo-label">{tech.name}</span>

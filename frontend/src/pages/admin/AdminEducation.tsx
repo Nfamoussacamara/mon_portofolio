@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Button } from '../../components/ui/Button';
 import { Modal } from '../../components/ui/Modal';
-import { CardSkeleton } from '../../components/ui/Skeleton';
+import { TableRowSkeleton } from '../../components/ui/Skeleton';
 import { useToast } from '../../context/ToastContext';
 
 const API = 'http://localhost:8000/api';
@@ -20,7 +20,7 @@ export const AdminEducation = ({ token }: { token: string }) => {
   const [editing, setEditing] = useState<any>(null);
   const [form, setForm] = useState<EduForm>(emptyForm);
 
-  const { data: entries, isLoading } = useQuery({ queryKey: ['admin-education'], queryFn: async () => (await fetch(`${API}/education/`)).json() });
+  const { data: entries, isLoading, isError } = useQuery({ queryKey: ['admin-education'], queryFn: async () => (await fetch(`${API}/education/`)).json(), retry: 1 });
   const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
 
   const save = useMutation({
@@ -53,24 +53,28 @@ export const AdminEducation = ({ token }: { token: string }) => {
       </div>
 
       {isLoading ? (
-        <div className="space-y-4">{[1,2,3].map(i => <CardSkeleton key={i} />)}</div>
+        <div className="space-y-3">
+          {[1,2,3].map(i => <TableRowSkeleton key={i} />)}
+        </div>
+      ) : isError ? (
+        <div className="text-sm text-slate-400">Impossible de charger l'éducation. Réessayez plus tard.</div>
       ) : (
         <div className="space-y-4">
-          {entries?.map((e: any) => (
+          {(entries ?? []).map((e: any) => (
             <motion.div key={e.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-              className="bg-[#111111] border border-white/10 p-6 rounded-2xl hover:border-white/25 transition-all duration-300 w-full relative z-10 flex flex-col sm:flex-row justify-between gap-4">
+              className="bg-[#1a1a1a] border border-white/10 p-6 rounded-2xl hover:border-white/25 transition-all duration-300 w-full relative z-10 flex flex-col sm:flex-row justify-between gap-4 group">
               <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-1">
+                <div className="flex items-start justify-between mb-1 pr-8">
                   <span className="text-indigo-400 font-mono text-sm block">{e.start_year} — {e.end_year || 'Présent'}</span>
                   <span className={`text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded border border-white/5 ${typeColors[e.entry_type]}`}>{e.entry_type}</span>
                 </div>
+                <Button variant="ghost" size="sm" className="absolute top-2 right-2 w-8 h-8 p-0 flex items-center justify-center rounded-full text-red-400/70 hover:bg-red-500/10 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all z-20" onClick={() => { if(confirm('Supprimer ?')) remove.mutate(e.id); }}>✕</Button>
                 <h3 className="text-xl font-bold text-white mb-1">{e.title}</h3>
                 <div className="text-white/40 text-sm font-medium mb-3 uppercase tracking-wider">{e.institution}</div>
                 {e.description && <p className="text-white/60 text-sm leading-relaxed line-clamp-2 mb-4">{e.description}</p>}
               </div>
               <div className="flex sm:flex-col gap-2 sm:ml-4 flex-shrink-0 mt-auto">
                 <Button variant="outline" size="sm" className="text-xs border-white/10 hover:bg-white/5 flex-1" onClick={() => { setEditing(e); setForm({ title: e.title, institution: e.institution, start_year: e.start_year, end_year: e.end_year || '', description: e.description || '', entry_type: e.entry_type, order: e.order }); setIsOpen(true); }}>Éditer</Button>
-                <Button variant="ghost" size="sm" className="text-xs text-red-400 hover:bg-red-500/10 hover:text-red-300 flex-1" onClick={() => { if(confirm('Supprimer ?')) remove.mutate(e.id); }}>Supprimer</Button>
               </div>
             </motion.div>
           ))}
