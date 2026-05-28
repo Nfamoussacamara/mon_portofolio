@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 from portfolio.models import Profile, Skill, Education, Project
 from blog.models import BlogPost
 from datetime import datetime
@@ -127,7 +128,7 @@ class Command(BaseCommand):
                     content="...",
                     category="Architecture",
                     read_time="5 min",
-                    published_at=datetime.strptime('24-05-2026', '%d-%m-%Y'),
+                    published_at=timezone.make_aware(datetime.strptime('24-05-2026', '%d-%m-%Y')),
                     is_published=True,
                     order=1
                 )
@@ -140,7 +141,7 @@ class Command(BaseCommand):
                     content="...",
                     category="Cybersécurité",
                     read_time="8 min",
-                    published_at=datetime.strptime('18-05-2026', '%d-%m-%Y'),
+                    published_at=timezone.make_aware(datetime.strptime('18-05-2026', '%d-%m-%Y')),
                     is_published=True,
                     order=2
                 )
