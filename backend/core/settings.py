@@ -105,6 +105,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = DEBUG # All in dev, restricted in prod
 CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=[])
 
+# CSRF Safe Origins (requis pour Django 4.x+ en production)
+CSRF_TRUSTED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=[])
+
 # Cloudinary Storage
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME', default=''),
