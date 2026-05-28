@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Button } from '../../components/ui/Button';
@@ -20,24 +20,54 @@ export const AdminSkills = ({ token }: { token: string }) => {
   const [editing, setEditing] = useState<any>(null);
   const [form, setForm] = useState<SkillForm>(emptyForm);
 
-  const { data: skills, isLoading, isError } = useQuery({ queryKey: ['admin-skills'], queryFn: async () => (await fetch(`${API}/skills/`)).json(), retry: 1 });
+  const { data: skills, isLoading, isError } = useQuery({ 
+    queryKey: ['admin-skills'], 
+    queryFn: async () => {
+      try {
+        const res = await fetch(`${API}/skills/`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return await res.json();
+      } catch (err) {
+        console.error('Erreur chargement compétences:', err);
+        return [];
+      }
+    }, 
+    retry: 1 
+  });
   const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
 
   const save = useMutation({
     mutationFn: async (data: SkillForm) => {
       const url = editing ? `${API}/skills/${editing.id}/` : `${API}/skills/`;
       const res = await fetch(url, { method: editing ? 'PUT' : 'POST', headers, body: JSON.stringify(data) });
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        console.error('Erreur lors de l\'enregistrement de la compétence:', { status: res.status, errorData, data });
+        throw new Error(JSON.stringify(errorData));
+      }
       return res.json();
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-skills'] }); showToast(editing ? 'Compétence modifiée !' : 'Compétence ajoutée !'); setIsOpen(false); setEditing(null); setForm(emptyForm); },
-    onError: () => showToast('Erreur lors de l\'enregistrement.', 'error'),
+    onError: (error: any) => {
+      console.error('Mutation erreur:', error);
+      showToast(`Erreur: ${error.message || 'Enregistrement échoué'}`, 'error');
+    },
   });
 
   const remove = useMutation({
-    mutationFn: async (id: number) => { const res = await fetch(`${API}/skills/${id}/`, { method: 'DELETE', headers }); if (!res.ok) throw new Error(); },
+    mutationFn: async (id: number) => { 
+      const res = await fetch(`${API}/skills/${id}/`, { method: 'DELETE', headers }); 
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        console.error('Erreur lors de la suppression:', { status: res.status, errorData });
+        throw new Error(JSON.stringify(errorData));
+      }
+    },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['admin-skills'] }); showToast('Compétence supprimée.', 'info'); },
-    onError: () => showToast('Suppression échouée.', 'error'),
+    onError: (error: any) => {
+      console.error('Erreur suppression:', error);
+      showToast('Suppression échouée.', 'error');
+    },
   });
 
   const categories: Record<string, string> = { Frontend: 'text-blue-400 bg-blue-500/10', Backend: 'text-emerald-400 bg-emerald-500/10', DevOps: 'text-purple-400 bg-purple-500/10', Soft: 'text-amber-400 bg-amber-500/10', Other: 'text-slate-400 bg-slate-500/10' };
@@ -92,27 +122,28 @@ export const AdminSkills = ({ token }: { token: string }) => {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className={labelClass}>Nom</label>
-              <input className={inputClass} value={form.name} onChange={e => setForm({...form, name: e.target.value})} required placeholder="React, Python..." />
+              <input className={inputClass} value={form.name} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setForm({...form, name: e.target.value})} required placeholder="React, Python..." />
             </div>
             <div>
               <label className={labelClass}>Catégorie</label>
-              <select className={inputClass} value={form.category} onChange={e => setForm({...form, category: e.target.value})}>
+              <select className={inputClass} value={form.category || ''} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setForm({...form, category: e.target.value})}>
+                <option value="">Sélectionner...</option>
                 {['Frontend', 'Backend', 'DevOps', 'Soft', 'Other'].map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
           </div>
           <div>
             <label className={labelClass}>Maîtrise : {form.mastery_percentage}%</label>
-            <input type="range" min={10} max={100} step={5} className="w-full accent-blue-500" value={form.mastery_percentage} onChange={e => setForm({...form, mastery_percentage: Number(e.target.value)})} />
+            <input type="range" min="10" max="100" step="5" className="w-full accent-blue-500" value={String(form.mastery_percentage)} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setForm({...form, mastery_percentage: Number(e.target.value)})} />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className={labelClass}>Icône (optionnel)</label>
-              <input className={inputClass} value={form.icon_name} onChange={e => setForm({...form, icon_name: e.target.value})} placeholder="react, python..." />
+              <input className={inputClass} value={form.icon_name} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setForm({...form, icon_name: e.target.value})} placeholder="react, python..." />
             </div>
             <div>
               <label className={labelClass}>Ordre (0 = premier)</label>
-              <input type="number" className={inputClass} value={form.order} onChange={e => setForm({...form, order: Number(e.target.value)})} />
+              <input type="number" className={inputClass} value={form.order} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setForm({...form, order: Number(e.target.value)})} />
             </div>
           </div>
           <div className="flex gap-3 pt-2">

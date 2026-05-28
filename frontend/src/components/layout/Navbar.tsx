@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { normalizeProfile, usePublicProfile } from '../../lib/siteContent';
 
 export const Navbar = () => {
+  const { data: profile } = usePublicProfile();
+  const content = normalizeProfile(profile);
   const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -101,14 +104,18 @@ export const Navbar = () => {
           </motion.button>
 
           <div className="w-px h-6 bg-slate-200 dark:bg-[#333333]" />
+          <a href={content.whatsapp_url || '#'} aria-label="WhatsApp" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-emerald-500 transition-colors">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+              <path d="M20.52 3.48A11.95 11.95 0 0 0 12 0C5.37 0 .03 5.34.03 12c0 2.11.55 4.08 1.52 5.84L0 24l6.41-1.55A11.96 11.96 0 0 0 12 24c6.63 0 11.97-5.34 11.97-12 0-1.97-.46-3.84-1.45-5.52zM12 21.5c-1.75 0-3.47-.45-4.98-1.3l-.36-.21-3.8.92.95-3.7-.23-.38A9.49 9.49 0 0 1 2.5 12C2.5 6.14 6.64 2 12 2s9.5 4.14 9.5 10-4.14 9.5-9.5 9.5z" fill="currentColor"/>
+              <path d="M17.2 14.1c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.18.2-.36.22-.66.07-.3-.15-1.27-.47-2.42-1.48-.9-.8-1.5-1.78-1.68-2.08-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.45 1.06 2.85 1.2 3.05.13.2 2.08 3.3 5.04 4.62 2.96 1.33 2.96.89 3.5.83.54-.06 1.76-.72 2.01-1.41.25-.69.25-1.28.17-1.41-.08-.13-.3-.2-.6-.35z" fill="currentColor"/>
+            </svg>
+          </a>
 
-          <motion.a
-            href="#contact"
-            onClick={(e) => scrollToSection(e, '#contact')}
-            className="text-[15px] font-medium text-[var(--text-primary)] transition-opacity duration-200 hover:opacity-80"
-          >
-            Discuter
-          </motion.a>
+          <a href={content.linkedin_url || '#'} aria-label="LinkedIn" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-blue-700 transition-colors">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+              <path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8.98h5V24H0V8.98zM8.98 8.98h4.79v2.04h.07c.67-1.27 2.31-2.61 4.75-2.61 5.09 0 6.03 3.35 6.03 7.7V24h-5V16.5c0-1.78-.03-4.07-2.48-4.07-2.48 0-2.86 1.94-2.86 3.95V24h-5V8.98z" fill="currentColor"/>
+            </svg>
+          </a>
 
           <motion.a
             href="#contact"
@@ -174,16 +181,20 @@ export const Navbar = () => {
                 </motion.a>
               ))}
               <div className="pt-4 border-t border-slate-100 dark:border-[#333333] space-y-4">
-                <motion.a
-                  href="#contact"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.18, duration: 0.3 }}
-                  className="block text-base font-medium text-slate-700 dark:text-[#a1a1aa]"
-                  onClick={(e) => scrollToSection(e, '#contact')}
-                >
-                  Discuter
-                </motion.a>
+                <div className="flex items-center gap-4">
+                  <a href={content.whatsapp_url || '#'} aria-label="WhatsApp" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-emerald-500 transition-colors">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                      <path d="M20.52 3.48A11.95 11.95 0 0 0 12 0C5.37 0 .03 5.34.03 12c0 2.11.55 4.08 1.52 5.84L0 24l6.41-1.55A11.96 11.96 0 0 0 12 24c6.63 0 11.97-5.34 11.97-12 0-1.97-.46-3.84-1.45-5.52zM12 21.5c-1.75 0-3.47-.45-4.98-1.3l-.36-.21-3.8.92.95-3.7-.23-.38A9.49 9.49 0 0 1 2.5 12C2.5 6.14 6.64 2 12 2s9.5 4.14 9.5 10-4.14 9.5-9.5 9.5z" fill="currentColor"/>
+                      <path d="M17.2 14.1c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.18.2-.36.22-.66.07-.3-.15-1.27-.47-2.42-1.48-.9-.8-1.5-1.78-1.68-2.08-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.45 1.06 2.85 1.2 3.05.13.2 2.08 3.3 5.04 4.62 2.96 1.33 2.96.89 3.5.83.54-.06 1.76-.72 2.01-1.41.25-.69.25-1.28.17-1.41-.08-.13-.3-.2-.6-.35z" fill="currentColor"/>
+                    </svg>
+                  </a>
+                  <a href={content.linkedin_url || '#'} aria-label="LinkedIn" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-blue-700 transition-colors">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                      <path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8.98h5V24H0V8.98zM8.98 8.98h4.79v2.04h.07c.67-1.27 2.31-2.61 4.75-2.61 5.09 0 6.03 3.35 6.03 7.7V24h-5V16.5c0-1.78-.03-4.07-2.48-4.07-2.48 0-2.86 1.94-2.86 3.95V24h-5V8.98z" fill="currentColor"/>
+                    </svg>
+                  </a>
+                </div>
+                {/* 'Discuter' link removed as requested */}
                 <motion.a
                   href="#contact"
                   initial={{ opacity: 0, x: -20 }}

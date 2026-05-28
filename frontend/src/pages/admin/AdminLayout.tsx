@@ -39,9 +39,22 @@ const Overview = ({ token }: { token: string }) => {
   const fetchStats = async () => {
     const headers = { 'Authorization': `Bearer ${token}` };
     const urls = ['projects/', 'skills/', 'education/', 'contact/'];
+    
+    const fetchUrl = async (u: string) => {
+      try {
+        const res = await fetch(`${API_BASE}/${u}`, { headers });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return await res.json();
+      } catch (err) {
+        console.error(`Erreur fetch ${u}:`, err);
+        return [];
+      }
+    };
+    
     const [p, s, e, m] = await Promise.all(
-      urls.map(u => fetch(`${API_BASE}/${u}`, { headers }).then(r => r.json()))
+      urls.map(fetchUrl)
     );
+    
     return {
       projects: Array.isArray(p) ? p.length : 0,
       skills: Array.isArray(s) ? s.length : 0,
@@ -215,8 +228,8 @@ export const AdminLayout = ({ onLogout, token }: { onLogout: () => void; token: 
             className="lg:hidden mr-4 text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/5 transition-colors"
             onClick={() => setSidebarOpen(true)}
           >
-            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />
+            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+              <path d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
           <div className="flex items-center gap-2 text-sm min-w-0">
