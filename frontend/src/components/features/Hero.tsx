@@ -230,7 +230,9 @@ function HeroText() {
               : rawUrl;
             try {
               const res = await fetch(url);
+              if (!res.ok) throw new Error(`HTTP ${res.status}`);
               const blob = await res.blob();
+              if (blob.size === 0) throw new Error('Fichier vide');
               const link = document.createElement('a');
               link.href = URL.createObjectURL(blob);
               link.download = 'Mon_CV.pdf';
@@ -239,7 +241,7 @@ function HeroText() {
               document.body.removeChild(link);
               URL.revokeObjectURL(link.href);
             } catch {
-              // Fallback si fetch échoue (CORS, etc.)
+              // Fallback : ouvre dans un nouvel onglet
               window.open(url, '_blank');
             }
           }}
