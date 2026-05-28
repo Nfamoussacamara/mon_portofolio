@@ -35,4 +35,4 @@ COPY . .
 EXPOSE $PORT
 
 # Render exécute ce script au démarrage (migrations + superuser + seed + collectstatic + gunicorn)
-CMD ["sh", "-c", "echo '==> Running Migrations...' && python manage.py migrate --noinput && echo '==> Creating Superuser...' && python manage.py createsuperuser_auto && echo '==> Seeding Data...' && python manage.py seed_data && echo '==> Collecting Static Files...' && mkdir -p /app/staticfiles && python manage.py collectstatic --noinput && echo '==> Starting Gunicorn...' && gunicorn core.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120"]
+CMD ["sh", "-c", "echo '==> Running Migrations...' && python manage.py migrate --noinput && echo '==> Creating Superuser...' && python manage.py createsuperuser_auto && echo '==> Seeding Data...' && python manage.py seed_data && echo '==> Collecting Static Files...' && mkdir -p /app/staticfiles && python manage.py collectstatic --noinput && echo '==> Starting Gunicorn...' && gunicorn core.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --access-logfile - --error-logfile -"]
