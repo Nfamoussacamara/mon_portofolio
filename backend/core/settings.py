@@ -111,8 +111,8 @@ CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=[])
 # CSRF Safe Origins (requis pour Django 4.x+ en production)
 CSRF_TRUSTED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=[])
 
-# Configuration du stockage des fichiers médias avec Cloudinary (si défini)
-CLOUDINARY_URL = env('CLOUDINARY_URL', default=None)
+# Configuration du stockage des fichiers médias avec Cloudinary
+CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL')
 if CLOUDINARY_URL:
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
     CLOUDINARY_STORAGE = {
