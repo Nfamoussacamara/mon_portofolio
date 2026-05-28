@@ -221,13 +221,29 @@ function HeroText() {
         <Button size="lg" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
           Voir mes projets
         </Button>
-        <a
-          href="/Mon_CV.pdf"
-          download="Mon_CV.pdf"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/15 text-sm font-semibold text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200"
+        <button
+          onClick={async () => {
+            try {
+              const res = await fetch('/Mon_CV.pdf');
+              if (!res.ok || !res.headers.get('content-type')?.includes('pdf')) {
+                throw new Error('PDF non trouvé');
+              }
+              const blob = await res.blob();
+              const link = document.createElement('a');
+              link.href = URL.createObjectURL(blob);
+              link.download = 'Mon_CV.pdf';
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              URL.revokeObjectURL(link.href);
+            } catch {
+              alert('CV temporairement indisponible.');
+            }
+          }}
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/15 text-sm font-semibold text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200 cursor-pointer"
         >
           Mon CV
-        </a>
+        </button>
       </div>
     </div>
   );
