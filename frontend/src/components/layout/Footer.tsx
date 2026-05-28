@@ -65,7 +65,7 @@ export const Footer = () => {
           </nav>
 
           {/* Social Icons */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 justify-center w-full md:w-auto">
             <a href={content.whatsapp_url || '#'} aria-label="WhatsApp" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-emerald-500 transition-colors">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
                 <path d="M20.52 3.48A11.95 11.95 0 0 0 12 0C5.37 0 .03 5.34.03 12c0 2.11.55 4.08 1.52 5.84L0 24l6.41-1.55A11.96 11.96 0 0 0 12 24c6.63 0 11.97-5.34 11.97-12 0-1.97-.46-3.84-1.45-5.52zM12 21.5c-1.75 0-3.47-.45-4.98-1.3l-.36-.21-3.8.92.95-3.7-.23-.38A9.49 9.49 0 0 1 2.5 12C2.5 6.14 6.64 2 12 2s9.5 4.14 9.5 10-4.14 9.5-9.5 9.5z" fill="currentColor"/>
