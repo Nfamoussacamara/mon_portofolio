@@ -251,80 +251,112 @@ export function usePublicProfile() {
   return useQuery({
     queryKey: ['public-profile'],
     queryFn: async (): Promise<ProfileRecord | null> => {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000); // 10s timeout
+      
       try {
-        const response = await fetch(`${API_BASE}/profile/`);
+        const response = await fetch(`${API_BASE}/profile/`, { signal: controller.signal });
+        clearTimeout(timeout);
         if (!response.ok) return null;
         const data = await response.json();
         return Array.isArray(data) ? (data[0] ?? null) : data;
-      } catch {
+      } catch (error) {
+        clearTimeout(timeout);
+        console.error('Failed to fetch profile:', error);
         return null;
       }
     },
     staleTime: 60_000,
+    retry: 2,
+    retryDelay: 1000,
   });
 }
 
 export function usePublicSkills() {
   return useQuery({
     queryKey: ['public-skills'],
-    initialData: fallbackSkills,
     queryFn: async (): Promise<SkillRecord[]> => {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      
       try {
-        const response = await fetch(`${API_BASE}/skills/`);
+        const response = await fetch(`${API_BASE}/skills/`, { signal: controller.signal });
+        clearTimeout(timeout);
         if (!response.ok) return fallbackSkills;
         const data = await response.json();
         return Array.isArray(data) && data.length ? data : fallbackSkills;
-      } catch {
+      } catch (error) {
+        clearTimeout(timeout);
+        console.error('Failed to fetch skills:', error);
         return fallbackSkills;
       }
     },
     staleTime: 60_000,
+    retry: 2,
+    retryDelay: 1000,
   });
 }
 
 export function usePublicEducation() {
   return useQuery({
     queryKey: ['public-education'],
-    initialData: fallbackEducation,
     queryFn: async (): Promise<EducationRecord[]> => {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      
       try {
-        const response = await fetch(`${API_BASE}/education/`);
+        const response = await fetch(`${API_BASE}/education/`, { signal: controller.signal });
+        clearTimeout(timeout);
         if (!response.ok) return fallbackEducation;
         const data = await response.json();
         return Array.isArray(data) && data.length ? data : fallbackEducation;
-      } catch {
+      } catch (error) {
+        clearTimeout(timeout);
+        console.error('Failed to fetch education:', error);
         return fallbackEducation;
       }
     },
     staleTime: 60_000,
+    retry: 2,
+    retryDelay: 1000,
   });
 }
 
 export function usePublicProjects() {
   return useQuery({
     queryKey: ['public-projects'],
-    initialData: fallbackProjects,
     queryFn: async (): Promise<ProjectRecord[]> => {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      
       try {
-        const response = await fetch(`${API_BASE}/projects/`);
+        const response = await fetch(`${API_BASE}/projects/`, { signal: controller.signal });
+        clearTimeout(timeout);
         if (!response.ok) return fallbackProjects;
         const data = await response.json();
         return Array.isArray(data) && data.length ? data : fallbackProjects;
-      } catch {
+      } catch (error) {
+        clearTimeout(timeout);
+        console.error('Failed to fetch projects:', error);
         return fallbackProjects;
       }
     },
     staleTime: 60_000,
+    retry: 2,
+    retryDelay: 1000,
   });
 }
 
 export function usePublicBlogPosts() {
   return useQuery({
     queryKey: ['public-blog-posts'],
-    initialData: fallbackBlogPosts,
     queryFn: async (): Promise<BlogPostRecord[]> => {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      
       try {
-        const response = await fetch(`${API_BASE}/blog/?published=true`);
+        const response = await fetch(`${API_BASE}/blog/?published=true`, { signal: controller.signal });
+        clearTimeout(timeout);
         if (!response.ok) return fallbackBlogPosts;
         const data = await response.json();
         const mapped = Array.isArray(data)
@@ -343,10 +375,14 @@ export function usePublicBlogPosts() {
             }))
           : [];
         return mapped.length ? mapped : fallbackBlogPosts;
-      } catch {
+      } catch (error) {
+        clearTimeout(timeout);
+        console.error('Failed to fetch blog posts:', error);
         return fallbackBlogPosts;
       }
     },
     staleTime: 60_000,
+    retry: 2,
+    retryDelay: 1000,
   });
 }
