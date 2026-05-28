@@ -1,5 +1,18 @@
+import os
 from django.db import models
 from core.constants import PROJECT_CATEGORIES, SKILL_CATEGORIES, EXPERIENCE_TYPES
+
+
+def get_cv_storage():
+    """Retourne RawMediaCloudinaryStorage si Cloudinary est configuré, sinon FileSystemStorage."""
+    cloudinary_url = os.environ.get('CLOUDINARY_URL')
+    cloudinary_cloud = os.environ.get('CLOUDINARY_CLOUD_NAME')
+    if cloudinary_url or cloudinary_cloud:
+        from cloudinary_storage.storage import RawMediaCloudinaryStorage
+        return RawMediaCloudinaryStorage()
+    from django.core.files.storage import FileSystemStorage
+    return FileSystemStorage()
+
 
 class Profile(models.Model):
     """
@@ -13,7 +26,13 @@ class Profile(models.Model):
     avatar_url = models.CharField(max_length=500, blank=True, default="", verbose_name="URL de la photo de profil (Fallback)")
     
     about_text = models.TextField(verbose_name="Texte de section 'À propos'", blank=True, default="")
-    cv_file = models.FileField(upload_to='cv/', blank=True, null=True, verbose_name="Fichier CV")
+    cv_file = models.FileField(
+        upload_to='cv/',
+        storage=get_cv_storage,
+        blank=True,
+        null=True,
+        verbose_name="Fichier CV (PDF)"
+    )
     
     # Section Contact
     contact_page_title = models.CharField(max_length=200, default="Parlons de votre projet", verbose_name="Titre page Contact")
