@@ -70,21 +70,16 @@ export const Skills = () => {
             whileInView="visible"
             whileHover={{ 
               y: -8, 
-              borderColor: 'rgba(139,92,246,0.5)', 
-              boxShadow: '0 0 25px rgba(139,92,246,0.2)',
+              borderColor: 'rgba(139, 92, 246, 0.3)', 
               transition: { duration: 0.3 } 
             }}
-            whileTap={{ scale: 0.98 }}
+            whileTap={{ 
+              scale: 0.98,
+              borderColor: 'rgba(139, 92, 246, 0.3)',
+            }}
             viewport={defaultViewport}
-            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] will-change-transform cursor-pointer"
+            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/25 bg-white dark:bg-[#1a1a1a] relative min-h-[320px] will-change-transform cursor-pointer transition-colors duration-300"
           >
-            {/* Effet code en hologramme */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
-              className="absolute inset-x-0 bottom-0 top-1/3 bg-gradient-to-t from-violet-500/20 via-transparent to-transparent pointer-events-none"
-            />
-            
             <div className="p-8 relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
@@ -101,6 +96,7 @@ export const Skills = () => {
                     variants={badgeVariants('rgba(139,92,246,0.2)', 'rgba(139,92,246,0.3)')}
                     initial="initial"
                     whileHover="hover"
+                    whileTap="hover"
                     className="px-4 py-2 rounded-xl font-mono text-xs font-semibold border cursor-pointer will-change-transform"
                   >
                     {skill.name}
@@ -117,20 +113,16 @@ export const Skills = () => {
             whileInView="visible"
             whileHover={{ 
               y: -8, 
-              borderColor: 'rgba(239,68,68,0.5)', 
-              boxShadow: '0 0 25px rgba(239,68,68,0.2)',
+              borderColor: 'rgba(239, 68, 68, 0.3)', 
               transition: { duration: 0.3 } 
             }}
-            whileTap={{ scale: 0.98 }}
+            whileTap={{ 
+              scale: 0.98,
+              borderColor: 'rgba(239, 68, 68, 0.3)',
+            }}
             viewport={defaultViewport}
-            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] will-change-transform cursor-pointer"
+            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/25 bg-white dark:bg-[#1a1a1a] relative min-h-[320px] will-change-transform cursor-pointer transition-colors duration-300"
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
-              className="absolute inset-0 bg-gradient-to-tr from-red-500/10 to-transparent pointer-events-none"
-            />
-            
             <div className="p-8 relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center relative">
@@ -152,6 +144,7 @@ export const Skills = () => {
                     variants={badgeVariants('rgba(255,255,255,0.05)', 'rgba(239,68,68,0.5)', 'rgba(248,113,113,1)')}
                     initial="initial"
                     whileHover="hover"
+                    whileTap="hover"
                     className="px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold border cursor-pointer will-change-transform"
                   >
                     {skill.name}
@@ -168,20 +161,16 @@ export const Skills = () => {
             whileInView="visible"
             whileHover={{ 
               y: -8, 
-              borderColor: 'rgba(6,182,212,0.5)', 
-              boxShadow: '0 0 25px rgba(6,182,212,0.2)',
+              borderColor: 'rgba(6, 182, 212, 0.3)', 
               transition: { duration: 0.3 } 
             }}
-            whileTap={{ scale: 0.98 }}
+            whileTap={{ 
+              scale: 0.98,
+              borderColor: 'rgba(6, 182, 212, 0.3)',
+            }}
             viewport={defaultViewport}
-            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] will-change-transform cursor-pointer"
+            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/25 bg-white dark:bg-[#1a1a1a] relative min-h-[320px] will-change-transform cursor-pointer transition-colors duration-300"
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
-              className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-transparent pointer-events-none"
-            />
-            
             <div className="p-8 relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
@@ -198,6 +187,7 @@ export const Skills = () => {
                     variants={badgeVariants('rgba(6,182,212,0.2)', 'rgba(6,182,212,0.3)')}
                     initial="initial"
                     whileHover="hover"
+                    whileTap="hover"
                     className="px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold border cursor-pointer will-change-transform"
                   >
                     {skill.name}
@@ -214,20 +204,16 @@ export const Skills = () => {
             whileInView="visible"
             whileHover={{ 
               y: -8, 
-              borderColor: 'rgba(16,185,129,0.5)', 
-              boxShadow: '0 0 25px rgba(16,185,129,0.2)',
+              borderColor: 'rgba(16, 185, 129, 0.3)', 
               transition: { duration: 0.3 } 
             }}
-            whileTap={{ scale: 0.98 }}
+            whileTap={{ 
+              scale: 0.98,
+              borderColor: 'rgba(16, 185, 129, 0.3)',
+            }}
             viewport={defaultViewport}
-            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] will-change-transform cursor-pointer"
+            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/25 bg-white dark:bg-[#1a1a1a] relative min-h-[320px] will-change-transform cursor-pointer transition-colors duration-300"
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
-              className="absolute inset-0 bg-gradient-to-tr from-emerald-500/10 to-transparent pointer-events-none"
-            />
-            
             <div className="p-8 relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
@@ -244,6 +230,7 @@ export const Skills = () => {
                     variants={badgeVariants('rgba(16,185,129,0.2)', 'rgba(16,185,129,0.3)')}
                     initial="initial"
                     whileHover="hover"
+                    whileTap="hover"
                     className="px-4 py-2 rounded-xl font-mono text-xs font-semibold border cursor-pointer will-change-transform"
                   >
                     {skill.name}

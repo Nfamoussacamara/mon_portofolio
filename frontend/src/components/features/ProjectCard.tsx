@@ -18,6 +18,7 @@ export const ProjectCard = ({ title, description, image, stack, category, linkGi
     <motion.div 
       initial="initial"
       whileHover="hover"
+      whileTap="hover"
       className="flex flex-col h-full rounded-3xl overflow-hidden border border-slate-200 dark:border-white/25 bg-white dark:bg-[#1a1a1a] relative group cursor-pointer hover:border-[#377BFF]/30 dark:hover:border-[#377BFF]/30 transition-all duration-300"
     >
       {/* ZONE PRINCIPALE (Image + Contenu) */}
@@ -56,7 +57,7 @@ export const ProjectCard = ({ title, description, image, stack, category, linkGi
              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-700 dark:text-white/40">{category}</span>
           </div>
           <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-2 line-clamp-2">{title}</h3>
-          <p className="text-sm text-slate-700 dark:text-white/40 leading-relaxed line-clamp-2 overflow-hidden">{description}</p>
+          <p className="text-sm text-slate-700 dark:text-white/40 leading-relaxed line-clamp-1 md:line-clamp-2 overflow-hidden">{description}</p>
         </div>
 
         {/* RIDEAU MONTANT (Framer Motion) */}
