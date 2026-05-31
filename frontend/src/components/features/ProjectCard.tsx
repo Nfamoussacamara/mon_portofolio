@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { Button } from '../ui/Button';
 
 interface ProjectCardProps {
@@ -13,12 +14,15 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard = ({ title, description, image, stack, category, linkGithub, linkDemo, isFeatured }: ProjectCardProps) => {
+  const [isOpen, setIsOpen] = useState(false);
   const hasLinks = !!(linkGithub || linkDemo);
+
   return (
     <motion.div 
       initial="initial"
       whileHover="hover"
-      whileTap="hover"
+      animate={isOpen ? "hover" : "initial"}
+      onClick={() => setIsOpen(!isOpen)}
       className="flex flex-col h-full rounded-3xl overflow-hidden border border-slate-200 dark:border-white/25 bg-white dark:bg-[#1a1a1a] relative group cursor-pointer hover:border-[#377BFF]/30 dark:hover:border-[#377BFF]/30 transition-all duration-300"
     >
       {/* ZONE PRINCIPALE (Image + Contenu) */}
@@ -57,7 +61,7 @@ export const ProjectCard = ({ title, description, image, stack, category, linkGi
              <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-slate-700 dark:text-white/40">{category}</span>
           </div>
           <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-2 line-clamp-2">{title}</h3>
-          <p className="text-sm text-slate-700 dark:text-white/40 leading-relaxed line-clamp-1 md:line-clamp-2 overflow-hidden">{description}</p>
+          <p className="text-sm text-slate-700 dark:text-white/40 leading-relaxed line-clamp-2 overflow-hidden">{description}</p>
         </div>
 
         {/* RIDEAU MONTANT (Framer Motion) */}
@@ -71,7 +75,7 @@ export const ProjectCard = ({ title, description, image, stack, category, linkGi
         >
           <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-blue-500 dark:text-blue-400">{category}</span>
           <h3 className="text-slate-900 dark:text-white font-bold text-lg text-center">{title}</h3>
-          <p className="text-slate-700 dark:text-white/90 text-sm text-center leading-relaxed px-2">{description}</p>
+          <p className="text-slate-700 dark:text-white/90 text-sm text-center leading-relaxed px-2 line-clamp-4">{description}</p>
           <div className="flex flex-wrap gap-1.5 justify-center">
             {stack.map((tech) => (
               <span key={tech} className="text-[10px] font-mono text-slate-700 dark:text-white/60 bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/15 px-2 py-0.5 rounded-md">
@@ -86,12 +90,12 @@ export const ProjectCard = ({ title, description, image, stack, category, linkGi
       {hasLinks && (
         <div className="flex gap-2 p-4 border-t border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#1a1a1a] relative z-30">
           {linkGithub && (
-            <Button variant="outline" size="sm" className="flex-1 text-xs" onClick={() => window.open(linkGithub, '_blank')}>
+            <Button variant="outline" size="sm" className="flex-1 text-xs" onClick={(e) => { e.stopPropagation(); window.open(linkGithub, '_blank'); }}>
               GitHub
             </Button>
           )}
           {linkDemo && (
-            <Button variant="primary" size="sm" className="flex-1 text-xs" onClick={() => window.open(linkDemo, '_blank')}>
+            <Button variant="primary" size="sm" className="flex-1 text-xs" onClick={(e) => { e.stopPropagation(); window.open(linkDemo, '_blank'); }}>
               Démo
             </Button>
           )}
