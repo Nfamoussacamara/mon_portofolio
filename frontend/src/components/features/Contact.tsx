@@ -1,18 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { sectionHeader, fadeLeft, fadeRight, defaultViewport } from '../../lib/animations';
 import { normalizeProfile, usePublicProfile } from '../../lib/siteContent';
 import { API_BASE } from '../../lib/api';
 
-const inputClass = "w-full px-4 py-3 rounded-xl border text-sm bg-transparent outline-none transition-all duration-300 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-[#555] focus:border-[#377BFF]/50 dark:focus:border-[#377BFF]/50 focus:ring-4 focus:ring-[#377BFF]/5 dark:focus:bg-white/[0.03]";
-const labelClass = "block text-sm font-medium mb-2 text-slate-700";
+// Optimisation : Transition ciblée au lieu de transition-all
+const inputClass = "w-full px-4 py-3 rounded-xl border text-sm bg-transparent outline-none transition-[border-color,box-shadow,background-color] duration-200 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-[#555] focus:border-[#377BFF]/50 dark:focus:border-[#377BFF]/50 focus:ring-4 focus:ring-[#377BFF]/5 dark:focus:bg-white/[0.03]";
+const labelClass = "block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300";
 
 export const Contact = () => {
   const { data: profile } = usePublicProfile();
-  const content = normalizeProfile(profile);
+  
+  // Optimisation : Mémorisation des données calculées
+  const content = useMemo(() => normalizeProfile(profile), [profile]);
+  
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const infos = useMemo(() => [
+    { label: 'ME CONTACTER PAR EMAIL', value: content.contact_email || 'camaranfamoussa199@gmail.com' },
+    { label: "Zone d'Intervention", value: content.location || 'Disponible pour le monde entier' },
+    { label: 'Engagement Actuel', value: content.available_for_hire ? 'Ouvert aux collaborations et projets freelance' : 'Actuellement engagé — Réservation possible' },
+  ], [content]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,12 +60,6 @@ export const Contact = () => {
       setTimeout(() => setStatus('idle'), 5000);
     }
   };
-
-  const infos = [
-    { label: 'ME CONTACTER PAR EMAIL', value: content.contact_email || 'camaranfamoussa199@gmail.com' },
-    { label: "Zone d'Intervention", value: content.location || 'Disponible pour le monde entier' },
-    { label: 'Engagement Actuel', value: content.available_for_hire ? 'Ouvert aux collaborations et projets freelance' : 'Actuellement engagé — Réservation possible' },
-  ];
 
   return (
     <section id="contact" className="py-16 md:py-28 bg-[var(--bg-primary)] relative overflow-hidden">

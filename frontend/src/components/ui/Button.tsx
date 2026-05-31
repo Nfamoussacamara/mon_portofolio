@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { motion } from 'framer-motion';
@@ -56,8 +56,10 @@ const borders: Record<string, string> = {
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', isLoading = false, children, disabled, ...props }, ref) => {
     const { theme } = useTheme();
-    const variantInitial = getVariantInitial(theme);
-    const variantHover = getVariantHover(theme);
+    
+    // Optimisation : Mémorisation des variantes pour éviter les recalculs inutiles
+    const variantInitial = useMemo(() => getVariantInitial(theme), [theme]);
+    const variantHover = useMemo(() => getVariantHover(theme), [theme]);
 
     return (
       <motion.button
