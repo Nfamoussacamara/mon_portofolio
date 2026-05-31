@@ -215,9 +215,9 @@ function HeroText() {
         Ingénieur Full-Stack spécialisé dans la conception d'architectures résilientes, d'APIs haute performance et de solutions cloud sécurisées. J'aide les entreprises à transformer leurs défis technologiques en succès numériques.
       </p>
 
-      {/* Boutons - Cachés sur mobile, visibles sur desktop */}
-      <div className="hero-btns opacity-0 hidden md:flex flex-col sm:flex-row flex-wrap gap-3 w-full sm:w-auto">
-        <Button size="lg" className="px-5 py-2.5 md:px-8 md:py-4 text-sm md:text-base" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
+      {/* Boutons - Visibles sur tous les écrans */}
+      <div className="hero-btns opacity-0 flex flex-col sm:flex-row flex-wrap gap-4 w-full sm:w-auto justify-center lg:justify-start mt-8 md:mt-10">
+        <Button size="lg" className="px-8 py-4 text-sm md:text-base w-full sm:w-auto" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
           Voir mes projets
         </Button>
         <button
@@ -241,11 +241,11 @@ function HeroText() {
               alert('CV temporairement indisponible.');
             }
           }}
-          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 md:px-6 md:py-3 rounded-xl border border-white/15 text-xs md:text-sm font-semibold text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200 cursor-pointer"
+          className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-200 dark:border-white/15 text-sm font-semibold text-slate-900 dark:text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200 cursor-pointer w-full sm:w-auto"
         >
           <svg
-            width="16"
-            height="16"
+            width="18"
+            height="18"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
