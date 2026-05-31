@@ -331,9 +331,9 @@ export function Hero() {
         </div>
 
 
-        {/* TECH MARQUEE - Centrage mathématique parfait */}
+        {/* TECH MARQUEE - Centrage parfait (Responsive) */}
         <motion.div
-          className="border-t border-b border-[var(--border-card)] py-12 mt-20"
+          className="border-t border-b border-[var(--border-card)] py-8 md:py-12 mt-10 md:mt-20"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
