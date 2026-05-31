@@ -119,6 +119,7 @@ const defaultSkillIcons: Record<string, string> = {
   'Node.js': 'nodedotjs',
   Tailwind: 'tailwindcss',
   GraphQL: 'graphql',
+  Java: 'openjdk',
 };
 
 export const fallbackSkills: SkillRecord[] = [
