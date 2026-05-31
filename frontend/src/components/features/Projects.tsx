@@ -123,7 +123,6 @@ export const Projects = () => {
                         category={project.category}
                         linkGithub={project.link_github}
                         linkDemo={project.link_demo}
-                        isFeatured={project.is_featured}
                       />
                     </motion.div>
                   );

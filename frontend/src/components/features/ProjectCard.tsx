@@ -10,10 +10,9 @@ interface ProjectCardProps {
   category: string;
   linkGithub?: string;
   linkDemo?: string;
-  isFeatured?: boolean;
 }
 
-export const ProjectCard = ({ title, description, image, stack, category, linkGithub, linkDemo, isFeatured }: ProjectCardProps) => {
+export const ProjectCard = ({ title, description, image, stack, category, linkGithub, linkDemo }: ProjectCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const hasLinks = !!(linkGithub || linkDemo);
 
