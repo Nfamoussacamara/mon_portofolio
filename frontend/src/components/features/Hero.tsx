@@ -280,7 +280,7 @@ export function Hero() {
   ];
 
   return (
-    <section id="home" className="relative pt-0 pb-6 md:pb-16 overflow-hidden">
+    <section id="home" className="relative pt-0 pb-16 md:pb-24 overflow-hidden">
       {/* Ambient glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-48 right-1/4 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[120px]" />
@@ -331,9 +331,9 @@ export function Hero() {
         </div>
 
 
-        {/* TECH MARQUEE */}
+        {/* TECH MARQUEE - Poussé vers le bas pour n'être visible qu'au scroll */}
         <motion.div
-          className="border-t border-[var(--border-card)] pt-6 md:pt-12"
+          className="border-t border-[var(--border-card)] pt-6 md:pt-12 mt-32 md:mt-80"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}

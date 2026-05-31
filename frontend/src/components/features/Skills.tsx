@@ -68,18 +68,11 @@ export const Skills = () => {
             variants={fadeLeft}
             initial="hidden"
             whileInView="visible"
-            whileHover="hover"
-            whileTap="hover"
-            whileFocus="hover"
-            tabIndex={0}
+            whileHover={{ y: -5, borderColor: 'rgba(139,92,246,0.3)' }}
             viewport={defaultViewport}
-            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] hover:border-violet-500/30 dark:hover:border-violet-500/30 transition-all duration-300"
+            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] will-change-transform"
           >
-            {/* Effet code en hologramme — Framer Motion via whileHover */}
-            <motion.div
-              variants={{ initial: { opacity: 0 }, hover: { opacity: 1, transition: { duration: 0.4 } } }}
-              className="absolute inset-x-0 bottom-0 top-1/3 bg-gradient-to-t from-violet-500/10 via-transparent to-transparent pointer-events-none"
-            />
+            {/* Effet code en hologramme */}
             <div className="absolute -right-10 -bottom-10 opacity-10 font-mono text-[10px] leading-tight select-none pointer-events-none text-violet-500 max-w-xs break-all hidden sm:block">
               {`def authenticate(self, request):\n  auth = get_authorization_header(request).split()\n  if not auth or auth[0].lower() != b'bearer':\n    return None`}
             </div>
@@ -100,10 +93,7 @@ export const Skills = () => {
                     variants={badgeVariants('rgba(139,92,246,0.2)', 'rgba(139,92,246,0.3)')}
                     initial="initial"
                     whileHover="hover"
-                    whileTap="hover"
-                    whileFocus="hover"
-                    tabIndex={0}
-                    className="px-4 py-2 rounded-xl font-mono text-xs font-semibold border cursor-pointer"
+                    className="px-4 py-2 rounded-xl font-mono text-xs font-semibold border cursor-pointer will-change-transform"
                   >
                     {skill.name}
                   </motion.span>
@@ -117,14 +107,10 @@ export const Skills = () => {
             variants={fadeRight}
             initial="hidden"
             whileInView="visible"
-            whileHover="hover"
-            whileTap="hover"
-            whileFocus="hover"
-            tabIndex={0}
+            whileHover={{ y: -5, borderColor: 'rgba(239,68,68,0.3)' }}
             viewport={defaultViewport}
-            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] hover:border-red-500/30 dark:hover:border-red-500/30 transition-all duration-300"
+            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] will-change-transform"
           >
-
             <div className="p-8 relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center relative">
@@ -140,30 +126,13 @@ export const Skills = () => {
               <p className="text-slate-700 dark:text-white/60 text-sm mb-8">Audits de sécurité, gestion des vulnérabilités (OWASP) et implémentation Zero Trust.</p>
 
               <div className="flex flex-wrap gap-2 mt-auto relative z-10">
-                {securitySkills.map((skill) => (
+                {[...securitySkills, ...groupedSkills.DevOps.filter((skill) => !securitySkills.some((item) => item.id === skill.id))].map((skill) => (
                   <motion.span
                     key={skill.id}
                     variants={badgeVariants('rgba(255,255,255,0.05)', 'rgba(239,68,68,0.5)', 'rgba(248,113,113,1)')}
                     initial="initial"
                     whileHover="hover"
-                    whileTap="hover"
-                    whileFocus="hover"
-                    tabIndex={0}
-                    className="px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold border cursor-pointer"
-                  >
-                    {skill.name}
-                  </motion.span>
-                ))}
-                {groupedSkills.DevOps.filter((skill) => !securitySkills.some((item) => item.id === skill.id)).map((skill) => (
-                  <motion.span
-                    key={skill.id}
-                    variants={badgeVariants('rgba(255,255,255,0.05)', 'rgba(239,68,68,0.5)', 'rgba(248,113,113,1)')}
-                    initial="initial"
-                    whileHover="hover"
-                    whileTap="hover"
-                    whileFocus="hover"
-                    tabIndex={0}
-                    className="px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold border cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold border cursor-pointer will-change-transform"
                   >
                     {skill.name}
                   </motion.span>
@@ -177,17 +146,10 @@ export const Skills = () => {
             variants={fadeLeft}
             initial="hidden"
             whileInView="visible"
-            whileHover="hover"
-            whileTap="hover"
-            whileFocus="hover"
-            tabIndex={0}
+            whileHover={{ y: -5, borderColor: 'rgba(6,182,212,0.3)' }}
             viewport={defaultViewport}
-            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] hover:border-cyan-500/30 dark:hover:border-cyan-500/30 transition-all duration-300"
+            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] will-change-transform"
           >
-            <motion.div
-              variants={{ initial: { opacity: 0 }, hover: { opacity: 1, transition: { duration: 0.4 } } }}
-              className="absolute inset-0 bg-gradient-to-tr from-cyan-500/5 to-transparent pointer-events-none"
-            />
             <div className="p-8 relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
@@ -204,10 +166,7 @@ export const Skills = () => {
                     variants={badgeVariants('rgba(6,182,212,0.2)', 'rgba(6,182,212,0.3)')}
                     initial="initial"
                     whileHover="hover"
-                    whileTap="hover"
-                    whileFocus="hover"
-                    tabIndex={0}
-                    className="px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold border cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg font-mono text-[11px] font-semibold border cursor-pointer will-change-transform"
                   >
                     {skill.name}
                   </motion.span>
@@ -221,14 +180,10 @@ export const Skills = () => {
             variants={fadeRight}
             initial="hidden"
             whileInView="visible"
-            whileHover="hover"
-            whileTap="hover"
-            whileFocus="hover"
-            tabIndex={0}
+            whileHover={{ y: -5, borderColor: 'rgba(16,185,129,0.3)' }}
             viewport={defaultViewport}
-            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] hover:border-emerald-500/30 dark:hover:border-emerald-500/30 transition-all duration-300"
+            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] will-change-transform"
           >
-
             <div className="p-8 relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
@@ -245,10 +200,7 @@ export const Skills = () => {
                     variants={badgeVariants('rgba(16,185,129,0.2)', 'rgba(16,185,129,0.3)')}
                     initial="initial"
                     whileHover="hover"
-                    whileTap="hover"
-                    whileFocus="hover"
-                    tabIndex={0}
-                    className="px-4 py-2 rounded-xl font-mono text-xs font-semibold border cursor-pointer"
+                    className="px-4 py-2 rounded-xl font-mono text-xs font-semibold border cursor-pointer will-change-transform"
                   >
                     {skill.name}
                   </motion.span>

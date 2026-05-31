@@ -77,7 +77,7 @@ export type BlogPostRecord = {
 };
 
 export const defaultProfile: Required<Omit<ProfileRecord, 'id'>> = {
-  full_name: "N'famoussa Camara",
+  full_name: "N'Famoussa Camara",
   hero_title: 'Expert en Ingénierie Full-Stack',
   hero_subtitle: "Ingénieur Full-Stack spécialisé dans la conception d'architectures résilientes, d'APIs haute performance et de solutions cloud sécurisées. J'aide les entreprises à transformer leurs défis technologiques en succès numériques.",
   avatar_url: '/profil-removebg-preview.png',

@@ -53,7 +53,7 @@ export const About = () => {
             // about me
           </p>
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-5 leading-tight">
-            À propos de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">{content.full_name}</span>
+            À propos de moi
           </h2>
         </motion.div>
 
@@ -67,11 +67,25 @@ export const About = () => {
             viewport={defaultViewport}
             className="space-y-6"
           >
-            {aboutParagraphs.map((paragraph, index) => (
-              <motion.p key={index} variants={fadeLeft} className="text-[var(--text-muted)] text-[1.1rem] leading-relaxed">
-                {paragraph}
-              </motion.p>
-            ))}
+            {aboutParagraphs.map((paragraph, index) => {
+              // Détection du nom (insensible à la casse par sécurité)
+              const nameRegex = new RegExp(`(${content.full_name})`, 'gi');
+              const parts = paragraph.split(nameRegex);
+              
+              const contentToRender = parts.map((part, i) => 
+                part.toLowerCase() === content.full_name.toLowerCase() ? (
+                  <span key={i} className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 font-extrabold uppercase">
+                    {part}
+                  </span>
+                ) : part
+              );
+
+              return (
+                <motion.p key={index} variants={fadeLeft} className="text-[var(--text-muted)] text-[1.1rem] leading-relaxed">
+                  {contentToRender}
+                </motion.p>
+              );
+            })}
           </motion.div>
 
           {/* Col droite */}
