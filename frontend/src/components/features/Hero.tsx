@@ -223,20 +223,22 @@ function HeroText() {
         </Button>
         <button
           onClick={async () => {
+            const localPath = '/cv/Mon_CV.pdf';
+            const dynamicUrl = resolveMediaUrl(content.cv_file);
+
             try {
-              const res = await fetch('/Mon_CV.pdf');
-              if (!res.ok || !res.headers.get('content-type')?.includes('pdf')) {
-                throw new Error('PDF non trouvé');
+              const res = await fetch(localPath, { method: 'HEAD' });
+              if (res.ok) {
+                window.location.href = localPath;
+                return;
               }
-              const blob = await res.blob();
-              const link = document.createElement('a');
-              link.href = URL.createObjectURL(blob);
-              link.download = 'Mon_CV.pdf';
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
-              URL.revokeObjectURL(link.href);
-            } catch {
+            } catch (err) {
+              console.warn('Local CV not found, trying fallback...', err);
+            }
+
+            if (dynamicUrl && dynamicUrl !== localPath) {
+              window.open(dynamicUrl, '_blank');
+            } else {
               alert('CV temporairement indisponible.');
             }
           }}

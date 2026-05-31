@@ -86,7 +86,7 @@ export const defaultProfile: Required<Omit<ProfileRecord, 'id'>> = {
     "Actuellement étudiant en informatique à l'Université de Labé, je développe des solutions numériques orientées résolution de problèmes réels avec une forte attention portée à l'architecture logicielle, à la qualité du code et à l'expérience utilisateur.",
     "Je travaille principalement avec React, Django REST Framework et PostgreSQL pour construire des applications full-stack rapides, maintenables et scalables. Je m'intéresse particulièrement au développement backend, aux APIs REST, aux architectures propres, aux principes SOLID ainsi qu'à l'optimisation des performances web. Au-delà du développement, je m'intéresse également à la cybersécurité, aux réseaux informatiques et à la conception de plateformes capables d'avoir un impact concret dans des domaines comme l'éducation, la santé numérique, l'immobilier et les services digitaux en Guinée."
   ].join('\n\n'),
-  cv_file: '/cv.pdf',
+  cv_file: '/cv/Mon_CV.pdf',
   contact_page_title: 'Vous avez un projet web, une idée numérique à développer ?',
   contact_page_description: "Que vous ayez besoin d'une plateforme SaaS ou d'une infrastructure sur mesure, je suis ouvert aux collaborations, projets freelance et opportunités professionnelles.",
   cta_headline_active: 'Prêt à sécuriser & scaler vos applications ?',
