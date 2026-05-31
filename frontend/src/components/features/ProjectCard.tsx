@@ -75,7 +75,7 @@ export const ProjectCard = ({ title, description, image, stack, category, linkGi
         >
           <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-blue-500 dark:text-blue-400">{category}</span>
           <h3 className="text-slate-900 dark:text-white font-bold text-lg text-center">{title}</h3>
-          <p className="text-slate-700 dark:text-white/90 text-sm text-center leading-relaxed px-2 line-clamp-4">{description}</p>
+          <p className="text-slate-700 dark:text-white/90 text-sm text-center leading-relaxed px-2 line-clamp-6">{description}</p>
           <div className="flex flex-wrap gap-1.5 justify-center">
             {stack.map((tech) => (
               <span key={tech} className="text-[10px] font-mono text-slate-700 dark:text-white/60 bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/15 px-2 py-0.5 rounded-md">
