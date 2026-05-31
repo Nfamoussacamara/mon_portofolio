@@ -280,7 +280,7 @@ export function Hero() {
   ];
 
   return (
-    <section id="home" className="relative pt-0 pb-16 md:pb-24 overflow-hidden">
+    <section id="home" className="relative pt-0 pb-0 overflow-hidden">
       {/* Ambient glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-48 right-1/4 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[120px]" />
@@ -331,16 +331,16 @@ export function Hero() {
         </div>
 
 
-        {/* TECH MARQUEE - Poussé vers le bas pour n'être visible qu'au scroll */}
+        {/* TECH MARQUEE - Centrage mathématique parfait */}
         <motion.div
-          className="border-t border-[var(--border-card)] pt-6 md:pt-12 mt-32 md:mt-80"
+          className="border-t border-b border-[var(--border-card)] py-12 mt-20"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
-            <div className="marquee-wrapper flex select-none" aria-hidden="true">
+            <div className="marquee-wrapper flex items-center justify-center select-none" aria-hidden="true">
               <div className="flex shrink-0 animate-marquee items-center gap-16 pr-16">
                 {techMarquee.map((tech, i) => (
                   <div key={`hero-tech1-${i}`} className="tech-logo-item">

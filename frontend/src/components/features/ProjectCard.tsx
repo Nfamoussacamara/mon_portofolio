@@ -34,9 +34,8 @@ export const ProjectCard = ({ title, description, image, stack, category, linkGi
             <div className="p-4 flex justify-between items-start">
               <p className="text-[11px] text-slate-700 dark:text-white/40 font-mono uppercase tracking-widest">Projet</p>
               <div className="flex flex-wrap gap-1 justify-end items-center">
-                {isFeatured && (
-                  <span className="text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-amber-500/10 text-amber-500 border border-amber-500/20 mr-1">★ Featured</span>
-                )}
+                {/* Featured badge removed */}
+
                 {stack.slice(0, 2).map((tech) => (
                   <span key={tech} className="text-[9px] font-mono text-slate-700 dark:text-white/30 bg-slate-100 dark:bg-white/5 px-1.5 py-0.5 rounded-md">
                     {tech}
