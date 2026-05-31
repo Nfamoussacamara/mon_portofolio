@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '../../components/ui/Button';
 import { API_BASE } from '../../lib/api';
@@ -131,7 +131,7 @@ export const AdminContact = ({ token }: { token: string }) => {
           <Button
             type="submit"
             variant="primary"
-            disabled={updateMutation.isPending}
+            isLoading={updateMutation.isPending}
           >
             {updateMutation.isPending ? 'Enregistrement...' : 'Enregistrer'}
           </Button>

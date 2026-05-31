@@ -145,7 +145,8 @@ export const Contact = () => {
                 type="submit"
                 className="w-full"
                 size="lg"
-                disabled={status === 'loading' || status === 'success'}
+                isLoading={status === 'loading'}
+                disabled={status === 'success'}
               >
                 {status === 'loading' ? 'Envoi en cours...' : status === 'success' ? 'Message envoyé !' : 'Envoyer le message'}
               </Button>

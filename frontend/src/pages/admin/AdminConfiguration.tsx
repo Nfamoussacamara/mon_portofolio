@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../../components/ui/Button';
@@ -21,7 +21,7 @@ const configTabs: { id: ConfigTab; label: string; icon: string }[] = [
 function SaveBar({ isPending, isError, saved }: { isPending: boolean; isError: boolean; saved: boolean }) {
   return (
     <div className="flex items-center gap-4 pt-2">
-      <Button type="submit" disabled={isPending} className="bg-blue-600 text-white border-0 px-6">
+      <Button type="submit" isLoading={isPending} className="bg-blue-600 text-white border-0 px-6">
         {isPending ? 'Enregistrement...' : 'Enregistrer'}
       </Button>
       {saved && <span className="text-emerald-400 text-sm flex items-center gap-1.5"><span>✓</span> Enregistré</span>}

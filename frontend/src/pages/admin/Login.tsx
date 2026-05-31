@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '../../components/ui/Button';
 import { API_BASE } from '../../lib/api';
@@ -73,7 +73,7 @@ export const Login = ({ onLogin }: { onLogin: (token: string) => void }) => {
             <input type="password" className={inputClass} value={password} onChange={e => setPassword(e.target.value)} required placeholder="••••••••" autoComplete="current-password" />
           </div>
 
-          <Button type="submit" disabled={loading} size="lg" className="w-full !bg-blue-600 hover:!bg-blue-700 text-white border-0 mt-2">
+          <Button type="submit" isLoading={loading} size="lg" className="w-full !bg-blue-600 hover:!bg-blue-700 text-white border-0 mt-2">
             {loading ? 'Vérification...' : 'Entrer dans le système →'}
           </Button>
         </form>

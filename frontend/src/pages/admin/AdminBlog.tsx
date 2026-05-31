@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Button } from '../../components/ui/Button';
@@ -188,7 +188,7 @@ export const AdminBlog = ({ token }: { token: string }) => {
           </label>
           <div className="flex gap-3 pt-2">
             <Button type="button" variant="ghost" className="flex-1 border border-white/10" onClick={() => setIsOpen(false)}>Annuler</Button>
-            <Button type="submit" disabled={save.isPending} className="flex-1 bg-blue-600 text-white border-0">{save.isPending ? '...' : 'Enregistrer'}</Button>
+            <Button type="submit" isLoading={save.isPending} className="flex-1 bg-blue-600 text-white border-0">{save.isPending ? 'Enregistrement...' : 'Enregistrer'}</Button>
           </div>
         </form>
       </Modal>
