@@ -25,11 +25,12 @@ function HeroText() {
       });
 
       // Masquer tout au début
-      gsap.set([".hero-title-1", ".hero-sub", ".hero-btns", ".hero-photo-container", ".scroll-indicator"], { opacity: 0, y: 40 });
+      gsap.set([".hero-title-1", ".hero-sub", ".hero-btns", ".hero-photo-container", ".scroll-indicator", ".hero-badge"], { opacity: 0, y: 40 });
       gsap.set([".hero-name", ".hero-role"], { opacity: 0 });
       gsap.set(".navbar-anim", { opacity: 0, y: -20 });
 
       // 1. CALCUL DES OFFSETS DU CENTRE (TOUTES RÉSOLUTIONS)
+      // ... (code existant)
       const nameBounds = nameRef.current?.getBoundingClientRect();
       const roleBounds = roleRef.current?.getBoundingClientRect();
 
@@ -74,8 +75,6 @@ function HeroText() {
       })
 
       // 4. DÉPLACEMENT VERS LES POSITIONS FINALES
-      // Sur mobile : métier part EN PREMIER vers sa place, puis le nom
-      // Sur desktop : nom part EN PREMIER vers sa place, puis le métier
       const isMobile = window.innerWidth < 1024;
 
       if (isMobile) {
@@ -116,7 +115,7 @@ function HeroText() {
         ease: "power2.out"
       }, "-=0.5")
 
-      tl.to([".hero-sub", ".hero-btns"], {
+      tl.to([".hero-badge", ".hero-sub", ".hero-btns"], {
         opacity: 1,
         y: 0,
         stagger: 0.15,
@@ -164,9 +163,9 @@ function HeroText() {
       </div>
       
       {/* LE NOM */}
-      <div ref={nameRef} className="hero-name-container relative mb-4">
+      <div ref={nameRef} className="hero-name-container relative mb-2 md:mb-4">
         <div className="relative inline-block overflow-hidden">
-          <h1 className="hero-name text-4xl md:text-6xl lg:text-[80px] font-extrabold leading-tight tracking-tighter text-[var(--text-primary)] sm:whitespace-nowrap">
+          <h1 className="hero-name text-3xl md:text-6xl lg:text-[80px] font-extrabold leading-tight tracking-tighter text-[var(--text-primary)] sm:whitespace-nowrap">
             {content.full_name}
           </h1>
           <div className="reveal-bar-name absolute inset-0 bg-blue-500 z-10 scale-x-0" />
@@ -174,34 +173,34 @@ function HeroText() {
       </div>
 
       {/* LE MÉTIER */}
-      <div ref={roleRef} className="hero-role-container mb-4 relative">
+      <div ref={roleRef} className="hero-role-container mb-2 md:mb-4 relative">
         <div className="relative inline-block overflow-hidden">
-          <h2 className="hero-role block text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold leading-tight tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500">
+          <h2 className="hero-role block text-xl sm:text-3xl md:text-4xl lg:text-[42px] font-bold leading-tight tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500">
             {content.hero_title}
           </h2>
           <div className="reveal-bar-role absolute inset-0 bg-indigo-500 z-10 scale-x-0" />
         </div>
       </div>
 
-      <div className="mb-6">
-        <span className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium ${content.available_for_hire ? 'border-emerald-500/20 bg-emerald-500/10 text-emerald-400' : 'border-amber-500/20 bg-amber-500/10 text-amber-400'}`}>
+      <div className="hero-badge mb-4 md:mb-6">
+        <span className={`inline-flex items-center rounded-full border px-3 py-1 text-[10px] md:text-xs font-medium ${content.available_for_hire ? 'border-emerald-500/20 bg-emerald-500/10 text-emerald-400' : 'border-amber-500/20 bg-amber-500/10 text-amber-400'}`}>
           Ouvert aux collaborations stratégiques
         </span>
       </div>
 
-      {/* Flèche scroll mobile uniquement */}
-      <div className="hero-btns lg:hidden flex justify-center mb-4">
+      {/* Flèche scroll mobile uniquement - Toujours visible sur mobile au centre */}
+      <div className="hero-btns lg:hidden flex justify-center mb-0 mt-4">
         <motion.div
-          animate={{ y: [0, 6, 0] }}
+          animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
         >
           <svg
-            width="22"
-            height="22"
+            width="28"
+            height="28"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
             className="text-blue-500"
@@ -211,14 +210,14 @@ function HeroText() {
         </motion.div>
       </div>
 
-      {/* Sous-titre */}
-      <p className="hero-sub opacity-0 text-lg text-[var(--text-muted)] max-w-md leading-relaxed mb-10">
+      {/* Sous-titre - Caché sur mobile, visible sur desktop */}
+      <p className="hero-sub opacity-0 hidden md:block text-base md:text-lg text-[var(--text-muted)] max-w-md leading-relaxed mb-6 md:mb-10">
         Ingénieur Full-Stack spécialisé dans la conception d'architectures résilientes, d'APIs haute performance et de solutions cloud sécurisées. J'aide les entreprises à transformer leurs défis technologiques en succès numériques.
       </p>
 
-      {/* Boutons */}
-      <div className="hero-btns opacity-0 flex flex-col sm:flex-row flex-wrap gap-3 w-full sm:w-auto">
-        <Button size="lg" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
+      {/* Boutons - Cachés sur mobile, visibles sur desktop */}
+      <div className="hero-btns opacity-0 hidden md:flex flex-col sm:flex-row flex-wrap gap-3 w-full sm:w-auto">
+        <Button size="lg" className="px-5 py-2.5 md:px-8 md:py-4 text-sm md:text-base" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
           Voir mes projets
         </Button>
         <button
@@ -242,7 +241,7 @@ function HeroText() {
               alert('CV temporairement indisponible.');
             }
           }}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/15 text-sm font-semibold text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200 cursor-pointer"
+          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 md:px-6 md:py-3 rounded-xl border border-white/15 text-xs md:text-sm font-semibold text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200 cursor-pointer"
         >
           <svg
             width="16"
@@ -289,26 +288,27 @@ export function Hero() {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
           {/* Left: Text */}
           <HeroText />
 
           {/* Right: Photo */}
-          <div className="hero-photo-container opacity-0 relative w-4/5 max-w-[320px] mx-auto lg:w-full lg:max-w-[520px] lg:ml-auto lg:mr-0 order-1 lg:order-2 self-end">
+          <div className="hero-photo-container opacity-0 relative w-[240px] md:w-3/4 max-w-[320px] mx-auto lg:w-full lg:max-w-[520px] lg:ml-auto lg:mr-0 order-1 lg:order-2 self-end">
             <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-blue-600/10 to-transparent rounded-full blur-3xl translate-y-20" />
             <div className="relative aspect-[4/5] flex items-end justify-center overflow-visible">
               <img
                 src={resolveMediaUrl(content.avatar_url) || '/profil-removebg-preview.png'}
                 alt={`Photo de profil de ${content.full_name}`}
-                className="w-full h-full object-contain object-bottom transform scale-115 origin-bottom"
+                className="w-full h-full object-contain object-bottom transform scale-110 md:scale-115 origin-bottom"
               />
             </div>
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="scroll-indicator opacity-0 flex flex-col items-center gap-2 mb-6 mt-6 md:-mt-16">
+
+        {/* Scroll Indicator - Uniquement sur Desktop */}
+        <div className="scroll-indicator opacity-0 hidden lg:flex flex-col items-center gap-2 mb-6 mt-6 md:-mt-16">
           <span className="text-[10px] uppercase tracking-[0.2em] text-slate-700 font-bold">Explorez mon univers</span>
           <motion.div
             animate={{ y: [0, 6, 0] }}
@@ -329,6 +329,7 @@ export function Hero() {
             </svg>
           </motion.div>
         </div>
+
 
         {/* TECH MARQUEE */}
         <motion.div
