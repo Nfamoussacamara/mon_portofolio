@@ -26,7 +26,7 @@ export const StatCard = ({
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay }}
-      className="bg-[#1a1a1a] border border-white/10 p-6 rounded-2xl hover:border-white/25 transition-all duration-300 w-full relative z-10"
+      className="bg-[#1a1a1a] border border-white/10 p-6 rounded-2xl hover:border-[#377BFF]/30 transition-all duration-300 w-full relative z-10"
     >
       {/* Reproduction exacte de l'intérieur de la timeline-card de la section Education */}
       <span className="text-indigo-400 font-mono text-sm block mb-1 hover:text-indigo-300 transition-colors">{title}</span>

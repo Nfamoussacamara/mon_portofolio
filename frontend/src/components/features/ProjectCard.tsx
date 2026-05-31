@@ -18,7 +18,7 @@ export const ProjectCard = ({ title, description, image, stack, category, linkGi
     <motion.div 
       initial="initial"
       whileHover="hover"
-      className="flex flex-col h-full rounded-3xl overflow-hidden border border-slate-200 dark:border-white/25 bg-white dark:bg-[#1a1a1a] relative group cursor-pointer"
+      className="flex flex-col h-full rounded-3xl overflow-hidden border border-slate-200 dark:border-white/25 bg-white dark:bg-[#1a1a1a] relative group cursor-pointer hover:border-[#377BFF]/30 dark:hover:border-[#377BFF]/30 transition-all duration-300"
     >
       {/* ZONE PRINCIPALE (Image + Contenu) */}
       <div className="relative flex-1 flex flex-col overflow-hidden">

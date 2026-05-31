@@ -78,8 +78,8 @@ export type BlogPostRecord = {
 
 export const defaultProfile: Required<Omit<ProfileRecord, 'id'>> = {
   full_name: "N'famoussa Camara",
-  hero_title: 'Développeur Full-Stack',
-  hero_subtitle: 'Spécialisé en Cybersécurité, React & Django. Je construis des applications robustes, sécurisées et prêtes pour la production.',
+  hero_title: 'Expert en Ingénierie Full-Stack',
+  hero_subtitle: "Ingénieur Full-Stack spécialisé dans la conception d'architectures résilientes, d'APIs haute performance et de solutions cloud sécurisées. J'aide les entreprises à transformer leurs défis technologiques en succès numériques.",
   avatar_url: '/profil-removebg-preview.png',
   about_text: [
     "Je suis N'Famoussa Camara, développeur full-stack passionné par la conception d'applications web modernes, performantes et évolutives.",
@@ -87,8 +87,8 @@ export const defaultProfile: Required<Omit<ProfileRecord, 'id'>> = {
     "Je travaille principalement avec React, Django REST Framework et PostgreSQL pour construire des applications full-stack rapides, maintenables et scalables. Je m'intéresse particulièrement au développement backend, aux APIs REST, aux architectures propres, aux principes SOLID ainsi qu'à l'optimisation des performances web. Au-delà du développement, je m'intéresse également à la cybersécurité, aux réseaux informatiques et à la conception de plateformes capables d'avoir un impact concret dans des domaines comme l'éducation, la santé numérique, l'immobilier et les services digitaux en Guinée."
   ].join('\n\n'),
   cv_file: '/cv.pdf',
-  contact_page_title: 'Parlons de votre projet',
-  contact_page_description: 'Architecture d\'entreprise, audit de sécurité ou produit web innovant — n\'hésitez pas à me contacter. Je réponds dans les 24h.',
+  contact_page_title: 'Vous avez un projet web, une idée numérique à développer ?',
+  contact_page_description: "Que vous ayez besoin d'une plateforme SaaS ou d'une infrastructure sur mesure, je suis ouvert aux collaborations, projets freelance et opportunités professionnelles.",
   cta_headline_active: 'Prêt à sécuriser & scaler vos applications ?',
   cta_headline_inactive: 'Découvrez mon portfolio',
   cta_description_active: 'Basé sur les standards de l\'industrie, je transforme vos idées en produits robustes.',

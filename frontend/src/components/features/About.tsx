@@ -97,11 +97,17 @@ export const About = () => {
                 <motion.div
                   key={stat.label}
                   variants={staggerItem}
-                  className="text-center p-4 rounded-2xl border border-slate-300 dark:border-white/5 bg-slate-100 dark:bg-white/5"
+                  whileHover="hovered"
+                  className="text-center p-4 rounded-2xl border border-slate-300 dark:border-white/5 bg-slate-100 dark:bg-white/5 hover:border-[#377BFF]/30 dark:hover:border-[#377BFF]/30 transition-all duration-300 group cursor-default"
                 >
-                  <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">
+                  <motion.div 
+                    className="text-3xl font-bold text-slate-900 dark:text-white mb-1"
+                    variants={{
+                      hovered: { scale: [1, 1.25, 1], transition: { duration: 0.4, ease: "easeInOut" } }
+                    }}
+                  >
                     <CountUp value={stat.value} />
-                  </div>
+                  </motion.div>
                   <div className="text-xs text-[var(--text-muted)] leading-tight">{stat.label}</div>
                 </motion.div>
               ))}

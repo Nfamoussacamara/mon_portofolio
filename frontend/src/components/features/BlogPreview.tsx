@@ -36,10 +36,10 @@ export const BlogPreview = () => {
         >
           <div>
             <p className="text-sm font-mono font-medium text-purple-500 mb-3 tracking-widest uppercase">
-              // technical blog
+              // knowledge sharing
             </p>
             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
-              Pensées &amp; <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-indigo-500">Articles</span>
+              Décryptage & <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-indigo-500">Veille tech</span>
             </h2>
           </div>
           <Button variant="outline">Voir tout le blog</Button>
@@ -53,7 +53,7 @@ export const BlogPreview = () => {
               initial="hidden"
               whileInView="visible"
               viewport={defaultViewport}
-              className="p-8 rounded-2xl border border-slate-200 dark:border-white/8 bg-slate-50 dark:bg-white/2 flex flex-col h-full cursor-pointer group hover:border-purple-500/30 dark:hover:border-purple-500/30 transition-colors duration-300"
+              className="p-8 rounded-2xl border border-slate-200 dark:border-white/8 bg-slate-50 dark:bg-white/2 flex flex-col h-full cursor-pointer group hover:border-[#377BFF]/30 dark:hover:border-[#377BFF]/30 transition-colors duration-300"
             >
               <div className="flex items-center gap-4 mb-6">
                 <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--text-muted)] px-2 py-1 rounded border border-slate-200 dark:border-white/10">

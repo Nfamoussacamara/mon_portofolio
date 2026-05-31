@@ -73,7 +73,7 @@ export const Skills = () => {
             whileFocus="hover"
             tabIndex={0}
             viewport={defaultViewport}
-            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px]"
+            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] hover:border-violet-500/30 dark:hover:border-violet-500/30 transition-all duration-300"
           >
             {/* Effet code en hologramme — Framer Motion via whileHover */}
             <motion.div
@@ -122,7 +122,7 @@ export const Skills = () => {
             whileFocus="hover"
             tabIndex={0}
             viewport={defaultViewport}
-            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px]"
+            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] hover:border-red-500/30 dark:hover:border-red-500/30 transition-all duration-300"
           >
 
             <div className="p-8 relative z-10 flex flex-col h-full">
@@ -182,7 +182,7 @@ export const Skills = () => {
             whileFocus="hover"
             tabIndex={0}
             viewport={defaultViewport}
-            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px]"
+            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] hover:border-cyan-500/30 dark:hover:border-cyan-500/30 transition-all duration-300"
           >
             <motion.div
               variants={{ initial: { opacity: 0 }, hover: { opacity: 1, transition: { duration: 0.4 } } }}
@@ -226,7 +226,7 @@ export const Skills = () => {
             whileFocus="hover"
             tabIndex={0}
             viewport={defaultViewport}
-            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px]"
+            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] hover:border-emerald-500/30 dark:hover:border-emerald-500/30 transition-all duration-300"
           >
 
             <div className="p-8 relative z-10 flex flex-col h-full">

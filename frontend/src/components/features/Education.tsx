@@ -123,7 +123,7 @@ export const Education = () => {
 
                   {/* Carte */}
                   <div className={`ml-16 md:ml-0 md:absolute md:top-1/2 md:-translate-y-1/2 w-[calc(100%-5rem)] md:w-[45%] ${isLeft ? 'md:left-0 md:text-right' : 'md:right-0 md:text-left'} text-left`}>
-                    <div className="timeline-card bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-white/10 p-6 rounded-2xl hover:border-indigo-500/40 dark:hover:border-white/25 transition-all duration-300 w-full relative z-10 cursor-default">
+                    <div className="timeline-card bg-white dark:bg-[#1a1a1a] border border-slate-200 dark:border-white/10 p-6 rounded-2xl hover:border-[#377BFF]/30 dark:hover:border-[#377BFF]/30 transition-all duration-300 w-full relative z-10 cursor-default">
                       <span className="text-indigo-400 font-mono text-sm block mb-1">{item.year}</span>
                       <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">{item.degree}</h3>
                       <div className="text-slate-700 dark:text-white/40 text-sm font-medium mb-3 uppercase tracking-wider">{item.school}</div>

@@ -159,7 +159,7 @@ function HeroText() {
       {/* Greeting */}
       <div className="hero-title-1 mb-2 opacity-0">
         <h1 className="text-xl md:text-2xl font-medium tracking-tight text-[var(--text-muted)]">
-          Bonjour, je suis
+          Expertise & Innovation
         </h1>
       </div>
       
@@ -185,7 +185,7 @@ function HeroText() {
 
       <div className="mb-6">
         <span className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium ${content.available_for_hire ? 'border-emerald-500/20 bg-emerald-500/10 text-emerald-400' : 'border-amber-500/20 bg-amber-500/10 text-amber-400'}`}>
-          {content.available_for_hire ? 'Disponible pour de nouveaux projets' : 'Actuellement indisponible'}
+          Ouvert aux collaborations stratégiques
         </span>
       </div>
 
@@ -213,7 +213,7 @@ function HeroText() {
 
       {/* Sous-titre */}
       <p className="hero-sub opacity-0 text-lg text-[var(--text-muted)] max-w-md leading-relaxed mb-10">
-        {content.hero_subtitle}
+        Ingénieur Full-Stack spécialisé dans la conception d'architectures résilientes, d'APIs haute performance et de solutions cloud sécurisées. J'aide les entreprises à transformer leurs défis technologiques en succès numériques.
       </p>
 
       {/* Boutons */}
@@ -307,7 +307,7 @@ export function Hero() {
 
         {/* Scroll Indicator */}
         <div className="scroll-indicator opacity-0 flex flex-col items-center gap-2 mb-6 mt-6 md:-mt-16">
-          <span className="text-[10px] uppercase tracking-[0.2em] text-slate-700 font-bold">Découvrir</span>
+          <span className="text-[10px] uppercase tracking-[0.2em] text-slate-700 font-bold">Explorez mon univers</span>
           <motion.div
             animate={{ y: [0, 6, 0] }}
             transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}

@@ -1,11 +1,11 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { sectionHeader, fadeLeft, fadeRight, defaultViewport } from '../../lib/animations';
 import { normalizeProfile, usePublicProfile } from '../../lib/siteContent';
 import { API_BASE } from '../../lib/api';
 
-const inputClass = "w-full px-4 py-3 rounded-xl border text-sm bg-transparent outline-none transition-all duration-200 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-[#555] focus:border-slate-400 dark:focus:border-white/30 focus:bg-slate-50 dark:focus:bg-white/5";
+const inputClass = "w-full px-4 py-3 rounded-xl border text-sm bg-transparent outline-none transition-all duration-300 border-slate-200 dark:border-white/10 text-slate-900 dark:text-white placeholder-[#555] focus:border-[#377BFF]/50 dark:focus:border-[#377BFF]/50 focus:ring-4 focus:ring-[#377BFF]/5 dark:focus:bg-white/[0.03]";
 const labelClass = "block text-sm font-medium mb-2 text-slate-700";
 
 export const Contact = () => {
@@ -20,7 +20,10 @@ export const Contact = () => {
     setErrorMessage('');
     
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
+    const data: Record<string, any> = {};
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
 
     try {
       const response = await fetch(`${API_BASE}/contact/`, {
@@ -49,9 +52,9 @@ export const Contact = () => {
   };
 
   const infos = [
-    { label: 'Email', value: content.contact_email || 'contact@votre-email.com' },
-    { label: 'Localisation', value: content.location || 'Conakry, Guinée' },
-    { label: 'Disponibilité', value: content.available_for_hire ? 'Ouvert aux projets' : 'Non disponible pour le moment' },
+    { label: 'ME CONTACTER PAR EMAIL', value: content.contact_email || 'camaranfamoussa199@gmail.com' },
+    { label: "Zone d'Intervention", value: content.location || 'Disponible pour le monde entier' },
+    { label: 'Engagement Actuel', value: content.available_for_hire ? 'Ouvert aux collaborations et projets freelance' : 'Actuellement engagé — Réservation possible' },
   ];
 
   return (
@@ -69,16 +72,13 @@ export const Contact = () => {
           className="text-center mb-16"
         >
           <p className="text-sm font-mono font-medium text-blue-500 dark:text-blue-400 mb-3 tracking-widest uppercase">
-            // contact
+            // start a conversation
           </p>
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
-            {content.contact_page_title && content.contact_page_title !== 'Parlons de votre projet'
-              ? content.contact_page_title
-              : <>Parlons de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">votre projet</span></>
-            }
+            Vous avez un projet web, une <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">idée numérique</span> à développer ?
           </h2>
           <p className="text-[var(--text-muted)] text-lg max-w-2xl mx-auto leading-relaxed">
-            {content.contact_page_description || 'Architecture d\'entreprise, audit de sécurité ou produit web innovant — n\'hésitez pas à me contacter. Je réponds dans les 24h.'}
+            Que vous ayez besoin d'une plateforme SaaS ou d'une infrastructure sur mesure, je suis ouvert aux collaborations, projets freelance et opportunités professionnelles.
           </p>
         </motion.div>
  
@@ -113,8 +113,10 @@ export const Contact = () => {
             initial="hidden"
             whileInView="visible"
             viewport={defaultViewport}
-            className="rounded-2xl border border-slate-200 dark:border-white/8 bg-slate-50 dark:bg-white/[0.02] p-8"
+            className="rounded-3xl border border-slate-200 dark:border-white/15 bg-white dark:bg-[#0c0c0c] p-8 md:p-10 shadow-2xl shadow-blue-500/5 dark:shadow-blue-500/10 relative overflow-hidden group hover:border-[#377BFF]/40 transition-all duration-500"
           >
+            {/* Subtle Gradient Glow */}
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/10 rounded-full blur-[80px] pointer-events-none" />
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className={labelClass}>Nom complet</label>
@@ -135,7 +137,7 @@ export const Contact = () => {
                   required
                   rows={4}
                   className={inputClass + ' resize-none'}
-                  placeholder="Décrivez votre projet ou votre besoin..."
+                  placeholder="Décrivez brièvement les enjeux de votre projet ou les problématiques que vous souhaitez résoudre..."
                 />
               </div>
 
