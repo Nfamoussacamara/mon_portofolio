@@ -2,7 +2,7 @@ import { motion, useMotionValue, useSpring, useInView } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { fadeLeft, fadeRight, staggerContainer, staggerItem, sectionHeader, defaultViewport } from '../../lib/animations';
 import { normalizeProfile, usePublicProfile } from '../../lib/siteContent';
-
+import { Skeleton } from '../ui/Skeleton';
 const CountUp = ({ value }: { value: string }) => {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true });
@@ -21,7 +21,7 @@ const CountUp = ({ value }: { value: string }) => {
 };
 
 export const About = () => {
-  const { data: profile } = usePublicProfile();
+  const { data: profile, isLoading } = usePublicProfile();
   const content = normalizeProfile(profile);
 
   const stats = [
@@ -107,22 +107,32 @@ export const About = () => {
               viewport={defaultViewport}
               className="grid grid-cols-1 sm:grid-cols-3 gap-4"
             >
-              {stats.map((stat) => (
+              {[0, 1, 2].map((i) => (
                 <motion.div
-                  key={stat.label}
+                  key={i}
                   variants={staggerItem}
                   whileHover="hovered"
                   className="text-center p-4 rounded-2xl border border-slate-300 dark:border-white/5 bg-slate-100 dark:bg-white/5 hover:border-[#377BFF]/30 dark:hover:border-[#377BFF]/30 transition-all duration-300 group cursor-default"
                 >
                   <motion.div 
-                    className="text-3xl font-bold text-slate-900 dark:text-white mb-1"
+                    className="text-3xl font-bold text-slate-900 dark:text-white mb-1 h-9 flex items-center justify-center"
                     variants={{
                       hovered: { scale: [1, 1.25, 1], transition: { duration: 0.4, ease: "easeInOut" } }
                     }}
                   >
-                    <CountUp value={stat.value} />
+                    {isLoading ? (
+                      <Skeleton className="h-7 w-12" />
+                    ) : (
+                      <CountUp value={stats[i].value} />
+                    )}
                   </motion.div>
-                  <div className="text-xs text-[var(--text-muted)] leading-tight">{stat.label}</div>
+                  <div className="text-xs text-[var(--text-muted)] leading-tight h-4 flex items-center justify-center">
+                    {isLoading ? (
+                      <Skeleton className="h-3 w-16" />
+                    ) : (
+                      stats[i].label
+                    )}
+                  </div>
                 </motion.div>
               ))}
             </motion.div>

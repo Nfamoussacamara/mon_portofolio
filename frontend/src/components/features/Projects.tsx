@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ProjectCard } from './ProjectCard';
+import { Skeleton } from '../ui/Skeleton';
 import { sectionHeader, defaultViewport, staggerContainer } from '../../lib/animations';
 import { fallbackProjects, usePublicProjects, type ProjectRecord } from '../../lib/siteContent';
 
@@ -9,7 +10,7 @@ const filters = ['Tous', 'Full-Stack', 'Frontend', 'Backend', 'Cybersécurité',
 export const Projects = () => {
   const [activeFilter, setActiveFilter] = useState('Tous');
 
-  const { data: projects } = usePublicProjects();
+  const { data: projects, isLoading } = usePublicProjects();
   const safeProjects = projects ?? fallbackProjects;
 
   const filteredProjects = safeProjects.filter((project: ProjectRecord) => {
@@ -70,42 +71,64 @@ export const Projects = () => {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project, index) => {
-                const col = index % 3;
-                const initial =
-                  col === 0 ? { opacity: 0, x: -50, y: 0 } :
-                  col === 2 ? { opacity: 0, x: 50, y: 0 } :
-                              { opacity: 0, x: 0, y: 50 };
-                
-                const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
-                const variants = {
-                  hidden: initial,
-                  visible: { opacity: 1, x: 0, y: 0, transition: { duration: 1.1, ease: EASE } }
-                };
+              {isLoading ? (
+                // Skeleton Grid
+                [0, 1, 2].map((i) => (
+                  <div key={`skeleton-${i}`} className="card h-[450px] p-4 flex flex-col gap-4">
+                    <Skeleton className="w-full h-48 rounded-xl" />
+                    <div className="space-y-3 mt-4">
+                      <div className="flex gap-2">
+                        <Skeleton className="h-5 w-16" />
+                        <Skeleton className="h-5 w-16" />
+                      </div>
+                      <Skeleton className="h-8 w-3/4" />
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-5/6" />
+                    </div>
+                    <div className="mt-auto flex gap-4">
+                      <Skeleton className="h-10 flex-1 rounded-lg" />
+                      <Skeleton className="h-10 flex-1 rounded-lg" />
+                    </div>
+                  </div>
+                ))
+              ) : (
+                filteredProjects.map((project, index) => {
+                  const col = index % 3;
+                  const initial =
+                    col === 0 ? { opacity: 0, x: -50, y: 0 } :
+                    col === 2 ? { opacity: 0, x: 50, y: 0 } :
+                                { opacity: 0, x: 0, y: 50 };
+                  
+                  const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+                  const variants = {
+                    hidden: initial,
+                    visible: { opacity: 1, x: 0, y: 0, transition: { duration: 1.1, ease: EASE } }
+                  };
 
-                return (
-                  <motion.div
-                    key={project.id}
-                    layout
-                    variants={variants}
-                    initial="hidden"
-                    whileInView="visible"
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    viewport={defaultViewport}
-                  >
-                    <ProjectCard
-                      title={project.title}
-                      description={project.description}
-                      image={project.image_url || 'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=700'}
-                      stack={project.stack || []}
-                      category={project.category}
-                      linkGithub={project.link_github}
-                      linkDemo={project.link_demo}
-                      isFeatured={project.is_featured}
-                    />
-                  </motion.div>
-                );
-              })}
+                  return (
+                    <motion.div
+                      key={project.id}
+                      layout
+                      variants={variants}
+                      initial="hidden"
+                      whileInView="visible"
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      viewport={defaultViewport}
+                    >
+                      <ProjectCard
+                        title={project.title}
+                        description={project.description}
+                        image={project.image_url || 'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=700'}
+                        stack={project.stack || []}
+                        category={project.category}
+                        linkGithub={project.link_github}
+                        linkDemo={project.link_demo}
+                        isFeatured={project.is_featured}
+                      />
+                    </motion.div>
+                  );
+                })
+              )}
             </AnimatePresence>
           </motion.div>
         </div>
