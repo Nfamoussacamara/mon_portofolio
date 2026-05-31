@@ -68,15 +68,23 @@ export const Skills = () => {
             variants={fadeLeft}
             initial="hidden"
             whileInView="visible"
-            whileHover={{ y: -5, borderColor: 'rgba(139,92,246,0.3)' }}
+            whileHover={{ 
+              y: -8, 
+              borderColor: 'rgba(139,92,246,0.5)', 
+              boxShadow: '0 0 25px rgba(139,92,246,0.2)',
+              transition: { duration: 0.3 } 
+            }}
+            whileTap={{ scale: 0.98 }}
             viewport={defaultViewport}
-            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] will-change-transform"
+            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] will-change-transform cursor-pointer"
           >
             {/* Effet code en hologramme */}
-            <div className="absolute -right-10 -bottom-10 opacity-10 font-mono text-[10px] leading-tight select-none pointer-events-none text-violet-500 max-w-xs break-all hidden sm:block">
-              {`def authenticate(self, request):\n  auth = get_authorization_header(request).split()\n  if not auth or auth[0].lower() != b'bearer':\n    return None`}
-            </div>
-
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileHover={{ opacity: 1 }}
+              className="absolute inset-x-0 bottom-0 top-1/3 bg-gradient-to-t from-violet-500/20 via-transparent to-transparent pointer-events-none"
+            />
+            
             <div className="p-8 relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
@@ -107,10 +115,22 @@ export const Skills = () => {
             variants={fadeRight}
             initial="hidden"
             whileInView="visible"
-            whileHover={{ y: -5, borderColor: 'rgba(239,68,68,0.3)' }}
+            whileHover={{ 
+              y: -8, 
+              borderColor: 'rgba(239,68,68,0.5)', 
+              boxShadow: '0 0 25px rgba(239,68,68,0.2)',
+              transition: { duration: 0.3 } 
+            }}
+            whileTap={{ scale: 0.98 }}
             viewport={defaultViewport}
-            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] will-change-transform"
+            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] will-change-transform cursor-pointer"
           >
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileHover={{ opacity: 1 }}
+              className="absolute inset-0 bg-gradient-to-tr from-red-500/10 to-transparent pointer-events-none"
+            />
+            
             <div className="p-8 relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center relative">
@@ -146,10 +166,22 @@ export const Skills = () => {
             variants={fadeLeft}
             initial="hidden"
             whileInView="visible"
-            whileHover={{ y: -5, borderColor: 'rgba(6,182,212,0.3)' }}
+            whileHover={{ 
+              y: -8, 
+              borderColor: 'rgba(6,182,212,0.5)', 
+              boxShadow: '0 0 25px rgba(6,182,212,0.2)',
+              transition: { duration: 0.3 } 
+            }}
+            whileTap={{ scale: 0.98 }}
             viewport={defaultViewport}
-            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] will-change-transform"
+            className="md:col-span-1 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] will-change-transform cursor-pointer"
           >
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileHover={{ opacity: 1 }}
+              className="absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-transparent pointer-events-none"
+            />
+            
             <div className="p-8 relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
@@ -180,10 +212,22 @@ export const Skills = () => {
             variants={fadeRight}
             initial="hidden"
             whileInView="visible"
-            whileHover={{ y: -5, borderColor: 'rgba(16,185,129,0.3)' }}
+            whileHover={{ 
+              y: -8, 
+              borderColor: 'rgba(16,185,129,0.5)', 
+              boxShadow: '0 0 25px rgba(16,185,129,0.2)',
+              transition: { duration: 0.3 } 
+            }}
+            whileTap={{ scale: 0.98 }}
             viewport={defaultViewport}
-            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] will-change-transform"
+            className="md:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#1a1a1a] overflow-hidden relative min-h-[320px] will-change-transform cursor-pointer"
           >
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileHover={{ opacity: 1 }}
+              className="absolute inset-0 bg-gradient-to-tr from-emerald-500/10 to-transparent pointer-events-none"
+            />
+            
             <div className="p-8 relative z-10 flex flex-col h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
