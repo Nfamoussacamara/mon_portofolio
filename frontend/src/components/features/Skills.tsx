@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
 import { sectionHeader, fadeLeft, fadeRight, defaultViewport } from '../../lib/animations';
-import { fallbackSkills, usePublicSkills } from '../../lib/siteContent';
+import { usePublicSkills } from '../../lib/siteContent';
 import { Skeleton } from '../ui/Skeleton';
 
 
@@ -11,7 +11,7 @@ export const Skills = () => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const { data: skills, isLoading } = usePublicSkills();
-  const skillList = skills?.length ? skills : fallbackSkills;
+  const skillList = skills || [];
 
   const groupedSkills = {
     Backend: skillList.filter((skill) => skill.category === 'Backend'),

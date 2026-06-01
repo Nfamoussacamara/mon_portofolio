@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ProjectCard } from './ProjectCard';
 import { Skeleton } from '../ui/Skeleton';
 import { sectionHeader, defaultViewport, staggerContainer } from '../../lib/animations';
-import { fallbackProjects, usePublicProjects, type ProjectRecord } from '../../lib/siteContent';
+import { usePublicProjects, type ProjectRecord } from '../../lib/siteContent';
 
 const filters = ['Tous', 'Full-Stack', 'Frontend', 'Backend', 'Cybersécurité', 'Mobile'];
 
@@ -11,7 +11,7 @@ export const Projects = () => {
   const [activeFilter, setActiveFilter] = useState('Tous');
 
   const { data: projects, isLoading } = usePublicProjects();
-  const safeProjects = projects ?? fallbackProjects;
+  const safeProjects = projects ?? [];
 
   const filteredProjects = safeProjects.filter((project: ProjectRecord) => {
     if (activeFilter === 'Tous') return true;

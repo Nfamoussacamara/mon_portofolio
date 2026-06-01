@@ -67,25 +67,35 @@ export const About = () => {
             viewport={defaultViewport}
             className="space-y-6"
           >
-            {aboutParagraphs.map((paragraph, index) => {
-              // Détection du nom (insensible à la casse par sécurité)
-              const nameRegex = new RegExp(`(${content.full_name})`, 'gi');
-              const parts = paragraph.split(nameRegex);
-              
-              const contentToRender = parts.map((part, i) => 
-                part.toLowerCase() === content.full_name.toLowerCase() ? (
-                  <span key={i} className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 font-extrabold uppercase">
-                    {part}
-                  </span>
-                ) : part
-              );
+            {isLoading ? (
+              <div className="space-y-4">
+                <Skeleton className="h-6 w-full" />
+                <Skeleton className="h-6 w-11/12" />
+                <Skeleton className="h-6 w-4/5" />
+                <Skeleton className="h-6 w-full" />
+                <Skeleton className="h-6 w-5/6" />
+              </div>
+            ) : (
+              aboutParagraphs.map((paragraph, index) => {
+                // Détection du nom (insensible à la casse par sécurité)
+                const nameRegex = new RegExp(`(${content.full_name})`, 'gi');
+                const parts = paragraph.split(nameRegex);
+                
+                const contentToRender = parts.map((part, i) => 
+                  part.toLowerCase() === content.full_name.toLowerCase() ? (
+                    <span key={i} className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 font-extrabold uppercase">
+                      {part}
+                    </span>
+                  ) : part
+                );
 
-              return (
-                <motion.p key={index} variants={fadeLeft} className="text-[var(--text-muted)] text-[1.1rem] leading-relaxed">
-                  {contentToRender}
-                </motion.p>
-              );
-            })}
+                return (
+                  <motion.p key={index} variants={fadeLeft} className="text-[var(--text-muted)] text-[1.1rem] leading-relaxed">
+                    {contentToRender}
+                  </motion.p>
+                );
+              })
+            )}
           </motion.div>
 
           {/* Col droite */}
@@ -95,9 +105,18 @@ export const About = () => {
             whileInView="visible"
             viewport={defaultViewport}
           >
-            <motion.p variants={fadeRight} className="text-[var(--text-muted)] text-[1.1rem] leading-relaxed mb-12">
-              {content.hero_subtitle}
-            </motion.p>
+            <motion.div variants={fadeRight} className="mb-12">
+              {isLoading ? (
+                <div className="space-y-3">
+                  <Skeleton className="h-5 w-full" />
+                  <Skeleton className="h-5 w-5/6" />
+                </div>
+              ) : (
+                <p className="text-[var(--text-muted)] text-[1.1rem] leading-relaxed">
+                  {content.hero_subtitle}
+                </p>
+              )}
+            </motion.div>
 
             {/* Stats */}
             <motion.div
